@@ -82,7 +82,7 @@ public class Piskvorky implements ActionListener{
         }catch (InterruptedException e){
             e.printStackTrace();
         }
-        if(random.nextInt(2)==2){
+        if(random.nextInt(2)==1){
             player1_turn = true;
             textfield.setText("X turn");
         }
