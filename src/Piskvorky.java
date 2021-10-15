@@ -13,6 +13,8 @@ public class Piskvorky implements ActionListener{
     JButton[] buttons = new JButton[225];
     boolean player1_turn;
     boolean player2_turn;
+    int xRada = 0;
+    int oRada = 0;
 
     Piskvorky(){
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,17 +62,17 @@ public class Piskvorky implements ActionListener{
                         buttons[i].setText("X");
                         player1_turn=false;
                         textfield.setText("O turn");
-                        check();
+                        check(i, "X");
                     }
 
-                    }
+                }
                 else {
                     if (buttons[i].getText()==""){
                         buttons[i].setForeground(new Color(0, 0, 0));
                         buttons[i].setText("O");
                         player1_turn=true;
                         textfield.setText("X turn");
-                        check();
+                        check(i, "O");
                     }
                 }
             }
@@ -91,13 +93,41 @@ public class Piskvorky implements ActionListener{
             textfield.setText("O turn");
         }
     }
-    public void check(){
-        int pocet = 0;
-    }
-    public void xWins(int a, int b, int c){
+    public void check(int tlacitko, String znak){
+
+
+        checkLeva(tlacitko, znak);
+
 
     }
-    public void oWins(int a, int b, int c){
+    public void checkLeva(int tlactiko, String znak){
+        if(tlactiko > 0){
+            tlactiko--;
+        }
+        else return;
+        System.out.println(buttons[tlactiko].getText().toString() + ", " + tlactiko);
+        if (buttons[tlactiko].getText().toString() == znak){
+            if (znak == "X") xWins();
+            else oWins();
+            checkLeva(tlactiko, znak);
+            oRada = 0;
+            xRada = 0;
+        }
+        else return;
 
+    }
+    public void xWins(){
+        xRada ++;
+
+        if(xRada == 4){
+            System.out.println("x vyhrali");
+        }
+    }
+    public void oWins(){
+        oRada ++;
+
+        if (oRada == 4){
+            System.out.println("o vyhrali");
+        }
     }
 }
