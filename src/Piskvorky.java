@@ -9,21 +9,20 @@ import javax.swing.border.LineBorder;
 
 
 
-public class Piskvorky implements ActionListener{
+public class Piskvorky extends MyButtons implements FirstTurn{
 
-    Random random = new Random();
+    //Random random = new Random();
     JFrame frame = new JFrame();
     JFrame menu = new JFrame();
     JPanel title_panel = new JPanel();
-    JPanel button_panel = new JPanel();
-    JLabel textfield = new JLabel();
+
+
     JLabel textfield1 = new JLabel();
-    JButton[] buttons = new JButton[225];
+    MyButtons[] buttons = new MyButtons[225];
     JButton hra = new JButton("Hrát");
     JButton lan = new JButton("Hra po LAN");
-    boolean player1_turn;
-    int xRada = 0;
-    int oRada = 0;
+
+
 
     Piskvorky(){
 
@@ -88,26 +87,30 @@ public class Piskvorky implements ActionListener{
         button_panel.setBackground(new Color(150,150,150));
 
         for (int i = 0; i < 225; i++){
-            buttons[i] = new JButton();
+            vytvoreni(String.valueOf(i));
+        }
+        /*for (int i = 0; i < 225; i++){
+            buttons[i] = new MyButtons();
             button_panel.add(buttons[i]);
             buttons[i].setFont(new Font("MV Boli",Font.BOLD,50));
             buttons[i].setBackground(new Color(255, 255, 255));
             buttons[i].setFocusable(false);
             buttons[i].addActionListener(this);
 
-        }
+        }*/
 
         title_panel.add(textfield);
         frame.add(title_panel,BorderLayout.NORTH);
         frame.add(button_panel);
 
-        firstTurn();
+        FirstTurn.firstTurn();
 
     }
 
 
 
-    public void actionPerformed(ActionEvent e){
+    /*public void actionPerformed(ActionEvent e){
+
         for(int i=0; i<225; i++){
             if(e.getSource()==buttons[i]){
                 if (player1_turn){
@@ -131,8 +134,8 @@ public class Piskvorky implements ActionListener{
                 }
             }
         }
-    }
-    public void firstTurn(){
+    }*/
+    /*public void firstTurn(){
         try {
             Thread.sleep(2000);
         }catch (InterruptedException e){
@@ -146,8 +149,8 @@ public class Piskvorky implements ActionListener{
             player1_turn = false;
             textfield.setText("O turn");
         }
-    }
-    public void check(int tlacitko, String znak){
+    }*/
+    /*public void check(int tlacitko, String znak){
 
 
         checkLeva(tlacitko, znak);
@@ -158,14 +161,12 @@ public class Piskvorky implements ActionListener{
         checkHoreLeva(tlacitko, znak);
         checkDolePrava(tlacitko, znak);
         checkDoleLeva(tlacitko, znak);
-    }
+    }*/
     public void checkLeva(int tlacitko, String znak){
         if(tlacitko != 0 && tlacitko != 15 && tlacitko != 30 && tlacitko != 45 && tlacitko != 60 && tlacitko != 75 && tlacitko != 90 && tlacitko != 105 && tlacitko != 120 && tlacitko != 135 && tlacitko != 150 && tlacitko != 165 && tlacitko != 180 && tlacitko != 195 && tlacitko != 210){
             tlacitko--;
         }
-        if (){
-            tlacitko--;
-        }
+
         else return;
         System.out.println(buttons[tlacitko].getText() + ", " + tlacitko);
         if (buttons[tlacitko].getText().equals(znak)){
@@ -289,18 +290,5 @@ public class Piskvorky implements ActionListener{
         }
         else return;
     }
-    public void xWins(){
-        xRada ++;
 
-        if(xRada == 4){
-            System.out.println("x vyhrali");
-        }
-    }
-    public void oWins(){
-        oRada ++;
-
-        if (oRada == 4){
-            System.out.println("o vyhrali");
-        }
-    }
 }
