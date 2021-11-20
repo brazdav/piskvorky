@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-interface FirstTurn {
+interface FirstTurn{
     AtomicBoolean player1_turn = new AtomicBoolean(true);
     Random random = new Random();
     JLabel textfield = new JLabel();

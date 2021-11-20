@@ -8,6 +8,15 @@ public interface Podminky {
         }
     }
 
+    static void napleni(int a, int pocatecni, int konecna, int b, int pocatecni2, int konecna2){
+        for(int i = pocatecni; i <= konecna; i += a){
+            podminky.add(i);
+        }
+        for(int i = pocatecni2; i <= konecna2; i += b){
+            podminky.add(i);
+        }
+    }
+
     static boolean vyhodnoceni(int poradi){
         boolean pravda = false;
         for (int i:podminky) {
@@ -18,5 +27,6 @@ public interface Podminky {
         }
         return pravda;
     }
+
 
 }
