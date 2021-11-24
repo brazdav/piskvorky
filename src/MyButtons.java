@@ -213,14 +213,14 @@ public class MyButtons extends JButton implements FirstTurn,Podminky {
         xRada ++;
         //System.out.println(xRada);
         if (xRada == 4){
-            System.out.println("x vyhrali obě");
+            System.out.println("x vyhrali");
         }
     }
 
     public void oWins(){
         oRada ++;
         if (oRada == 4){
-            System.out.println("o vyhrali obě");
+            System.out.println("o vyhrali");
         }
 
     }
