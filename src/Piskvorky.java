@@ -1,9 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-
+import java.awt.event.*;
 
 
 public class Piskvorky extends MyButtons implements FirstTurn{
@@ -17,10 +14,11 @@ public class Piskvorky extends MyButtons implements FirstTurn{
     JButton hra = new JButton("Hrát");
     JButton lan = new JButton("Hra po LAN");
 
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    double height = screenSize.getHeight() - 35;
 
 
     Piskvorky(){
-
         menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         menu.setSize(800,800);
         menu.setResizable(false);
@@ -63,7 +61,8 @@ public class Piskvorky extends MyButtons implements FirstTurn{
 
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.setSize((int) height,(int) height);
+        frame.setResizable(false);
         frame.getContentPane().setBackground(new Color(50,50,50));
         frame.setLayout(new BorderLayout());
         frame.setVisible(false);
@@ -76,7 +75,7 @@ public class Piskvorky extends MyButtons implements FirstTurn{
         textfield.setOpaque(true);
 
         title_panel.setLayout(new BorderLayout());
-        title_panel.setBounds(0,0,800,100);
+        title_panel.setBounds(0,0,800,1000);
 
         button_panel.setLayout(new GridLayout(15,15));
         button_panel.setBackground(new Color(150,150,150));

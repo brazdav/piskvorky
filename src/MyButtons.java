@@ -15,7 +15,7 @@ public class MyButtons extends JButton implements FirstTurn,Podminky {
         MyButtons tlaco = new MyButtons();
         //tlaco.setText(i);
         button_panel.add(tlaco);
-        tlaco.setFont(new Font("MV Boli",Font.BOLD,50));
+        tlaco.setFont(new Font("MV Boli",Font.BOLD,25));
         tlaco.setBackground(new Color(255, 255, 255));
         tlaco.setFocusable(false);
         tlaco.addActionListener(new ActionListener() {
