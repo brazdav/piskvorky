@@ -2,8 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-
+import java.util.ArrayList;
 
 
 public class Piskvorky extends MyButtons implements FirstTurn{
@@ -16,10 +15,10 @@ public class Piskvorky extends MyButtons implements FirstTurn{
     JLabel textfield1 = new JLabel();
     JButton hra = new JButton("Hrát");
     JButton lan = new JButton("Hra po LAN");
+    ArrayList buttons = new ArrayList<JButton>();
 
 
-
-    Piskvorky(){
+    public Piskvorky(){
 
         menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         menu.setSize(800,800);
@@ -81,8 +80,25 @@ public class Piskvorky extends MyButtons implements FirstTurn{
         button_panel.setLayout(new GridLayout(15,15));
         button_panel.setBackground(new Color(150,150,150));
 
-        for (int i = 0; i < 225; i++){
-            vytvoreni(String.valueOf(i));
+        for (int i = 0; i < 225; i++) {
+            MyButtons obj = new MyButtons();
+            button_panel.add(obj);
+            buttons.add(obj);
+            obj.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    vykresleni(obj);
+
+                    checkLeva(obj, buttons);
+                    checkPrava(obj, buttons);
+                    checkHore(obj, buttons);
+                    checkDole(obj, buttons);
+                    checkLevaHore(obj, buttons);
+                    checkPravaDole(obj, buttons);
+                    checkLevaDole(obj, buttons);
+                    checkPravaHore(obj, buttons);
+                }
+            });
         }
 
         title_panel.add(textfield);
@@ -92,7 +108,5 @@ public class Piskvorky extends MyButtons implements FirstTurn{
         FirstTurn.firstTurn();
 
     }
-
-
 
 }

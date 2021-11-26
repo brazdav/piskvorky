@@ -1,38 +1,16 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class MyButtons extends JButton implements FirstTurn,Podminky {
     int xRada = 0;
     int oRada = 0;
     JPanel button_panel = new JPanel();
-    ArrayList buttons = new ArrayList<JButton>();
-    public void vytvoreni(String i){
-        MyButtons tlaco = new MyButtons();
-        //tlaco.setText(i);
-        button_panel.add(tlaco);
-        tlaco.setFont(new Font("MV Boli",Font.BOLD,25));
-        tlaco.setBackground(new Color(255, 255, 255));
-        tlaco.setFocusable(false);
-        tlaco.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                vykresleni(tlaco);
-
-                checkLeva(tlaco);
-                checkPrava(tlaco);
-                checkHore(tlaco);
-                checkDole(tlaco);
-                checkLevaHore(tlaco);
-                checkPravaDole(tlaco);
-                checkLevaDole(tlaco);
-                checkPravaHore(tlaco);
+    public MyButtons(){
+            this.setFont(new Font("MV Boli", Font.BOLD, 25));
+            this.setBackground(new Color(255,255,255));
+            this.setFocusable(false);
             }
-        });
-        buttons.add(tlaco);
-    }
 
 
 
@@ -56,7 +34,7 @@ public class MyButtons extends JButton implements FirstTurn,Podminky {
     }
 
 
-    public void checkLeva(JButton tlaco){
+    public void checkLeva(JButton tlaco, ArrayList<JButton> buttons){
         String znak = tlaco.getText();
         int poradi = buttons.indexOf(tlaco);
         if(Podminky.vyhodnoceni(poradi,Podminky.naplneni(15,0,210))){
@@ -66,14 +44,14 @@ public class MyButtons extends JButton implements FirstTurn,Podminky {
         if (((JButton) buttons.get(poradi)).getText().equals(znak)){
             if (znak.equals("X")) xWins();
             else oWins();
-            checkLeva((JButton) buttons.get(poradi));
+            checkLeva((JButton) buttons.get(poradi), buttons);
 
 
         }
         else return;
     }
 
-    public void checkPrava(JButton tlaco){
+    public void checkPrava(JButton tlaco, ArrayList<JButton> buttons){
         String znak = tlaco.getText();
         int poradi = buttons.indexOf(tlaco);
         if(Podminky.vyhodnoceni(poradi,Podminky.naplneni(15, 14, 224))){
@@ -83,7 +61,7 @@ public class MyButtons extends JButton implements FirstTurn,Podminky {
         if (((JButton) buttons.get(poradi)).getText().equals(znak)){
             if (znak.equals("X")) xWins();
             else if (znak.equals("O")) oWins();
-            checkPrava((JButton) buttons.get(poradi));
+            checkPrava((JButton) buttons.get(poradi), buttons);
 
 
         }
@@ -94,7 +72,7 @@ public class MyButtons extends JButton implements FirstTurn,Podminky {
         }
     }
 
-    public void checkDole(JButton tlaco){
+    public void checkDole(JButton tlaco, ArrayList<JButton> buttons){
         String znak = tlaco.getText();
         int poradi = buttons.indexOf(tlaco);
         if(Podminky.vyhodnoceni(poradi,Podminky.naplneni(1, 210, 254))){
@@ -104,7 +82,7 @@ public class MyButtons extends JButton implements FirstTurn,Podminky {
         if (((JButton) buttons.get(poradi)).getText().equals(znak)){
             if (znak.equals("X")) xWins();
             else oWins();
-            checkDole((JButton) buttons.get(poradi));
+            checkDole((JButton) buttons.get(poradi), buttons);
 
 
         }
@@ -115,7 +93,7 @@ public class MyButtons extends JButton implements FirstTurn,Podminky {
         }
     }
 
-    public void checkHore(JButton tlaco){
+    public void checkHore(JButton tlaco, ArrayList<JButton> buttons){
         String znak = tlaco.getText();
         int poradi = buttons.indexOf(tlaco);
         if(Podminky.vyhodnoceni(poradi,Podminky.naplneni(1, 0, 14))){
@@ -125,7 +103,7 @@ public class MyButtons extends JButton implements FirstTurn,Podminky {
         if (((JButton) buttons.get(poradi)).getText().equals(znak)){
             if (znak.equals("X")) xWins();
             else oWins();
-            checkHore((JButton) buttons.get(poradi));
+            checkHore((JButton) buttons.get(poradi), buttons);
 
 
         }
@@ -133,7 +111,7 @@ public class MyButtons extends JButton implements FirstTurn,Podminky {
     }
 
 
-    public void checkPravaHore(JButton tlaco){
+    public void checkPravaHore(JButton tlaco, ArrayList<JButton> buttons){
         String znak = tlaco.getText();
         int poradi = buttons.indexOf(tlaco);
         if(Podminky.vyhodnoceni(poradi,Podminky.napleni(1, 0, 14, 15, 14, 224))){
@@ -143,7 +121,7 @@ public class MyButtons extends JButton implements FirstTurn,Podminky {
         if (((JButton) buttons.get(poradi)).getText().equals(znak)){
             if (znak.equals("X")) xWins();
             else oWins();
-            checkPravaHore((JButton) buttons.get(poradi));
+            checkPravaHore((JButton) buttons.get(poradi), buttons);
 
 
         }
@@ -154,7 +132,7 @@ public class MyButtons extends JButton implements FirstTurn,Podminky {
         }
     }
 
-    public void checkPravaDole(JButton tlaco){
+    public void checkPravaDole(JButton tlaco, ArrayList<JButton> buttons){
         String znak = tlaco.getText();
         int poradi = buttons.indexOf(tlaco);
         if(Podminky.vyhodnoceni(poradi,Podminky.napleni(1, 210, 224, 15, 14, 224))){
@@ -164,7 +142,7 @@ public class MyButtons extends JButton implements FirstTurn,Podminky {
         if (((JButton) buttons.get(poradi)).getText().equals(znak)){
             if (znak.equals("X")) xWins();
             else oWins();
-            checkPravaDole((JButton) buttons.get(poradi));
+            checkPravaDole((JButton) buttons.get(poradi), buttons);
 
 
         }
@@ -175,7 +153,7 @@ public class MyButtons extends JButton implements FirstTurn,Podminky {
         }
     }
 
-    public void checkLevaHore(JButton tlaco){
+    public void checkLevaHore(JButton tlaco, ArrayList<JButton> buttons){
         String znak = tlaco.getText();
         int poradi = buttons.indexOf(tlaco);
         if(Podminky.vyhodnoceni(poradi,Podminky.napleni(1, 0, 14, 15, 0, 210))){
@@ -185,14 +163,14 @@ public class MyButtons extends JButton implements FirstTurn,Podminky {
         if (((JButton) buttons.get(poradi)).getText().equals(znak)){
             if (znak.equals("X")) xWins();
             else oWins();
-            checkLevaHore((JButton) buttons.get(poradi));
+            checkLevaHore((JButton) buttons.get(poradi), buttons);
 
 
         }
         else return;
     }
 
-    public void checkLevaDole(JButton tlaco){
+    public void checkLevaDole(JButton tlaco, ArrayList<JButton> buttons){
         String znak = tlaco.getText();
         int poradi = buttons.indexOf(tlaco);
         if(Podminky.vyhodnoceni(poradi,Podminky.napleni(1, 210, 224, 15, 0, 210))){
@@ -202,7 +180,7 @@ public class MyButtons extends JButton implements FirstTurn,Podminky {
         if (((JButton) buttons.get(poradi)).getText().equals(znak)){
             if (znak.equals("X")) xWins();
             else oWins();
-            checkLevaDole((JButton) buttons.get(poradi));
+            checkLevaDole((JButton) buttons.get(poradi), buttons);
 
 
         }
