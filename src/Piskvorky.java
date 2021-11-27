@@ -12,21 +12,33 @@ public class Piskvorky extends MyButtons implements FirstTurn{
     JPanel title_panel = new JPanel();
 
 
+    ImageIcon lanImage= new ImageIcon(getClass().getResource("button.png"));
+    ImageIcon hraImage= new ImageIcon(getClass().getResource("hra.png"));
+
     JLabel textfield1 = new JLabel();
-    JButton hra = new JButton("Hrát");
-    JButton lan = new JButton("Hra po LAN");
+    JButton hra = new JButton(hraImage);
+    JButton lan = new JButton(lanImage);
+
+    ImageIcon logoImage= new ImageIcon(getClass().getResource("tiktak.png"));
+    JLabel logoLabel = new JLabel(logoImage);
+
     ArrayList buttons = new ArrayList<JButton>();
 
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    double height = screenSize.getHeight() - 35;
 
     public Piskvorky(){
 
         menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        menu.setSize(800,800);
+        menu.setSize(800,600);
         menu.setResizable(false);
         menu.setVisible(true);
         menu.setLayout(new BorderLayout());
         menu.setLocationRelativeTo(null);
         menu.getContentPane().setBackground(new Color(50,50,50));
+
+        logoLabel.setBounds(10,10,150,150);
+        textfield1.add(logoLabel);
 
 
         textfield1.setBackground(new Color(43, 135, 255));
@@ -38,16 +50,20 @@ public class Piskvorky extends MyButtons implements FirstTurn{
         textfield1.setOpaque(true);
         menu.add(textfield1);
 
-        lan.setBounds(300,450,200,100);
-        lan.setFont((new Font("SansSerif",Font.BOLD,30)));
-        lan.setBackground(new Color(255, 255, 255));
-        lan.setForeground(new Color(43, 135, 255));
+        lan.setBounds(250,375,300,100);
+        lan.setOpaque(false);
+        lan.setContentAreaFilled(false);
+        lan.setBorderPainted(false);
+        lan.setFocusable(false);
+        lan.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         textfield1.add(lan);
 
-        hra.setBounds(300,300,200,100);
-        hra.setFont((new Font("SansSerif",Font.BOLD,30)));
-        hra.setBackground(new Color(255, 255, 255));
-        hra.setForeground(new Color(43, 135, 255));
+        hra.setBounds(250,250,300,100);
+        hra.setOpaque(false);
+        hra.setContentAreaFilled(false);
+        hra.setBorderPainted(false);
+        hra.setFocusable(false);
+        hra.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         textfield1.add(hra);
 
 
@@ -62,7 +78,11 @@ public class Piskvorky extends MyButtons implements FirstTurn{
 
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.setSize((int) height,(int) height);
+        double sirka = (screenSize.getWidth()-frame.getSize().width)/2;
+        System.out.print(sirka);
+        frame.setLocation((int) sirka, 0);
+        frame.setResizable(false);
         frame.getContentPane().setBackground(new Color(50,50,50));
         frame.setLayout(new BorderLayout());
         frame.setVisible(false);
