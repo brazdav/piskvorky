@@ -84,7 +84,7 @@ public class Piskvorky extends MyButtons implements FirstTurn{
         hra.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         textfield1.add(hra);
 
-        sound.setBounds(650,450,100,100);
+        sound.setBounds(690,475,100,100);
         sound.setOpaque(false);
         sound.setContentAreaFilled(false);
         sound.setBorderPainted(false);
