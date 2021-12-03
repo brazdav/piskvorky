@@ -2,8 +2,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
-
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Piskvorky extends MyButtons implements FirstTurn{
 
@@ -22,12 +29,24 @@ public class Piskvorky extends MyButtons implements FirstTurn{
     ImageIcon logoImage= new ImageIcon(getClass().getResource("tiktak.png"));
     JLabel logoLabel = new JLabel(logoImage);
 
+    ImageIcon soundImage1 = new ImageIcon(getClass().getResource("audio.png"));
+    ImageIcon soundImage2 = new ImageIcon(getClass().getResource("muted audio.png"));
+    JButton sound = new JButton(soundImage1);
+
     ArrayList buttons = new ArrayList<JButton>();
 
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     double height = screenSize.getHeight() - 35;
 
-    public Piskvorky(){
+    boolean turn = true;
+    Long currentFrame;
+    Clip clip;
+    AudioInputStream audioInputStream;
+
+
+
+    public Piskvorky()throws UnsupportedAudioFileException,
+            IOException, LineUnavailableException{
 
         menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         menu.setSize(800,600);
@@ -66,6 +85,35 @@ public class Piskvorky extends MyButtons implements FirstTurn{
         hra.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         textfield1.add(hra);
 
+        sound.setBounds(650,450,100,100);
+        sound.setOpaque(false);
+        sound.setContentAreaFilled(false);
+        sound.setBorderPainted(false);
+        sound.setFocusable(false);
+        sound.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        textfield1.add(sound);
+
+
+
+
+        audioInputStream = AudioSystem.getAudioInputStream(new File("song").getAbsoluteFile());
+        clip = AudioSystem.getClip();
+        clip.open(audioInputStream);
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
+
+        sound.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (turn == true) {
+                    turn = false;
+                    sound.setIcon(soundImage2);
+                }
+                else {
+                    sound.setIcon(soundImage1);
+                    turn = true;
+                }
+            }
+        });
 
         hra.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
@@ -80,7 +128,7 @@ public class Piskvorky extends MyButtons implements FirstTurn{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize((int) height,(int) height);
         double sirka = (screenSize.getWidth()-frame.getSize().width)/2;
-        System.out.print(sirka);
+
         frame.setLocation((int) sirka, 0);
         frame.setResizable(false);
         frame.getContentPane().setBackground(new Color(50,50,50));

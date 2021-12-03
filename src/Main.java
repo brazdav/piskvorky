@@ -1,6 +1,21 @@
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.IOException;
+
 public class Main extends Piskvorky{
+    public Main() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+    }
+
     public static void main(String[] args) {
 
-        Piskvorky piskvorky = new Piskvorky();//vytvoření objektu třídy Piskvorky, po vytvoření se zavolá konstruktor třídy
+        try {
+            Piskvorky piskvorky = new Piskvorky();
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        }
     }
 }
