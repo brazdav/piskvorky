@@ -1,11 +1,9 @@
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -19,17 +17,16 @@ public class Piskvorky extends MyButtons implements FirstTurn{
 
     ImageIcon lanImage= new ImageIcon(getClass().getResource("button.png"));
     ImageIcon hraImage= new ImageIcon(getClass().getResource("hra.png"));
-
-    JLabel textfield1 = new JLabel();
-    JButton hra = new JButton(hraImage);
-    JButton lan = new JButton(lanImage);
-
     ImageIcon logoImage= new ImageIcon(getClass().getResource("tiktak.png"));
-    JLabel logoLabel = new JLabel(logoImage);
-
     ImageIcon soundImage1 = new ImageIcon(getClass().getResource("sound.png"));
     ImageIcon soundImage2 = new ImageIcon(getClass().getResource("mute.png"));
-    JButton sound = new JButton(soundImage1);
+
+    JLabel textfield1 = new JLabel();
+
+    JButton hra;
+    JButton lan;
+    JLabel logoLabel;
+    JButton sound;
 
     ArrayList buttons = new ArrayList<JButton>();
 
@@ -37,16 +34,41 @@ public class Piskvorky extends MyButtons implements FirstTurn{
     double height = screenSize.getHeight() - 35;
 
     boolean turn = true;
-    Long currentFrame;
     Clip clip;
-    AudioInputStream audioInputStream;
-
-
 
     public Piskvorky()throws UnsupportedAudioFileException,
             IOException, LineUnavailableException{
+        try
+        {
+            File file = new File("Adventure.wav");
+            String st = file.getAbsolutePath();
+            String[] pole = st.split("\\\\");
+            st = "";
+            for (int i = 0;i < pole.length; i++){
+                st += pole[i];
+                if (i != (pole.length - 1))
+                    st += "\\\\";
+            }
+            System.out.println(st);
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(new File(st));
+            clip = AudioSystem.getClip();
+            clip.open(audioStream);
+       }
+        catch (Exception e){
+           System.out.println("nenačetla se songa");
+       }
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
+        clip.start();
 
-
+        try{
+            hra = new JButton(hraImage);
+            lan = new JButton(lanImage);
+            logoLabel = new JLabel(logoImage);
+            sound = new JButton(soundImage1);
+        }
+        catch (Exception e){
+            System.out.println("špátná cesta k souboru obrázku");
+        }
         menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         menu.setSize(800,600);
         menu.setResizable(false);
@@ -84,6 +106,8 @@ public class Piskvorky extends MyButtons implements FirstTurn{
         hra.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         textfield1.add(hra);
 
+
+
         sound.setBounds(690,475,100,100);
         sound.setOpaque(false);
         sound.setContentAreaFilled(false);
@@ -93,20 +117,16 @@ public class Piskvorky extends MyButtons implements FirstTurn{
         textfield1.add(sound);
 
 
-
-        /*audioInputStream = AudioSystem.getAudioInputStream(new File("Adventure.mp3").getAbsoluteFile());
-        clip = AudioSystem.getClip();
-        clip.open(audioInputStream);
-        clip.loop(Clip.LOOP_CONTINUOUSLY);*/
-
         sound.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (turn == true) {
+                    clip.stop();
                     turn = false;
                     sound.setIcon(soundImage2);
                 }
                 else {
+                    clip.start();
                     sound.setIcon(soundImage1);
                     turn = true;
                 }
@@ -175,4 +195,15 @@ public class Piskvorky extends MyButtons implements FirstTurn{
 
     }
 
+    String getStringRepresentation(ArrayList<Character> list)
+    {
+        StringBuilder builder = new StringBuilder(list.size());
+        for(Character ch: list)
+        {
+            builder.append(ch);
+        }
+        return builder.toString();
+    }
+
 }
+
