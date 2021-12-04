@@ -1,14 +1,15 @@
-import javax.sound.sampled.*;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 
-public class Piskvorky extends MyButtons implements FirstTurn{
+public class Piskvorky extends MyButtons implements FirstTurn,Music{
 
     JFrame frame = new JFrame();
     JFrame menu = new JFrame();
@@ -36,27 +37,8 @@ public class Piskvorky extends MyButtons implements FirstTurn{
     boolean turn = true;
     Clip clip;
 
-    public Piskvorky()throws UnsupportedAudioFileException,
-            IOException, LineUnavailableException{
-        try
-        {
-            File file = new File("Adventure.wav");
-            String st = file.getAbsolutePath();
-            String[] pole = st.split("\\\\");
-            st = "";
-            for (int i = 0;i < pole.length; i++){
-                st += pole[i];
-                if (i != (pole.length - 1))
-                    st += "\\\\";
-            }
-            System.out.println(st);
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(new File(st));
-            clip = AudioSystem.getClip();
-            clip.open(audioStream);
-       }
-        catch (Exception e){
-           System.out.println("nenačetla se songa");
-       }
+    public Piskvorky() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        clip = Music.nacteni("Beethoven.wav");
         clip.loop(Clip.LOOP_CONTINUOUSLY);
         clip.start();
 
@@ -127,6 +109,7 @@ public class Piskvorky extends MyButtons implements FirstTurn{
                 }
                 else {
                     clip.start();
+                    clip.loop(Clip.LOOP_CONTINUOUSLY);
                     sound.setIcon(soundImage1);
                     turn = true;
                 }
@@ -137,6 +120,7 @@ public class Piskvorky extends MyButtons implements FirstTurn{
             public void actionPerformed(ActionEvent e){
                 frame.setVisible(true);
                 menu.setVisible(false);
+                clip.stop();
             }
         });
 
@@ -195,15 +179,7 @@ public class Piskvorky extends MyButtons implements FirstTurn{
 
     }
 
-    String getStringRepresentation(ArrayList<Character> list)
-    {
-        StringBuilder builder = new StringBuilder(list.size());
-        for(Character ch: list)
-        {
-            builder.append(ch);
-        }
-        return builder.toString();
-    }
+
 
 }
 
