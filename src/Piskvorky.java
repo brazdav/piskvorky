@@ -38,7 +38,7 @@ public class Piskvorky extends MyButtons implements FirstTurn,Music{
     Clip clip;
 
     public Piskvorky() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        clip = Music.nacteni("Beethoven.wav");
+        clip = Music.nacteni("Adventure.wav");
         clip.loop(Clip.LOOP_CONTINUOUSLY);
         clip.start();
 
@@ -102,7 +102,7 @@ public class Piskvorky extends MyButtons implements FirstTurn,Music{
         sound.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (turn == true) {
+                if (turn) {
                     clip.stop();
                     turn = false;
                     sound.setIcon(soundImage2);

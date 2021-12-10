@@ -1,12 +1,10 @@
-import javax.sound.sampled.*;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import java.io.File;
-import java.io.IOException;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public interface Music {
-    AtomicBoolean turn = new AtomicBoolean(true);
-    static Clip nacteni(String cesta)throws UnsupportedAudioFileException,
-            IOException, LineUnavailableException {
+    static Clip nacteni(String cesta){
         Clip clip = null;
         try
         {
