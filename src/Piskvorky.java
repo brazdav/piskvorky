@@ -28,6 +28,11 @@ public class Piskvorky extends MyButtons implements FirstTurn,Music{
     JButton lan;
     JLabel logoLabel;
     JButton sound;
+    JRadioButton r1;
+    JRadioButton r2;
+    JRadioButton r3;
+    ButtonGroup bg ;
+    JLabel pocetK;
 
     ArrayList buttons = new ArrayList<JButton>();
 
@@ -38,7 +43,7 @@ public class Piskvorky extends MyButtons implements FirstTurn,Music{
     Clip clip;
 
     public Piskvorky() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        clip = Music.nacteni("Beethoven.wav");
+        clip = Music.nacteni("Adventure.wav");
         clip.loop(Clip.LOOP_CONTINUOUSLY);
         clip.start();
 
@@ -87,6 +92,32 @@ public class Piskvorky extends MyButtons implements FirstTurn,Music{
         hra.setFocusable(false);
         hra.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         textfield1.add(hra);
+
+        pocetK = new JLabel("Počet kol:");
+        pocetK.setBounds(280,500,100,30);
+        textfield1.add(pocetK);
+
+        r1 = new JRadioButton("1");
+        r2 = new JRadioButton("3");
+        r3 = new JRadioButton("5");
+        r1.setBounds(340,500,50,30);
+        r2.setBounds(390,500,50,30);
+        r3.setBounds(440,500,50,30);
+        r1.setBackground(new Color(0,0,0,0));
+        r2.setBackground(new Color(0,0,0,0));
+        r3.setBackground(new Color(0,0,0,0));
+        r1.setOpaque(false);
+        r2.setOpaque(false);
+        r3.setOpaque(false);
+        r1.setSelected(true);
+        r1.setFocusable(false);
+        r2.setFocusable(false);
+        r3.setFocusable(false);
+
+        bg = new ButtonGroup();
+        bg.add(r1);bg.add(r2);bg.add(r3);
+        textfield1.add(r1);textfield1.add(r2);textfield1.add(r3);
+
 
 
 
