@@ -10,11 +10,8 @@ import java.util.ArrayList;
 
 
 public class Piskvorky extends MyButtons implements FirstTurn,Music{
-
-    JFrame frame = new JFrame();
     JFrame menu = new JFrame();
     JPanel title_panel = new JPanel();
-
 
     ImageIcon lanImage= new ImageIcon(getClass().getResource("button.png"));
     ImageIcon hraImage= new ImageIcon(getClass().getResource("hra.png"));
@@ -38,7 +35,7 @@ public class Piskvorky extends MyButtons implements FirstTurn,Music{
     Clip clip;
 
     public Piskvorky() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        clip = Music.nacteni("Adventure.wav");
+        clip = Music.nacteni("Beethoven.wav");
         clip.loop(Clip.LOOP_CONTINUOUSLY);
         clip.start();
 
@@ -88,8 +85,6 @@ public class Piskvorky extends MyButtons implements FirstTurn,Music{
         hra.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         textfield1.add(hra);
 
-
-
         sound.setBounds(690,475,100,100);
         sound.setOpaque(false);
         sound.setContentAreaFilled(false);
@@ -97,6 +92,21 @@ public class Piskvorky extends MyButtons implements FirstTurn,Music{
         sound.setFocusable(false);
         sound.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         textfield1.add(sound);
+
+
+        textfield.setBackground(new Color(43, 135, 255));
+        textfield.setForeground(new Color(255, 255, 255));
+        textfield.setFont(new Font("SansSerif",Font.BOLD,75));
+        textfield.setHorizontalAlignment(JLabel.CENTER);
+        textfield.setText("Piškvorky");
+        textfield.setOpaque(true);
+
+        title_panel.setLayout(new BorderLayout());
+        title_panel.setBounds(0,0,800,100);
+
+        button_panel.setLayout(new GridLayout(15,15));
+        button_panel.setBackground(new Color(150,150,150));
+
 
 
         sound.addActionListener(new ActionListener() {
@@ -118,14 +128,18 @@ public class Piskvorky extends MyButtons implements FirstTurn,Music{
 
         hra.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                frame.setVisible(true);
+                start();
                 menu.setVisible(false);
                 clip.stop();
             }
         });
 
 
+    }
 
+    public void start (){
+        JFrame frame = new JFrame();
+        frame.setVisible(true);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize((int) height,(int) height);
@@ -135,20 +149,9 @@ public class Piskvorky extends MyButtons implements FirstTurn,Music{
         frame.setResizable(false);
         frame.getContentPane().setBackground(new Color(50,50,50));
         frame.setLayout(new BorderLayout());
-        frame.setVisible(false);
 
-        textfield.setBackground(new Color(43, 135, 255));
-        textfield.setForeground(new Color(255, 255, 255));
-        textfield.setFont(new Font("SansSerif",Font.BOLD,75));
-        textfield.setHorizontalAlignment(JLabel.CENTER);
-        textfield.setText("Piškvorky");
-        textfield.setOpaque(true);
-
-        title_panel.setLayout(new BorderLayout());
-        title_panel.setBounds(0,0,800,100);
-
-        button_panel.setLayout(new GridLayout(15,15));
-        button_panel.setBackground(new Color(150,150,150));
+        frame.add(title_panel,BorderLayout.NORTH);
+        frame.add(button_panel);
 
         for (int i = 0; i < 225; i++) {
             MyButtons obj = new MyButtons();
@@ -167,19 +170,22 @@ public class Piskvorky extends MyButtons implements FirstTurn,Music{
                     checkPravaDole(obj, buttons);
                     checkLevaDole(obj, buttons);
                     checkPravaHore(obj, buttons);
+                    if (vyhra){
+                        vyhra = false;
+                        button_panel.removeAll();
+                        buttons.removeAll(buttons);
+                        //frame.dispose();
+                        start();
+
+                    }
                 }
             });
         }
-
         title_panel.add(textfield);
-        frame.add(title_panel,BorderLayout.NORTH);
-        frame.add(button_panel);
+
 
         FirstTurn.firstTurn();
-
     }
 
 
-
 }
-
