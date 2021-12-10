@@ -6,6 +6,7 @@ public class MyButtons extends JButton implements FirstTurn, Podminky {
     int xRada = 0;
     int oRada = 0;
     JPanel button_panel = new JPanel();
+    boolean vyhra = false;
 
     public MyButtons() {
         this.setFont(new Font("MV Boli", Font.BOLD, 25));
@@ -185,14 +186,14 @@ public class MyButtons extends JButton implements FirstTurn, Podminky {
     public void xWins() {
         xRada++;
         if (xRada == 4) {
-            System.out.println("x vyhrali");
+            vyhra = true;
         }
     }
 
     public void oWins() {
         oRada++;
         if (oRada == 4) {
-            System.out.println("o vyhrali");
+            vyhra = true;
         }
 
     }
