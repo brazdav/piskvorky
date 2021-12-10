@@ -193,7 +193,6 @@ public class MyButtons extends JButton implements FirstTurn, Podminky {
         oRada++;
         if (oRada == 4) {
             System.out.println("o vyhrali");
-
         }
 
     }
