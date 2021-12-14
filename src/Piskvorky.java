@@ -34,6 +34,14 @@ public class Piskvorky extends MyButtons implements FirstTurn,Music{
     boolean turn = true;
     Clip clip;
 
+    JRadioButton r1;
+    JRadioButton r2;
+    JRadioButton r3;
+    ButtonGroup bg ;
+    JLabel pocetK;
+    int kola;
+
+
     public Piskvorky() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         clip = Music.nacteni("Beethoven.wav");
         clip.loop(Clip.LOOP_CONTINUOUSLY);
@@ -107,6 +115,33 @@ public class Piskvorky extends MyButtons implements FirstTurn,Music{
         button_panel.setLayout(new GridLayout(15,15));
         button_panel.setBackground(new Color(150,150,150));
 
+        pocetK = new JLabel("Počet kol:");
+        pocetK.setBounds(280,500,100,30);
+        textfield1.add(pocetK);
+
+        r1 = new JRadioButton("1");
+        r2 = new JRadioButton("3");
+        r3 = new JRadioButton("5");
+        r1.setBounds(340,500,50,30);
+        r2.setBounds(390,500,50,30);
+        r3.setBounds(440,500,50,30);
+        r1.setBackground(new Color(0,0,0,0));
+        r2.setBackground(new Color(0,0,0,0));
+        r3.setBackground(new Color(0,0,0,0));
+        r1.setOpaque(false);
+        r2.setOpaque(false);
+        r3.setOpaque(false);
+        r1.setSelected(true);
+        r1.setFocusable(false);
+        r2.setFocusable(false);
+        r3.setFocusable(false);
+
+        bg = new ButtonGroup();
+        bg.add(r1);bg.add(r2);bg.add(r3);
+        textfield1.add(r1);textfield1.add(r2);textfield1.add(r3);
+
+
+
 
 
         sound.addActionListener(new ActionListener() {
@@ -128,6 +163,15 @@ public class Piskvorky extends MyButtons implements FirstTurn,Music{
 
         hra.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
+                if (r1.isSelected()){
+                    kola = 1;
+                }
+                else if (r2.isSelected()){
+                    kola = 3;
+                }
+                else if (r3.isSelected()){
+                    kola = 5;
+                }
                 start();
                 menu.setVisible(false);
                 clip.stop();
@@ -171,12 +215,17 @@ public class Piskvorky extends MyButtons implements FirstTurn,Music{
                     checkLevaDole(obj, buttons);
                     checkPravaHore(obj, buttons);
                     if (vyhra){
+                        kola --;
+                        frame.dispose();
                         vyhra = false;
                         button_panel.removeAll();
                         buttons.removeAll(buttons);
-                        //frame.dispose();
-                        start();
-
+                        if (kola > 0)
+                            start();
+                        else {
+                            JOptionPane.showMessageDialog(frame, "Konec hry");
+                            menu.setVisible(true);
+                        }
                     }
                 }
             });
