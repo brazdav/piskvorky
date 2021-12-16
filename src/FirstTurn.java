@@ -8,11 +8,7 @@ interface FirstTurn{
     JLabel textfield = new JLabel();
 
     static void firstTurn(){
-        try {
-            Thread.sleep(2000);
-        }catch (InterruptedException e){
-            e.printStackTrace();
-        }
+
         if(random.nextInt(2)==1){
             player1_turn.set(true);
             textfield.setText("X turn");

@@ -6,16 +6,8 @@ public class Main extends Piskvorky{
     public Main() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
 
-        try {
-            Piskvorky piskvorky = new Piskvorky();
-        } catch (UnsupportedAudioFileException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (LineUnavailableException e) {
-            e.printStackTrace();
-        }
+        Piskvorky piskvorky = new Piskvorky();
     }
 }
