@@ -5,6 +5,8 @@ import java.util.ArrayList;
 public class MyButtons extends JButton implements FirstTurn, Podminky {
     int xRada = 0;
     int oRada = 0;
+    int winX = 0;
+    int winO = 0;
     JPanel button_panel = new JPanel();
     boolean vyhra = false;
 
@@ -186,6 +188,7 @@ public class MyButtons extends JButton implements FirstTurn, Podminky {
     public void xWins() {
         xRada++;
         if (xRada == 4) {
+            winX++;
             vyhra = true;
         }
     }
@@ -193,6 +196,7 @@ public class MyButtons extends JButton implements FirstTurn, Podminky {
     public void oWins() {
         oRada++;
         if (oRada == 4) {
+            winO++;
             vyhra = true;
         }
 

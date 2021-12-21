@@ -26,6 +26,9 @@ public class Piskvorky extends MyButtons implements FirstTurn,Music{
     JLabel logoLabel;
     JButton sound;
 
+
+    JLabel vyhranaKola = new JLabel("Vyhrana kola:");
+
     ArrayList buttons = new ArrayList<JButton>();
 
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -102,12 +105,18 @@ public class Piskvorky extends MyButtons implements FirstTurn,Music{
         textfield1.add(sound);
 
 
+        vyhranaKola.setBounds(790,60,250,40);
+        vyhranaKola.setText("Vyhrana kola: X: " + winX + "  O: " + winO);
+        vyhranaKola.setFont(new Font("SansSerif",Font.BOLD,20));
+        vyhranaKola.setForeground(new Color(255, 255, 255));
+
         textfield.setBackground(new Color(43, 135, 255));
         textfield.setForeground(new Color(255, 255, 255));
         textfield.setFont(new Font("SansSerif",Font.BOLD,75));
         textfield.setHorizontalAlignment(JLabel.CENTER);
         textfield.setText("Piškvorky");
         textfield.setOpaque(true);
+        textfield.add(vyhranaKola);
 
         title_panel.setLayout(new BorderLayout());
         title_panel.setBounds(0,0,800,100);
@@ -215,15 +224,24 @@ public class Piskvorky extends MyButtons implements FirstTurn,Music{
                     checkLevaDole(obj, buttons);
                     checkPravaHore(obj, buttons);
                     if (vyhra){
+                        vyhranaKola.setText("Vyhrana kola: X:" + winX + "  O:" + winO);
                         kola --;
                         frame.dispose();
                         vyhra = false;
                         button_panel.removeAll();
                         buttons.removeAll(buttons);
-                        if (kola > 0)
+                        if (kola > 0) {
                             start();
+                            }
                         else {
-                            JOptionPane.showMessageDialog(frame, "Konec hry");
+                            if(winX > winO){
+                                JOptionPane.showMessageDialog(frame, "Konec hry, vyhral X");
+                            }else{
+                                JOptionPane.showMessageDialog(frame, "Konec hry, vyhral O");
+                            }
+                            winX = 0;
+                            winO = 0;
+                            vyhranaKola.setText("Vyhrana kola: X:" + winX + "  O:" + winO);
                             menu.setVisible(true);
                         }
                     }
