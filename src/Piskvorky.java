@@ -172,16 +172,17 @@ public class Piskvorky extends MyButtons implements FirstTurn,Music{
 
         hra.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                if (r1.isSelected()){
-                    kola = 1;
-                }
-                else if (r2.isSelected()){
-                    kola = 3;
-                }
-                else if (r3.isSelected()){
-                    kola = 5;
-                }
+                pocetKol();
                 start();
+                menu.setVisible(false);
+                clip.stop();
+            }
+        });
+
+        lan.addActionListener(new ActionListener(){//potreba dve tlacitka, kde se nastavuje turn
+            public void actionPerformed(ActionEvent e){
+                pocetKol();
+                startLan();
                 menu.setVisible(false);
                 clip.stop();
             }
@@ -243,6 +244,8 @@ public class Piskvorky extends MyButtons implements FirstTurn,Music{
                             winO = 0;
                             vyhranaKola.setText("Vyhrana kola: X:" + winX + "  O:" + winO);
                             menu.setVisible(true);
+                            sound.setIcon(soundImage1);
+                            clip.start();
                         }
                     }
                 }
@@ -252,6 +255,84 @@ public class Piskvorky extends MyButtons implements FirstTurn,Music{
 
 
         FirstTurn.firstTurn();
+    }
+
+    public void startLan (){
+        JFrame frame = new JFrame();
+        frame.setVisible(true);
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize((int) height,(int) height);
+        double sirka = (screenSize.getWidth()-frame.getSize().width)/2;
+
+        frame.setLocation((int) sirka, 0);
+        frame.setResizable(false);
+        frame.getContentPane().setBackground(new Color(50,50,50));
+        frame.setLayout(new BorderLayout());
+
+        frame.add(title_panel,BorderLayout.NORTH);
+        frame.add(button_panel);
+
+        for (int i = 0; i < 225; i++) {
+            MyButtons obj = new MyButtons();
+            button_panel.add(obj);
+            buttons.add(obj);
+            obj.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    //vykresleniLan(obj);
+
+                    checkLeva(obj, buttons);
+                    checkPrava(obj, buttons);
+                    checkHore(obj, buttons);
+                    checkDole(obj, buttons);
+                    checkLevaHore(obj, buttons);
+                    checkPravaDole(obj, buttons);
+                    checkLevaDole(obj, buttons);
+                    checkPravaHore(obj, buttons);
+                    if (vyhra){
+                        vyhranaKola.setText("Vyhrana kola: X:" + winX + "  O:" + winO);
+                        kola --;
+                        frame.dispose();
+                        vyhra = false;
+                        button_panel.removeAll();
+                        buttons.removeAll(buttons);
+                        if (kola > 0) {
+                            start();
+                        }
+                        else {
+                            if(winX > winO){
+                                JOptionPane.showMessageDialog(frame, "Konec hry, vyhral X");
+                            }else{
+                                JOptionPane.showMessageDialog(frame, "Konec hry, vyhral O");
+                            }
+                            winX = 0;
+                            winO = 0;
+                            vyhranaKola.setText("Vyhrana kola: X:" + winX + "  O:" + winO);
+                            menu.setVisible(true);
+                            sound.setIcon(soundImage1);
+                            clip.start();
+                        }
+                    }
+                }
+            });
+        }
+        title_panel.add(textfield);
+
+
+        FirstTurn.firstTurn();
+    }
+
+    public void pocetKol(){
+        if (r1.isSelected()){
+            kola = 1;
+        }
+        else if (r2.isSelected()){
+            kola = 3;
+        }
+        else if (r3.isSelected()){
+            kola = 5;
+        }
     }
 
 

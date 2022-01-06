@@ -2,13 +2,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class MyButtons extends JButton implements FirstTurn, Podminky {
+public class MyButtons extends AI1 implements FirstTurn, Podminky{
     int xRada = 0;
     int oRada = 0;
     int winX = 0;
     int winO = 0;
     JPanel button_panel = new JPanel();
     boolean vyhra = false;
+    boolean turn;
 
     public MyButtons() {
         this.setFont(new Font("MV Boli", Font.BOLD, 25));
@@ -29,23 +30,7 @@ public class MyButtons extends JButton implements FirstTurn, Podminky {
     }
 
 
-    public void vykresleni(JButton button) {
-        if (player1_turn.get()) {
-            if (button.getText().equals("")) {
-                button.setForeground(new Color(0, 0, 0));
-                button.setText("X");
-                player1_turn.set(false);
-                textfield.setText("O turn");
-                button.setBackground(new Color(245, 191, 191));
-            }
-        } else if (button.getText().equals("")) {
-            button.setForeground(new Color(0, 0, 0));
-            button.setText("O");
-            player1_turn.set(true);
-            textfield.setText("X turn");
-            button.setBackground(new Color(245, 191, 191));
-        }
-    }
+
 
 
     public void checkLeva(JButton tlaco, ArrayList<JButton> buttons) {
@@ -55,6 +40,7 @@ public class MyButtons extends JButton implements FirstTurn, Podminky {
             poradi--;
         } else return;
         if (((JButton) buttons.get(poradi)).getText().equals(znak)) {
+            obrana(znak, poradi, buttons, "leva");
             if (znak.equals("X")) xWins();
             else oWins();
             checkLeva((JButton) buttons.get(poradi), buttons);

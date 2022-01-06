@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public interface Podminky {
+public interface Podminky{
     static ArrayList<Integer> naplneni(int b, int pocatecni, int konecna){
         ArrayList<Integer> podminky = new ArrayList<>();
         for(int i = pocatecni; i <= konecna; i += b){
