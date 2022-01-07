@@ -2,7 +2,8 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class AI1 extends JButton implements FirstTurn{
+
+public class AI1 extends JButton implements FirstTurn {
     int pocet = 0;
     Random random = new Random();
     public void obrana (String znak, int poradi, ArrayList<JButton> buttons, String strana){
@@ -17,7 +18,7 @@ public class AI1 extends JButton implements FirstTurn{
 
         }
         else {
-            vykresleni(buttons.get(random.nextInt(255)));
+            vykresleni(buttons.get(random.nextInt(225)));
         }
     }
 }

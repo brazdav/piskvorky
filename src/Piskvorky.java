@@ -1,3 +1,4 @@
+
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -9,7 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
-public class Piskvorky extends MyButtons implements FirstTurn,Music{
+public class    Piskvorky extends MyButtons implements FirstTurn,Music{
     JFrame menu = new JFrame();
     JPanel title_panel = new JPanel();
 
