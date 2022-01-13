@@ -26,6 +26,8 @@ public class    Piskvorky extends MyButtons implements FirstTurn,Music{
     JButton lan;
     JLabel logoLabel;
     JButton sound;
+    JButton server = new JButton();
+    JButton client = new JButton();
 
 
     JLabel vyhranaKola = new JLabel("Vyhrana kola:");
@@ -49,7 +51,7 @@ public class    Piskvorky extends MyButtons implements FirstTurn,Music{
     public Piskvorky() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         clip = Music.nacteni("Adventure.wav");
         clip.loop(Clip.LOOP_CONTINUOUSLY);
-        clip.start();
+        clip.stop();
 
         try{
             hra = new JButton(hraImage);
@@ -119,6 +121,29 @@ public class    Piskvorky extends MyButtons implements FirstTurn,Music{
         textfield.setOpaque(true);
         textfield.add(vyhranaKola);
 
+        client.setText("client");
+        client.setBounds(100,200,80,20);
+        client.setVisible(true);
+        server.setText("server");
+        server.setBounds(180,200,80,20);
+        server.setVisible(true);
+        textfield1.add(client);
+        textfield1.add(server);
+
+        client.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
+        server.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                    Server server = new Server(1234);
+            }
+        });
+
         title_panel.setLayout(new BorderLayout());
         title_panel.setBounds(0,0,800,100);
 
@@ -145,6 +170,8 @@ public class    Piskvorky extends MyButtons implements FirstTurn,Music{
         r1.setFocusable(false);
         r2.setFocusable(false);
         r3.setFocusable(false);
+
+
 
         bg = new ButtonGroup();
         bg.add(r1);bg.add(r2);bg.add(r3);

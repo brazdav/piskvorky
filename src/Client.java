@@ -1,59 +1,69 @@
+import java.net.*;
 import java.io.*;
-import java.net.Socket;
-import java.net.UnknownHostException;
-import java.util.Scanner;
 
 public class Client {
-    public Client(){
-        System.out.println("funguje client");
-        Socket socket = null;
-        InputStreamReader inputStreamReader = null;
-        OutputStreamWriter outputStreamWriter = null;
-        BufferedReader bufferedReader = null;
-        BufferedWriter bufferedWriter = null;
+    // initialize socket and input output streams
+    private Socket socket = null;
+    private BufferedReader input = null;
+    private DataOutputStream out = null;
+    private DataInputStream in = null;
+    private String line = "";
+    private String send;
+    // constructor to put ip address and port
+    public Client(String address, int port) {
+        // establish a connection
+        try {
+            socket = new Socket(address, port);
+            System.out.println("Connected");
 
-        try{
-            socket = new Socket("localhost", 1234);
+            // takes input from terminal
+            input = new BufferedReader(new InputStreamReader(System.in));
 
-            inputStreamReader = new InputStreamReader(socket.getInputStream());
-            outputStreamWriter = new OutputStreamWriter((socket.getOutputStream()));
+            // sends output to the socket
+            out = new DataOutputStream(socket.getOutputStream());
 
-            bufferedReader = new BufferedReader(inputStreamReader);
-            bufferedWriter = new BufferedWriter(outputStreamWriter);
+            in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+        } catch (UnknownHostException u) {
+            System.out.println(u);
+        } catch (IOException i) {
+            System.out.println(i);
+        }
 
-            Scanner scanner = new Scanner(System.in);
+        // string to read message from input
 
-            while(true){
-                String msgToSend = scanner.nextLine();
-                bufferedWriter.write(msgToSend);
-                bufferedWriter.newLine();
-                bufferedWriter.flush();
-
-                System.out.println("Server:" + bufferedReader.readLine());
-                if(msgToSend.equalsIgnoreCase("BYE"));
-                    break;
-
+        // keep reading until "Over" is input
+        Thread thread = new Thread(() -> {
+            while (!line.equals("Over")){
+                try {
+                    send = input.readLine();
+                    out.writeUTF(send);
+                } catch (IOException i) {
+                    System.out.println(i);
+                }
             }
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-        finally {
+        });
+        thread.start();
+
+        while (!line.equals("Over")) {
             try {
-                if (socket != null)
-                    socket.close();
-                if (inputStreamReader != null)
-                    inputStreamReader.close();
-                if (outputStreamWriter != null)
-                    outputStreamWriter.close();
-                if (bufferedReader != null)
-                    bufferedReader.close();
-                if (bufferedWriter != null)
-                    bufferedWriter.close();
-            }catch (IOException e){
-                e.printStackTrace();
+                line = in.readUTF();
+                System.out.println(line);
+            } catch (IOException i) {
+                System.out.println(i);
             }
         }
+
+        // close the connection
+
+    }
+    private void end() throws IOException {
+        System.out.println("Closing connection");
+
+        // close connection
+        input.close();
+        out.close();
+        socket.close();
+        in.close();
     }
 
 }

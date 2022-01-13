@@ -1,55 +1,82 @@
-import javax.imageio.IIOException;
+import java.net.*;
 import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
 
 public class Server {
-
-    public Server() {
-        System.out.println("funguje server");
-        Socket socket = null;
-        InputStreamReader inputStreamReader = null;
-        OutputStreamWriter outputStreamWriter = null;
-        BufferedWriter bufferedWriter = null;
-        BufferedReader bufferedReader = null;
-        ServerSocket serverSocket = null;
-
+    //initialize socket and input stream
+    private Socket socket = null;
+    private ServerSocket server = null;
+    private DataInputStream in = null;
+    private DataOutputStream out = null;
+    private BufferedReader input = null;
+    private String line = "";
+    private String send;
+    private Thread thread;
+    private Thread thread2;
+    private boolean exit = true;
+    // constructor with port
+    public Server(int port) {
+        // starts server and waits for a connection
         try {
-            serverSocket = new ServerSocket(1234);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            server = new ServerSocket(port);
+            System.out.println("Server started");
 
-        while (true){
-            try{
-                socket = serverSocket.accept();
-                inputStreamReader = new InputStreamReader(socket.getInputStream());
-                outputStreamWriter = new OutputStreamWriter(socket.getOutputStream());
+            System.out.println("Waiting for a client ...");
 
-                bufferedReader = new BufferedReader(inputStreamReader);
-                bufferedWriter = new BufferedWriter(outputStreamWriter);
+            socket = server.accept();
+            System.out.println("Client accepted");
 
-                while (true){
-                    String msgFromClient = bufferedReader.readLine();
-                    System.out.println("Client:" + msgFromClient);
+            // takes input from the client socket
+            in = new DataInputStream(
+                    new BufferedInputStream(socket.getInputStream()));
 
-                    bufferedWriter.write("NSG received");
-                    bufferedWriter.newLine();
-                    bufferedWriter.flush();
+            out = new DataOutputStream(socket.getOutputStream());
 
-                    if (msgFromClient.equalsIgnoreCase("BYE"))
-                        break;
+            input = new BufferedReader(new InputStreamReader(System.in));
+
+
+            // reads message from client until "Over" is sent
+            thread = new Thread(() -> {
+                while (!line.equals("Over")){
+                    try {
+                        send = input.readLine();
+                        out.writeUTF(send);
+                    } catch (IOException i) {
+                        System.out.println(i);
+                    }
                 }
-                socket.close();
-                inputStreamReader.close();
-                outputStreamWriter.close();
-                bufferedReader.close();
-                bufferedWriter.close();
+                System.out.println("thred is dead");
+            });
 
-            }catch (IOException e) {
-                e.printStackTrace();
-            }
+            thread2 = new Thread(() -> {
+                while (!line.equals("Over")) {
+                    try {
+                        line = in.readUTF();
+                        System.out.println(line);
+                    } catch (IOException i) {
+                        System.out.println(i);
+                    }
+                }
+                try {
+                    end();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            thread.start();
+            thread2.start();
 
+        } catch (IOException i) {
+            System.out.println(i);
         }
     }
+    private void end() throws IOException {
+        System.out.println("Closing connection");
+        // close connection
+        input.close();
+        out.close();
+        socket.close();
+        in.close();
+        exit = false;
+    }
+
 }

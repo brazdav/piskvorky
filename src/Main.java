@@ -9,7 +9,6 @@ public class Main extends Piskvorky{
     public static void main(String[] args) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
 
         Piskvorky piskvorky = new Piskvorky();
-        Server server = new Server();
 
     }
 }
