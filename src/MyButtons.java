@@ -42,7 +42,7 @@ public class MyButtons extends AI1 implements FirstTurn, Podminky{
             poradi--;
         } else return;
         if (((JButton) buttons.get(poradi)).getText().equals(znak)) {
-            obrana(znak, poradi, buttons, "leva");
+            //obrana(znak, poradi, buttons, "leva");
             if (znak.equals("X")) xWins();
             else oWins();
             checkLeva((JButton) buttons.get(poradi), buttons);

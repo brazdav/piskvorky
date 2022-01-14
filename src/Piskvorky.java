@@ -7,6 +7,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 
@@ -46,6 +48,8 @@ public class    Piskvorky extends MyButtons implements FirstTurn,Music{
     ButtonGroup bg ;
     JLabel pocetK;
     int kola;
+
+    private String adresa;
 
 
     public Piskvorky() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
@@ -130,17 +134,29 @@ public class    Piskvorky extends MyButtons implements FirstTurn,Music{
         textfield1.add(client);
         textfield1.add(server);
 
+        adresa = getAdress();
+
         client.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                Client client = new Client(adresa, 6669);
             }
         });
 
         server.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    Server server = new Server(1234);
+
+                try {
+                    Server server = new Server();
+                } catch (UnsupportedAudioFileException unsupportedAudioFileException) {
+                    unsupportedAudioFileException.printStackTrace();
+                } catch (LineUnavailableException lineUnavailableException) {
+                    lineUnavailableException.printStackTrace();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+
             }
         });
 
@@ -209,8 +225,10 @@ public class    Piskvorky extends MyButtons implements FirstTurn,Music{
 
         lan.addActionListener(new ActionListener(){//potreba dve tlacitka, kde se nastavuje turn
             public void actionPerformed(ActionEvent e){
+                Vykresleni obj = new Vykresleni();
+                obj.poradi();
                 pocetKol();
-                startLan();
+                start();
                 menu.setVisible(false);
                 clip.stop();
             }
@@ -242,7 +260,8 @@ public class    Piskvorky extends MyButtons implements FirstTurn,Music{
             obj.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    vykresleni(obj);
+                    Vykresleni vykresleni = new Vykresleni();
+                    vykresleni.vykresleni(obj);
 
                     checkLeva(obj, buttons);
                     checkPrava(obj, buttons);
@@ -361,6 +380,20 @@ public class    Piskvorky extends MyButtons implements FirstTurn,Music{
         else if (r3.isSelected()){
             kola = 5;
         }
+    }
+
+    public String getAdress() {
+
+        InetAddress ip = null;
+        try {
+            ip = InetAddress.getLocalHost();
+            System.out.println("Your current IP address : " + ip);
+
+        } catch (UnknownHostException e) {
+
+            e.printStackTrace();
+        }
+        return ip.toString();
     }
 
 

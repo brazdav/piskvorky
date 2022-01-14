@@ -9,16 +9,17 @@ public class AI1 extends JButton implements FirstTurn {
     public void obrana (String znak, int poradi, ArrayList<JButton> buttons, String strana){
         pocet ++;
         System.out.println(poradi);
+        Vykresleni obj = new Vykresleni();
 
         if (pocet == 2){
             switch (strana){
                 case "leva": poradi--;
-                vykresleni(buttons.get(poradi));
+                obj.vykresleni(buttons.get(poradi));
             }
 
         }
         else {
-            vykresleni(buttons.get(random.nextInt(225)));
+            obj.vykresleni(buttons.get(random.nextInt(225)));
         }
     }
 }

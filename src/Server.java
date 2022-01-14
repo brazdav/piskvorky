@@ -1,7 +1,10 @@
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.*;
 import java.net.*;
 import java.io.*;
 
-public class Server {
+public class Server extends Piskvorky{
     //initialize socket and input stream
     private Socket socket = null;
     private ServerSocket server = null;
@@ -13,10 +16,12 @@ public class Server {
     private Thread thread;
     private Thread thread2;
     private boolean exit = true;
+    private int port = 6669;
     // constructor with port
-    public Server(int port) {
+    public Server() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         // starts server and waits for a connection
         try {
+            Vykresleni obj = new Vykresleni();
             server = new ServerSocket(port);
             System.out.println("Server started");
 
@@ -52,6 +57,8 @@ public class Server {
                     try {
                         line = in.readUTF();
                         System.out.println(line);
+                        int index = Integer.parseInt(line);
+                        obj.vykresleniLan((JButton) buttons.get(index));
                     } catch (IOException i) {
                         System.out.println(i);
                     }
@@ -78,5 +85,7 @@ public class Server {
         in.close();
         exit = false;
     }
+
+
 
 }
