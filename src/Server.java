@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.net.*;
 import java.io.*;
 
-public class Server extends Piskvorky{
+public class Server{
     //initialize socket and input stream
     private Socket socket = null;
     private ServerSocket server = null;
@@ -21,12 +21,10 @@ public class Server extends Piskvorky{
     public Server() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         // starts server and waits for a connection
         try {
-            Vykresleni obj = new Vykresleni();
             server = new ServerSocket(port);
             System.out.println("Server started");
 
             System.out.println("Waiting for a client ...");
-
             socket = server.accept();
             System.out.println("Client accepted");
             Start start = new Start();
@@ -58,8 +56,11 @@ public class Server extends Piskvorky{
                     try {
                         line = in.readUTF();
                         System.out.println(line);
-                        int index = Integer.parseInt(line);
-                        obj.vykresleniLan((JButton) buttons.get(index));
+                        if (line != null){
+                            int index = Integer.parseInt(line);
+                            JButton button = (JButton) start.buttons.get(index);
+                            button.doClick();
+                        }
                     } catch (IOException i) {
                         System.out.println(i);
                     }

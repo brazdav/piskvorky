@@ -5,10 +5,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Start extends Piskvorky{
     private double height;
     private Dimension screenSize;
+    public ArrayList buttons = new ArrayList<JButton>();
     public Start() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         height = screenSize.getHeight() - 35;
@@ -36,8 +38,8 @@ public class Start extends Piskvorky{
             obj.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    //Vykresleni vykresleni = new Vykresleni();
-                    //vykresleni.vykresleni(obj);
+                    Vykresleni vykresleni = new Vykresleni();
+                    vykresleni.vykresleni(obj);
 
                     checkLeva(obj, buttons);
                     checkPrava(obj, buttons);
@@ -103,7 +105,8 @@ public class Start extends Piskvorky{
             obj.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    //vykresleniLan(obj);
+                    Vykresleni o = new Vykresleni();
+                    o.vykresleniLan(obj);
 
                     checkLeva(obj, buttons);
                     checkPrava(obj, buttons);

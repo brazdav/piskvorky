@@ -12,7 +12,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 
-public class    Piskvorky extends MyButtons implements FirstTurn,Music{
+public class    Piskvorky extends MyButtons implements Music{
     JFrame menu = new JFrame();
     JPanel title_panel = new JPanel();
 
@@ -36,7 +36,7 @@ public class    Piskvorky extends MyButtons implements FirstTurn,Music{
 
     JLabel vyhranaKola = new JLabel("Vyhrana kola:");
 
-    ArrayList buttons = new ArrayList<JButton>();
+
 
 
 
@@ -153,7 +153,7 @@ public class    Piskvorky extends MyButtons implements FirstTurn,Music{
         client.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Client client = new Client("192.168.144.4", 6669);
+                Client client = new Client("192.168.144.7", 6669);
             }
         });
 
@@ -241,8 +241,8 @@ public class    Piskvorky extends MyButtons implements FirstTurn,Music{
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
-                obj.start();
-                menu.setVisible(false);
+                obj.startLan();
+                menu.dispose();
                 clip.stop();
             }
         });
