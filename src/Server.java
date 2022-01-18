@@ -29,7 +29,8 @@ public class Server extends Piskvorky{
 
             socket = server.accept();
             System.out.println("Client accepted");
-
+            Start start = new Start();
+            start.startLan();
             // takes input from the client socket
             in = new DataInputStream(
                     new BufferedInputStream(socket.getInputStream()));
