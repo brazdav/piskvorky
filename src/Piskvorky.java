@@ -18,6 +18,8 @@ public class    Piskvorky extends MyButtons implements FirstTurn,Music{
 
     ImageIcon lanImage= new ImageIcon(getClass().getResource("button.png"));
     ImageIcon hraImage= new ImageIcon(getClass().getResource("hra.png"));
+    ImageIcon clientImage = new ImageIcon(getClass().getResource("client.png"));
+    ImageIcon serverImage = new ImageIcon(getClass().getResource("server.png"));
     ImageIcon logoImage= new ImageIcon(getClass().getResource("tiktak.png"));
     ImageIcon soundImage1 = new ImageIcon(getClass().getResource("sound.png"));
     ImageIcon soundImage2 = new ImageIcon(getClass().getResource("mute.png"));
@@ -28,8 +30,8 @@ public class    Piskvorky extends MyButtons implements FirstTurn,Music{
     JButton lan;
     JLabel logoLabel;
     JButton sound;
-    JButton server = new JButton();
-    JButton client = new JButton();
+    JButton server = new JButton(serverImage);
+    JButton client = new JButton(clientImage);
 
 
     JLabel vyhranaKola = new JLabel("Vyhrana kola:");
@@ -45,7 +47,7 @@ public class    Piskvorky extends MyButtons implements FirstTurn,Music{
     JRadioButton r1;
     JRadioButton r2;
     JRadioButton r3;
-    ButtonGroup bg ;
+    ButtonGroup bg;
     JLabel pocetK;
     int kola;
 
@@ -125,14 +127,27 @@ public class    Piskvorky extends MyButtons implements FirstTurn,Music{
         textfield.setOpaque(true);
         textfield.add(vyhranaKola);
 
-        client.setText("client");
-        client.setBounds(100,200,80,20);
+        client.setBounds(275,375,250,80);
         client.setVisible(true);
-        server.setText("server");
-        server.setBounds(180,200,80,20);
+        client.setOpaque(false);
+        client.setContentAreaFilled(false);
+        client.setBorderPainted(false);
+        client.setFocusable(false);
+        client.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+        server.setBounds(275,250,250,80);
         server.setVisible(true);
+        server.setOpaque(false);
+        server.setContentAreaFilled(false);
+        server.setBorderPainted(false);
+        server.setFocusable(false);
+        server.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
         textfield1.add(client);
         textfield1.add(server);
+
+        client.setVisible(false);
+        server.setVisible(false);
 
         adresa = getAdress();
 
@@ -227,10 +242,19 @@ public class    Piskvorky extends MyButtons implements FirstTurn,Music{
             public void actionPerformed(ActionEvent e){
                 Vykresleni obj = new Vykresleni();
                 obj.poradi();
-                pocetKol();
-                start();
-                menu.setVisible(false);
                 clip.stop();
+
+
+                lan.setVisible(false);
+                hra.setVisible(false);
+                r1.setVisible(false);
+                r2.setVisible(false);
+                r3.setVisible(false);
+                pocetK.setVisible(false);
+
+                client.setVisible(true);
+                server.setVisible(true);
+
             }
         });
 
@@ -280,7 +304,7 @@ public class    Piskvorky extends MyButtons implements FirstTurn,Music{
                         buttons.removeAll(buttons);
                         if (kola > 0) {
                             start();
-                            }
+                        }
                         else {
                             if(winX > winO){
                                 JOptionPane.showMessageDialog(frame, "Konec hry, vyhral X");
