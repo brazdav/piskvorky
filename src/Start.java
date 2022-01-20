@@ -105,8 +105,8 @@ public class Start extends Piskvorky{
             obj.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    Vykresleni o = new Vykresleni();
-                    o.vykresleniLan(obj);
+                    Vykresleni vykresleni = new Vykresleni();
+                    vykresleni.vykresleniLan(obj);
 
                     checkLeva(obj, buttons);
                     checkPrava(obj, buttons);
@@ -124,7 +124,7 @@ public class Start extends Piskvorky{
                         button_panel.removeAll();
                         buttons.removeAll(buttons);
                         if (kola > 0) {
-                            startLan();
+                            start();
                         }
                         else {
                             if(winX > winO){
@@ -145,7 +145,5 @@ public class Start extends Piskvorky{
         }
         title_panel.add(textfield);
 
-
-        FirstTurn.firstTurn();
     }
 }

@@ -4,6 +4,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 interface FirstTurn{
     AtomicBoolean player1_turn = new AtomicBoolean(true);
+    AtomicBoolean lan_turn = new AtomicBoolean(true);
     Random random = new Random();
     JLabel textfield = new JLabel();
 
@@ -16,6 +17,15 @@ interface FirstTurn{
         else{
             player1_turn.set(false);
             textfield.setText("O turn");
+        }
+    }
+
+    default void firstTurnLan(){
+        if(random.nextInt(2)==1){
+            lan_turn.set(true);
+        }
+        else{
+            lan_turn.set(false);
         }
     }
 

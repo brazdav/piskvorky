@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 
 
 public class    Piskvorky extends MyButtons implements Music{
@@ -170,7 +169,7 @@ public class    Piskvorky extends MyButtons implements Music{
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
-
+                FirstTurn.firstTurn();
             }
         });
 
