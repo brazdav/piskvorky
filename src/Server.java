@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.net.*;
 import java.io.*;
 
-public class Server{
+public class Server extends Start implements FirstTurn{
     //initialize socket and input stream
     private Socket socket = null;
     private ServerSocket server = null;
@@ -17,6 +17,7 @@ public class Server{
     private Thread thread2;
     private boolean exit = true;
     private int port = 6669;
+    private int indexTlacoPredchozi;
     // constructor with port
     public Server() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         // starts server and waits for a connection
@@ -42,24 +43,35 @@ public class Server{
             thread = new Thread(() -> {
                 while (!line.equals("Over")){
                     try {
-                        send = input.readLine();
-                        out.writeUTF(send);
-                    } catch (IOException i) {
-                        System.out.println(i);
+                        if (indexTlacoPredchozi != indexTlaco) {
+                            sentIndexTlaco();
+                            indexTlacoPredchozi = indexTlaco;
+                            lan_turn.set(true);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
                 System.out.println("thred is dead");
             });
 
             thread2 = new Thread(() -> {
+                try {
+                    out.writeUTF(String.valueOf(lan_turn.get()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 while (!line.equals("Over")) {
                     try {
                         line = in.readUTF();
                         System.out.println(line);
-                        if (line != null){
-                            int index = Integer.parseInt(line);
-                            JButton button = (JButton) start.buttons.get(index);
-                            button.doClick();
+                        if (line != ""){
+                            if (lan_turn.get()) {
+                                int index = Integer.parseInt(line);
+                                JButton button = (JButton) start.buttons.get(index);
+                                button.doClick();
+                                lan_turn.set(false);
+                            }
                         }
                     } catch (IOException i) {
                         System.out.println(i);
@@ -71,7 +83,7 @@ public class Server{
                     e.printStackTrace();
                 }
             });
-            thread.start();
+            //thread.start();
             thread2.start();
 
         } catch (IOException i) {
@@ -88,6 +100,9 @@ public class Server{
         exit = false;
     }
 
+    public void sentIndexTlaco() throws IOException {
+        out.writeUTF(String.valueOf(indexTlaco));
+    }
 
 
 }

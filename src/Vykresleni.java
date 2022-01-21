@@ -38,4 +38,24 @@ public class Vykresleni implements FirstTurn{
             button.setBackground(new Color(245, 191, 191));
         }
     }
+
+    public void vykresleniX(JButton button){
+        if (button.getText().equals("")) {
+            button.setForeground(new Color(0, 0, 0));
+            button.setText("X");
+            player1_turn.set(false);
+            textfield.setText("O turn");
+            button.setBackground(new Color(245, 191, 191));
+        }
+    }
+
+    public void vykresleniO(JButton button){
+        if (button.getText().equals("")) {
+            button.setForeground(new Color(0, 0, 0));
+            button.setText("O");
+            player1_turn.set(true);
+            textfield.setText("X turn");
+            button.setBackground(new Color(245, 191, 191));
+        }
+    }
 }

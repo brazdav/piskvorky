@@ -152,7 +152,15 @@ public class    Piskvorky extends MyButtons implements Music{
         client.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Client client = new Client("192.168.144.7", 6669);
+                try {
+                    Client client = new Client("192.168.145.15", 6669);
+                } catch (UnsupportedAudioFileException unsupportedAudioFileException) {
+                    unsupportedAudioFileException.printStackTrace();
+                } catch (LineUnavailableException lineUnavailableException) {
+                    lineUnavailableException.printStackTrace();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
             }
         });
 
@@ -170,6 +178,7 @@ public class    Piskvorky extends MyButtons implements Music{
                     ioException.printStackTrace();
                 }
                 FirstTurn.firstTurn();
+                firstTurnLan();
             }
         });
 
@@ -240,7 +249,7 @@ public class    Piskvorky extends MyButtons implements Music{
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
-                obj.startLan();
+                obj.start();
                 menu.dispose();
                 clip.stop();
             }
@@ -249,7 +258,6 @@ public class    Piskvorky extends MyButtons implements Music{
         lan.addActionListener(new ActionListener(){//potreba dve tlacitka, kde se nastavuje turn
             public void actionPerformed(ActionEvent e){
                 Vykresleni obj = new Vykresleni();
-                obj.poradi();
                 clip.stop();
 
 

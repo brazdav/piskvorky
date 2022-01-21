@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Start extends Piskvorky{
+    public int indexTlaco;
     private double height;
     private Dimension screenSize;
     public ArrayList buttons = new ArrayList<JButton>();
@@ -107,6 +108,7 @@ public class Start extends Piskvorky{
                 public void actionPerformed(ActionEvent e) {
                     Vykresleni vykresleni = new Vykresleni();
                     vykresleni.vykresleniLan(obj);
+                    indexTlaco = buttons.indexOf(obj);
 
                     checkLeva(obj, buttons);
                     checkPrava(obj, buttons);
@@ -146,4 +148,5 @@ public class Start extends Piskvorky{
         title_panel.add(textfield);
 
     }
+
 }
