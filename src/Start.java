@@ -83,7 +83,7 @@ public class Start extends Piskvorky{
         FirstTurn.firstTurn();
     }
 
-    public void startLan (){
+    public void starLan (){
         JFrame frame = new JFrame();
         frame.setVisible(true);
 
@@ -147,6 +147,11 @@ public class Start extends Piskvorky{
         }
         title_panel.add(textfield);
 
+    }
+
+
+    public String getIndexTlaco(){
+        return String.valueOf(indexTlaco);
     }
 
 }

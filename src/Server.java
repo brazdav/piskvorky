@@ -28,8 +28,7 @@ public class Server extends Start implements FirstTurn{
             System.out.println("Waiting for a client ...");
             socket = server.accept();
             System.out.println("Client accepted");
-            Start start = new Start();
-            start.startLan();
+            starLan();
             // takes input from the client socket
             in = new DataInputStream(
                     new BufferedInputStream(socket.getInputStream()));
@@ -43,6 +42,7 @@ public class Server extends Start implements FirstTurn{
             thread = new Thread(() -> {
                 while (!line.equals("Over")){
                     try {
+                        getIndexTlaco();
                         if (indexTlacoPredchozi != indexTlaco) {
                             sentIndexTlaco();
                             indexTlacoPredchozi = indexTlaco;
@@ -68,7 +68,7 @@ public class Server extends Start implements FirstTurn{
                         if (line != ""){
                             if (lan_turn.get()) {
                                 int index = Integer.parseInt(line);
-                                JButton button = (JButton) start.buttons.get(index);
+                                JButton button = (JButton) buttons.get(index);
                                 button.doClick();
                                 lan_turn.set(false);
                             }
@@ -83,7 +83,7 @@ public class Server extends Start implements FirstTurn{
                     e.printStackTrace();
                 }
             });
-            //thread.start();
+            thread.start();
             thread2.start();
 
         } catch (IOException i) {

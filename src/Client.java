@@ -13,14 +13,15 @@ public class Client extends Start implements FirstTurn{
     private String line = "";
     private String send;
     private int indexTlacoPredchozi;
+    private Thread thread;
+    private Thread thread2;
     // constructor to put ip address and port
     public Client(String address, int port) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         // establish a connection
-        Start obj = new Start();
         try {
             socket = new Socket(address, port);
             System.out.println("Connected");
-            obj.start();
+            starLan();
             // takes input from terminal
             input = new BufferedReader(new InputStreamReader(System.in));
 
@@ -37,9 +38,10 @@ public class Client extends Start implements FirstTurn{
         // string to read message from input
 
         // keep reading until "Over" is input
-        Thread thread = new Thread(() -> {
+        thread = new Thread(() -> {
             while (!line.equals("Over")){
                 try {
+                    getIndexTlaco();
                     if (indexTlacoPredchozi != indexTlaco) {
                         sentIndexTlaco();
                         indexTlacoPredchozi = indexTlaco;
@@ -50,8 +52,8 @@ public class Client extends Start implements FirstTurn{
                 }
             }
         });
-        thread.start();
 
+        thread2 = new Thread(() -> {
         while (!line.equals("Over")) {
             try {
                 line = in.readUTF();
@@ -61,7 +63,7 @@ public class Client extends Start implements FirstTurn{
                 }
                 else if (lan_turn.get() == false) {
                     int index = Integer.parseInt(line);
-                    JButton button = (JButton) obj.buttons.get(index);
+                    JButton button = (JButton) buttons.get(index);
                     button.doClick();
                     lan_turn.set(true);
                 }
@@ -69,7 +71,9 @@ public class Client extends Start implements FirstTurn{
                 System.out.println(i);
             }
         }
-
+        });
+        thread.start();
+        thread2.start();
         // close the connection
 
     }
