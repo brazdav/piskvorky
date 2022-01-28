@@ -19,6 +19,7 @@ public class Server extends Start implements FirstTurn{
     private boolean exit = true;
     private int port = 6669;
     private int indexTlacoPredchozi;
+    private int odchozi;
     // constructor with port
     public Server() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         // starts server and waits for a connection
@@ -51,6 +52,7 @@ public class Server extends Start implements FirstTurn{
                     if (indexTlacoPredchozi != indexTlaco) {
                         try {
                             out.writeUTF(String.valueOf(indexTlaco));
+                            odchozi = indexTlaco;
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -64,7 +66,7 @@ public class Server extends Start implements FirstTurn{
                     try {
                         line = in.readUTF();
                         //System.out.println(line);
-                        if (!line.equals("")){
+                        if (Integer.parseInt(line) != odchozi){
                                 int index = Integer.parseInt(line);
                                 JButton button = (JButton) buttons.get(index);
                                 button.doClick();

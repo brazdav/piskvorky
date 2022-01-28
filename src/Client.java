@@ -15,6 +15,7 @@ public class Client extends Start implements FirstTurn{
     private int indexTlacoPredchozi;
     private Thread thread;
     private Thread thread2;
+    private int odchozi;
     // constructor to put ip address and port
     public Client(String address, int port) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         // establish a connection
@@ -44,6 +45,7 @@ public class Client extends Start implements FirstTurn{
                 if (indexTlacoPredchozi != indexTlaco) {
                     try {
                         out.writeUTF(String.valueOf(indexTlaco));
+                        odchozi = indexTlaco;
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -60,7 +62,7 @@ public class Client extends Start implements FirstTurn{
                 if (line.equals("true") || line.equals("false")){
                     player1_turn.set(Boolean.parseBoolean(line));
                 }
-                else{
+                else if (Integer.parseInt(line) != odchozi){
                     int index = Integer.parseInt(line);
                     JButton button = (JButton) buttons.get(index);
                     button.doClick();
