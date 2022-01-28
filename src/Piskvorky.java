@@ -11,7 +11,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 
-public class    Piskvorky extends MyButtons implements Music{
+public class Piskvorky extends MyButtons implements Music{
     JFrame menu = new JFrame();
     JPanel title_panel = new JPanel();
 
@@ -50,6 +50,8 @@ public class    Piskvorky extends MyButtons implements Music{
     int kola;
 
     private String adresa;
+
+
 
 
     public Piskvorky() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
@@ -149,11 +151,13 @@ public class    Piskvorky extends MyButtons implements Music{
 
         adresa = getAdress();
 
+
+
         client.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Client client = new Client("192.168.0.59", 6669);
+                    Client client = new Client("192.168.0.94", 6669);
                 } catch (UnsupportedAudioFileException unsupportedAudioFileException) {
                     unsupportedAudioFileException.printStackTrace();
                 } catch (LineUnavailableException lineUnavailableException) {
@@ -167,6 +171,19 @@ public class    Piskvorky extends MyButtons implements Music{
         server.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+
+                try {
+                    Dialogs dialogs = new Dialogs();
+                } catch (UnsupportedAudioFileException ex) {
+                    ex.printStackTrace();
+                } catch (LineUnavailableException ex) {
+                    ex.printStackTrace();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+
+                /*
                 FirstTurn.firstTurn();
                 FirstTurn.firstTurnLan();
                 try {
@@ -177,7 +194,7 @@ public class    Piskvorky extends MyButtons implements Music{
                     lineUnavailableException.printStackTrace();
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
-                }
+                }*/
             }
         });
 
