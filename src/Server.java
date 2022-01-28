@@ -1,8 +1,9 @@
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
-import java.net.*;
 import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 public class Server extends Start implements FirstTurn{
     //initialize socket and input stream
@@ -24,7 +25,6 @@ public class Server extends Start implements FirstTurn{
         try {
             server = new ServerSocket(port);
             System.out.println("Server started");
-
             System.out.println("Waiting for a client ...");
             socket = server.accept();
             System.out.println("Client accepted");
@@ -37,41 +37,37 @@ public class Server extends Start implements FirstTurn{
 
             input = new BufferedReader(new InputStreamReader(System.in));
 
+            try {
+                out.writeUTF(String.valueOf(player1_turn.get()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
 
             // reads message from client until "Over" is sent
             thread = new Thread(() -> {
                 while (!line.equals("Over")){
-                    try {
-                        getIndexTlaco();
-                        if (indexTlacoPredchozi != indexTlaco) {
-                            sentIndexTlaco();
-                            indexTlacoPredchozi = indexTlaco;
-                            lan_turn.set(true);
+                    getIndexTlaco();
+                    if (indexTlacoPredchozi != indexTlaco) {
+                        try {
+                            out.writeUTF(String.valueOf(indexTlaco));
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                        indexTlacoPredchozi = indexTlaco;
                     }
                 }
-                System.out.println("thred is dead");
             });
 
             thread2 = new Thread(() -> {
-                try {
-                    out.writeUTF(String.valueOf(lan_turn.get()));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
                 while (!line.equals("Over")) {
                     try {
                         line = in.readUTF();
-                        System.out.println(line);
-                        if (line != ""){
-                            if (lan_turn.get()) {
+                        //System.out.println(line);
+                        if (!line.equals("")){
                                 int index = Integer.parseInt(line);
                                 JButton button = (JButton) buttons.get(index);
                                 button.doClick();
-                                lan_turn.set(false);
-                            }
                         }
                     } catch (IOException i) {
                         System.out.println(i);
@@ -98,10 +94,6 @@ public class Server extends Start implements FirstTurn{
         socket.close();
         in.close();
         exit = false;
-    }
-
-    public void sentIndexTlaco() throws IOException {
-        out.writeUTF(String.valueOf(indexTlaco));
     }
 
 

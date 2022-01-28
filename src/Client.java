@@ -40,15 +40,14 @@ public class Client extends Start implements FirstTurn{
         // keep reading until "Over" is input
         thread = new Thread(() -> {
             while (!line.equals("Over")){
-                try {
-                    getIndexTlaco();
-                    if (indexTlacoPredchozi != indexTlaco) {
-                        sentIndexTlaco();
-                        indexTlacoPredchozi = indexTlaco;
-                        lan_turn.set(false);
+                getIndexTlaco();
+                if (indexTlacoPredchozi != indexTlaco) {
+                    try {
+                        out.writeUTF(String.valueOf(indexTlaco));
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                } catch (IOException i) {
-                    System.out.println(i);
+                    indexTlacoPredchozi = indexTlaco;
                 }
             }
         });
@@ -58,14 +57,13 @@ public class Client extends Start implements FirstTurn{
             try {
                 line = in.readUTF();
                 System.out.println(line);
-                if (line == "true" || line == "false"){
-                    lan_turn.set(Boolean.parseBoolean(line));
+                if (line.equals("true") || line.equals("false")){
+                    player1_turn.set(Boolean.parseBoolean(line));
                 }
-                else if (lan_turn.get() == false) {
+                else{
                     int index = Integer.parseInt(line);
                     JButton button = (JButton) buttons.get(index);
                     button.doClick();
-                    lan_turn.set(true);
                 }
             } catch (IOException i) {
                 System.out.println(i);
@@ -85,9 +83,6 @@ public class Client extends Start implements FirstTurn{
         out.close();
         socket.close();
         in.close();
-    }
-    public void sentIndexTlaco() throws IOException {
-        out.writeUTF(String.valueOf(indexTlaco));
     }
 
 }

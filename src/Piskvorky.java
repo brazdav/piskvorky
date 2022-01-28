@@ -153,7 +153,7 @@ public class    Piskvorky extends MyButtons implements Music{
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Client client = new Client("192.168.145.15", 6669);
+                    Client client = new Client("192.168.0.59", 6669);
                 } catch (UnsupportedAudioFileException unsupportedAudioFileException) {
                     unsupportedAudioFileException.printStackTrace();
                 } catch (LineUnavailableException lineUnavailableException) {
@@ -167,7 +167,8 @@ public class    Piskvorky extends MyButtons implements Music{
         server.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                FirstTurn.firstTurn();
+                FirstTurn.firstTurnLan();
                 try {
                     Server server = new Server();
                 } catch (UnsupportedAudioFileException unsupportedAudioFileException) {
@@ -177,8 +178,6 @@ public class    Piskvorky extends MyButtons implements Music{
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
-                FirstTurn.firstTurn();
-                firstTurnLan();
             }
         });
 
