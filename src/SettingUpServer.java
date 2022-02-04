@@ -18,6 +18,7 @@ public class SettingUpServer extends Piskvorky implements ActionListener{
     JLabel ipaddress;
     JLabel barva;
 
+
     JButton send;
 
     public SettingUpServer()throws UnsupportedAudioFileException, LineUnavailableException, IOException {
@@ -130,7 +131,10 @@ public class SettingUpServer extends Piskvorky implements ActionListener{
         FirstTurn.firstTurn();
         FirstTurn.firstTurnLan();
         pocetKolLan();
+
         dialogy.setVisible(false);
+
+
         try {
             Server server = new Server();
         } catch (UnsupportedAudioFileException unsupportedAudioFileException) {
@@ -140,6 +144,8 @@ public class SettingUpServer extends Piskvorky implements ActionListener{
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
+
+
     }
 
     public String getAdress() {

@@ -25,7 +25,7 @@ public class SettingUpClient extends Piskvorky implements ActionListener{
         nazev = new JLabel("Zadej IP serveru:");
         barva = new JLabel();
         ipaddress = new JTextField();
-        adresa = ipaddress.getText();
+
         // create a dialog Box
 
 
@@ -92,6 +92,8 @@ public class SettingUpClient extends Piskvorky implements ActionListener{
         FirstTurn.firstTurn();
         FirstTurn.firstTurnLan();
         dialogy.setVisible(false);
+        adresa = ipaddress.getText();
+        System.out.print(adresa);
         try {
             Client client = new Client(adresa, 6669);
         } catch (UnsupportedAudioFileException unsupportedAudioFileException) {
