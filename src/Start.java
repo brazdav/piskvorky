@@ -87,6 +87,7 @@ public class Start extends Piskvorky{
         JFrame frame = new JFrame();
         frame.setVisible(true);
 
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize((int) height,(int) height);
         double sirka = (screenSize.getWidth()-frame.getSize().width)/2;
@@ -106,6 +107,7 @@ public class Start extends Piskvorky{
             obj.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+
                     Vykresleni vykresleni = new Vykresleni();
                     vykresleni.vykresleniLan(obj);
                     indexTlaco = buttons.indexOf(obj);

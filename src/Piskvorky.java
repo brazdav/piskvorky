@@ -156,7 +156,19 @@ public class Piskvorky extends MyButtons implements Music{
         client.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                menu.setVisible(false);
                 try {
+                    SettingUpClient setClient = new SettingUpClient();
+                } catch (UnsupportedAudioFileException ex) {
+                    ex.printStackTrace();
+                } catch (LineUnavailableException ex) {
+                    ex.printStackTrace();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+
+                /*try {
                     Client client = new Client("192.168.0.94", 6669);
                 } catch (UnsupportedAudioFileException unsupportedAudioFileException) {
                     unsupportedAudioFileException.printStackTrace();
@@ -164,7 +176,7 @@ public class Piskvorky extends MyButtons implements Music{
                     lineUnavailableException.printStackTrace();
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
-                }
+                }*/
             }
         });
 
@@ -172,9 +184,9 @@ public class Piskvorky extends MyButtons implements Music{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-
+                menu.setVisible(false);
                 try {
-                    Dialogs dialogs = new Dialogs();
+                    SettingUpServer dialogs = new SettingUpServer();
                 } catch (UnsupportedAudioFileException ex) {
                     ex.printStackTrace();
                 } catch (LineUnavailableException ex) {
