@@ -1,10 +1,7 @@
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -13,7 +10,7 @@ public class ShowIP {
 
     private static Dialog d;
 
-    public ShowIP()throws UnsupportedAudioFileException, LineUnavailableException, IOException{
+    public ShowIP() throws UnsupportedAudioFileException, LineUnavailableException, IOException{
 
         Frame f = new Frame();
         d = new Dialog(f , "Dialog Example", true);

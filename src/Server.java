@@ -20,6 +20,7 @@ public class Server extends Start implements FirstTurn{
     private int port = 6669;
     private int indexTlacoPredchozi;
     private int odchozi;
+    private int prichozi;
     // constructor with port
     public Server() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         // starts server and waits for a connection
@@ -27,7 +28,7 @@ public class Server extends Start implements FirstTurn{
             server = new ServerSocket(port);
             System.out.println("Server started");
             System.out.println("Waiting for a client ...");
-            ShowIP show = new ShowIP();
+            //ShowIP show = new ShowIP();
 
             socket = server.accept();
             System.out.println("Client accepted");
@@ -51,10 +52,14 @@ public class Server extends Start implements FirstTurn{
             thread = new Thread(() -> {
                 while (!line.equals("Over")){
                     getIndexTlaco();
-                    if (indexTlacoPredchozi != indexTlaco) {
+                    if (indexTlacoPredchozi != indexTlaco && prichozi != indexTlaco) {
                         try {
                             out.writeUTF(String.valueOf(indexTlaco));
                             odchozi = indexTlaco;
+                            System.out.println(odchozi);
+                            for (Object button : buttons) {
+                                buttonOff((JButton) button);
+                            }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -67,10 +72,13 @@ public class Server extends Start implements FirstTurn{
                 while (!line.equals("Over")) {
                     try {
                         line = in.readUTF();
-                        //System.out.println(line);
                         if (Integer.parseInt(line) != odchozi){
                                 int index = Integer.parseInt(line);
+                                prichozi = index;
                                 JButton button = (JButton) buttons.get(index);
+                            for (Object button2 : buttons) {
+                                buttonOn((JButton) button2);
+                            }
                                 button.doClick();
                         }
                     } catch (IOException i) {
