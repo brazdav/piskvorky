@@ -29,6 +29,13 @@ public class MyButtons extends AI1 implements FirstTurn, Podminky{
         });
     }
 
+    public void buttonOn(JButton tlaco){
+        this.setEnabled(true);
+    }
+    public void buttonOff(JButton tlaco){
+        this.setEnabled(false);
+    }
+
 
 
 

@@ -144,9 +144,8 @@ public class SettingUpServer extends Piskvorky implements ActionListener{
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
-
-
     }
+
     public String getAdress() {
 
         InetAddress ip = null;
