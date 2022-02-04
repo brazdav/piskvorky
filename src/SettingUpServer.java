@@ -147,7 +147,6 @@ public class SettingUpServer extends Piskvorky implements ActionListener{
 
 
     }
-
     public String getAdress() {
 
         InetAddress ip = null;
