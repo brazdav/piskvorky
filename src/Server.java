@@ -5,7 +5,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class Server extends Start implements FirstTurn{
+public class Server extends Start{
     //initialize socket and input stream
     private Socket socket = null;
     private ServerSocket server = null;
@@ -16,7 +16,6 @@ public class Server extends Start implements FirstTurn{
     private String send;
     private Thread thread;
     private Thread thread2;
-    private boolean exit = true;
     private int port = 6669;
     private int indexTlacoPredchozi;
     private int odchozi;
@@ -28,14 +27,11 @@ public class Server extends Start implements FirstTurn{
             server = new ServerSocket(port);
             System.out.println("Server started");
             System.out.println("Waiting for a client ...");
-            //ShowIP show = new ShowIP();
-
             socket = server.accept();
             System.out.println("Client accepted");
-            starLan();
+            startLan();
             // takes input from the client socket
-            in = new DataInputStream(
-                    new BufferedInputStream(socket.getInputStream()));
+            in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
 
             out = new DataOutputStream(socket.getOutputStream());
 
@@ -105,7 +101,8 @@ public class Server extends Start implements FirstTurn{
         out.close();
         socket.close();
         in.close();
-        exit = false;
+        thread.stop();
+        thread2.stop();
     }
 
 

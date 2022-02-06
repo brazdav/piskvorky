@@ -83,7 +83,8 @@ public class Start extends Piskvorky{
         FirstTurn.firstTurn();
     }
 
-    public void starLan (){
+    public void startLan (){
+        menu.dispose();
         JFrame frame = new JFrame();
         frame.setVisible(true);
 
@@ -128,7 +129,7 @@ public class Start extends Piskvorky{
                         button_panel.removeAll();
                         buttons.removeAll(buttons);
                         if (kola > 0) {
-                            start();
+                            startLan();
                         }
                         else {
                             if(winX > winO){

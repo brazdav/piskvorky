@@ -17,13 +17,16 @@ public class Client extends Start implements FirstTurn{
     private Thread thread2;
     private int odchozi;
     private int prichozi;
+    private boolean connect;
     // constructor to put ip address and port
     public Client(String address, int port) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         // establish a connection
+        connect = hostAvailabilityCheck(address,port);
+        if (connect){
         try {
             socket = new Socket(address, port);
             System.out.println("Connected");
-            starLan();
+            startLan();
             // takes input from terminal
             input = new BufferedReader(new InputStreamReader(System.in));
 
@@ -41,7 +44,7 @@ public class Client extends Start implements FirstTurn{
 
         // keep reading until "Over" is input
         thread = new Thread(() -> {
-            while (!line.equals("Over")){
+            while (!line.equals("Over")) {
                 getIndexTlaco();
                 if (indexTlacoPredchozi != indexTlaco && prichozi != indexTlaco) {
                     try {
@@ -59,31 +62,36 @@ public class Client extends Start implements FirstTurn{
         });
 
         thread2 = new Thread(() -> {
-        while (!line.equals("Over")) {
-            try {
-                line = in.readUTF();
-                System.out.println(line);
-                if (line.equals("true") || line.equals("false")){
-                    player1_turn.set(Boolean.parseBoolean(line));
+            while (!line.equals("Over")) {
+                try {
+                        line = in.readUTF();
+                        System.out.println(line);
+                        if (line.equals("true") || line.equals("false")) {
+                            player1_turn.set(Boolean.parseBoolean(line));
+                        } else if (Integer.parseInt(line) != odchozi) {
+                            int index = Integer.parseInt(line);
+                            prichozi = index;
+                            JButton button = (JButton) buttons.get(index);
+                            for (Object button2 : buttons) {
+                                buttonOn((JButton) button2);
+                            }
+                            button.doClick();
+                        }
+
+                } catch (IOException i) {
+                    System.out.println(i);
                 }
-                else if (Integer.parseInt(line) != odchozi){
-                    int index = Integer.parseInt(line);
-                    prichozi = index;
-                    JButton button = (JButton) buttons.get(index);
-                    for (Object button2 : buttons) {
-                        buttonOn((JButton) button2);
-                    }
-                    button.doClick();
-                }
-            } catch (IOException i) {
-                System.out.println(i);
             }
-        }
         });
         thread.start();
         thread2.start();
         // close the connection
-
+    }
+        else {
+            //menu.setVisible(false);
+            SettingUpClient obj = new SettingUpClient();
+            JOptionPane.showMessageDialog(obj.dialogy, "Na této adrese není zapnutý žádný server");
+        }
     }
     private void end() throws IOException {
         System.out.println("Closing connection");
@@ -93,6 +101,14 @@ public class Client extends Start implements FirstTurn{
         out.close();
         socket.close();
         in.close();
+    }
+
+    public static boolean hostAvailabilityCheck(String adress, int port) {
+        try (Socket s = new Socket(adress, port)) {
+            return true;
+        } catch (IOException ex) {
+        }
+        return false;
     }
 
 }

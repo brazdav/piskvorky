@@ -5,8 +5,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 public class SettingUpClient extends Piskvorky implements ActionListener{
     JFrame dialogy;
@@ -81,16 +79,12 @@ public class SettingUpClient extends Piskvorky implements ActionListener{
         dialogy.add(barva);
 
         dialogy.setVisible(true);
-
-        menu.setVisible(false);
-
+        menu.dispose();
     }
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        FirstTurn.firstTurn();
-        FirstTurn.firstTurnLan();
         dialogy.setVisible(false);
         adresa = ipaddress.getText();
         System.out.print(adresa);

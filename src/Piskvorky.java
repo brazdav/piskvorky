@@ -7,8 +7,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 
 public class Piskvorky extends MyButtons implements Music{
@@ -49,12 +47,11 @@ public class Piskvorky extends MyButtons implements Music{
     JLabel pocetK;
     int kola;
 
-    private String adresa;
-
 
 
 
     public Piskvorky() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        System.out.println("konstruktor");
         clip = Music.nacteni("Adventure.wav");
         clip.loop(Clip.LOOP_CONTINUOUSLY);
         clip.stop();
@@ -149,15 +146,11 @@ public class Piskvorky extends MyButtons implements Music{
         client.setVisible(false);
         server.setVisible(false);
 
-        adresa = getAdress();
-
 
 
         client.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                menu.setVisible(false);
                 try {
                     SettingUpClient setClient = new SettingUpClient();
                 } catch (UnsupportedAudioFileException ex) {
@@ -167,6 +160,7 @@ public class Piskvorky extends MyButtons implements Music{
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
+                menu.dispose();
 
                 /*try {
                     Client client = new Client("192.168.0.94", 6669);
@@ -183,8 +177,6 @@ public class Piskvorky extends MyButtons implements Music{
         server.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                menu.setVisible(false);
                 try {
                     SettingUpServer dialogs = new SettingUpServer();
                 } catch (UnsupportedAudioFileException ex) {
@@ -194,7 +186,7 @@ public class Piskvorky extends MyButtons implements Music{
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
-
+                menu.dispose();
                 /*
                 FirstTurn.firstTurn();
                 FirstTurn.firstTurnLan();
@@ -316,20 +308,6 @@ public class Piskvorky extends MyButtons implements Music{
         else if (r3.isSelected()){
             kola = 5;
         }
-    }
-
-    public String getAdress() {
-
-        InetAddress ip = null;
-        try {
-            ip = InetAddress.getLocalHost();
-            System.out.println("Your current IP address : " + ip);
-
-        } catch (UnknownHostException e) {
-
-            e.printStackTrace();
-        }
-        return ip.toString();
     }
 
 

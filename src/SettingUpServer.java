@@ -132,8 +132,7 @@ public class SettingUpServer extends Piskvorky implements ActionListener{
         FirstTurn.firstTurnLan();
         pocetKolLan();
 
-        dialogy.setVisible(false);
-
+        dialogy.dispose();
 
         try {
             Server server = new Server();
