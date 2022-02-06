@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Start extends Piskvorky{
+public class Start{
     public int indexTlaco;
     private double height;
     private Dimension screenSize;
@@ -16,7 +16,7 @@ public class Start extends Piskvorky{
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         height = screenSize.getHeight() - 35;
     }
-    public void start (){
+    public void start (Piskvorky piskvorky){
         JFrame frame = new JFrame();
         frame.setVisible(true);
 
@@ -29,12 +29,12 @@ public class Start extends Piskvorky{
         frame.getContentPane().setBackground(new Color(50,50,50));
         frame.setLayout(new BorderLayout());
 
-        frame.add(title_panel,BorderLayout.NORTH);
-        frame.add(button_panel);
+        frame.add(piskvorky.title_panel,BorderLayout.NORTH);
+        frame.add(piskvorky.button_panel);
 
         for (int i = 0; i < 225; i++) {
             MyButtons obj = new MyButtons();
-            button_panel.add(obj);
+            piskvorky.button_panel.add(obj);
             buttons.add(obj);
             obj.addActionListener(new ActionListener() {
                 @Override
@@ -42,49 +42,49 @@ public class Start extends Piskvorky{
                     Vykresleni vykresleni = new Vykresleni();
                     vykresleni.vykresleni(obj);
 
-                    checkLeva(obj, buttons);
-                    checkPrava(obj, buttons);
-                    checkHore(obj, buttons);
-                    checkDole(obj, buttons);
-                    checkLevaHore(obj, buttons);
-                    checkPravaDole(obj, buttons);
-                    checkLevaDole(obj, buttons);
-                    checkPravaHore(obj, buttons);
-                    if (vyhra){
-                        vyhranaKola.setText("Vyhrana kola: X:" + winX + "  O:" + winO);
-                        kola --;
+                    piskvorky.checkLeva(obj, buttons);
+                    piskvorky.checkPrava(obj, buttons);
+                    piskvorky.checkHore(obj, buttons);
+                    piskvorky.checkDole(obj, buttons);
+                    piskvorky.checkLevaHore(obj, buttons);
+                    piskvorky.checkPravaDole(obj, buttons);
+                    piskvorky.checkLevaDole(obj, buttons);
+                    piskvorky.checkPravaHore(obj, buttons);
+                    if (piskvorky.vyhra){
+                        piskvorky.vyhranaKola.setText("Vyhrana kola: X:" + piskvorky.winX + "  O:" + piskvorky.winO);
+                        piskvorky.kola --;
                         frame.dispose();
-                        vyhra = false;
-                        button_panel.removeAll();
+                        piskvorky.vyhra = false;
+                        piskvorky.button_panel.removeAll();
                         buttons.removeAll(buttons);
-                        if (kola > 0) {
-                            start();
+                        if (piskvorky.kola > 0) {
+                            start(piskvorky);
                         }
                         else {
-                            if(winX > winO){
+                            if(piskvorky.winX > piskvorky.winO){
                                 JOptionPane.showMessageDialog(frame, "Konec hry, vyhral X");
                             }else{
                                 JOptionPane.showMessageDialog(frame, "Konec hry, vyhral O");
                             }
-                            winX = 0;
-                            winO = 0;
-                            vyhranaKola.setText("Vyhrana kola: X:" + winX + "  O:" + winO);
-                            menu.setVisible(true);
-                            sound.setIcon(soundImage1);
-                            clip.start();
+                            piskvorky.winX = 0;
+                            piskvorky.winO = 0;
+                            piskvorky.vyhranaKola.setText("Vyhrana kola: X:" + piskvorky.winX + "  O:" + piskvorky.winO);
+                            piskvorky.menu.setVisible(true);
+                            piskvorky.sound.setIcon(piskvorky.soundImage1);
+                            piskvorky.clip.start();
                         }
                     }
                 }
             });
         }
-        title_panel.add(textfield);
+        piskvorky.title_panel.add(piskvorky.textfield);
 
 
         FirstTurn.firstTurn();
     }
 
-    public void startLan (){
-        menu.dispose();
+    public void startLan (Piskvorky piskvorky){
+        piskvorky.menu.dispose();
         JFrame frame = new JFrame();
         frame.setVisible(true);
 
@@ -98,12 +98,12 @@ public class Start extends Piskvorky{
         frame.getContentPane().setBackground(new Color(50,50,50));
         frame.setLayout(new BorderLayout());
 
-        frame.add(title_panel,BorderLayout.NORTH);
-        frame.add(button_panel);
+        frame.add(piskvorky.title_panel,BorderLayout.NORTH);
+        frame.add(piskvorky.button_panel);
 
         for (int i = 0; i < 225; i++) {
             MyButtons obj = new MyButtons();
-            button_panel.add(obj);
+            piskvorky.button_panel.add(obj);
             buttons.add(obj);
             obj.addActionListener(new ActionListener() {
                 @Override
@@ -113,42 +113,42 @@ public class Start extends Piskvorky{
                     vykresleni.vykresleniLan(obj);
                     indexTlaco = buttons.indexOf(obj);
 
-                    checkLeva(obj, buttons);
-                    checkPrava(obj, buttons);
-                    checkHore(obj, buttons);
-                    checkDole(obj, buttons);
-                    checkLevaHore(obj, buttons);
-                    checkPravaDole(obj, buttons);
-                    checkLevaDole(obj, buttons);
-                    checkPravaHore(obj, buttons);
-                    if (vyhra){
-                        vyhranaKola.setText("Vyhrana kola: X:" + winX + "  O:" + winO);
-                        kola --;
+                    piskvorky.checkLeva(obj, buttons);
+                    piskvorky.checkPrava(obj, buttons);
+                    piskvorky.checkHore(obj, buttons);
+                    piskvorky.checkDole(obj, buttons);
+                    piskvorky.checkLevaHore(obj, buttons);
+                    piskvorky.checkPravaDole(obj, buttons);
+                    piskvorky.checkLevaDole(obj, buttons);
+                    piskvorky.checkPravaHore(obj, buttons);
+                    if (piskvorky.vyhra){
+                        piskvorky.vyhranaKola.setText("Vyhrana kola: X:" + piskvorky.winX + "  O:" + piskvorky.winO);
+                        piskvorky.kola --;
                         frame.dispose();
-                        vyhra = false;
-                        button_panel.removeAll();
+                        piskvorky.vyhra = false;
+                        piskvorky.button_panel.removeAll();
                         buttons.removeAll(buttons);
-                        if (kola > 0) {
-                            startLan();
+                        if (piskvorky.kola > 0) {
+                            startLan(piskvorky);
                         }
                         else {
-                            if(winX > winO){
+                            if(piskvorky.winX > piskvorky.winO){
                                 JOptionPane.showMessageDialog(frame, "Konec hry, vyhral X");
                             }else{
                                 JOptionPane.showMessageDialog(frame, "Konec hry, vyhral O");
                             }
-                            winX = 0;
-                            winO = 0;
-                            vyhranaKola.setText("Vyhrana kola: X:" + winX + "  O:" + winO);
-                            menu.setVisible(true);
-                            sound.setIcon(soundImage1);
-                            clip.start();
+                            piskvorky.winX = 0;
+                            piskvorky.winO = 0;
+                            piskvorky.vyhranaKola.setText("Vyhrana kola: X:" + piskvorky.winX + "  O:" + piskvorky.winO);
+                            piskvorky.menu.setVisible(true);
+                            piskvorky.sound.setIcon(piskvorky.soundImage1);
+                            piskvorky.clip.start();
                         }
                     }
                 }
             });
         }
-        title_panel.add(textfield);
+        piskvorky.title_panel.add(piskvorky.textfield);
 
     }
 
