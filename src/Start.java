@@ -12,9 +12,17 @@ public class Start{
     private double height;
     private Dimension screenSize;
     public ArrayList buttons = new ArrayList<JButton>();
+    private Server server;
+    private Client client;
     public Start() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         height = screenSize.getHeight() - 35;
+    }
+    public Start(Object obj, String st){
+        if (st.equals("server"))
+            this.server = (Server) obj;
+        else
+            this.client = (Client) obj;
     }
     public void start (Piskvorky piskvorky){
         JFrame frame = new JFrame();
@@ -132,6 +140,12 @@ public class Start{
                             startLan(piskvorky);
                         }
                         else {
+                            try {
+                                server.end();
+                                client.end();
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
+                            }
                             if(piskvorky.winX > piskvorky.winO){
                                 JOptionPane.showMessageDialog(frame, "Konec hry, vyhral X");
                             }else{
@@ -156,5 +170,7 @@ public class Start{
     public String getIndexTlaco(){
         return String.valueOf(indexTlaco);
     }
+
+
 
 }

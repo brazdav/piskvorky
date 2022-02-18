@@ -21,6 +21,7 @@ public class Client extends Start implements FirstTurn{
     // constructor to put ip address and port
     public Client(String address, int port, Piskvorky piskvorky) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         // establish a connection
+        Start start = new Start(this, "client");
         connect = hostAvailabilityCheck(address,port);
         if (connect){
         try {
@@ -93,7 +94,7 @@ public class Client extends Start implements FirstTurn{
             JOptionPane.showMessageDialog(obj.dialogy, "Na této adrese není zapnutý žádný server");
         }
     }
-    private void end() throws IOException {
+    public void end() throws IOException {
         System.out.println("Closing connection");
 
         // close connection
