@@ -75,6 +75,46 @@ public class Client extends Start implements FirstTurn {
             }
         });
             try {
+                thread = new Thread(() -> {
+                    while (!line.equals("Over")) {
+                        getIndexTlaco();
+                        if (indexTlacoPredchozi != indexTlaco && prichozi != indexTlaco) {
+                            try {
+                                out.writeUTF(String.valueOf(indexTlaco));
+                                odchozi = indexTlaco;
+                                for (Object button : buttons) {
+                                    piskvorky.buttonOff((JButton) button);
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            indexTlacoPredchozi = indexTlaco;
+                        }
+                    }
+                });
+
+                thread2 = new Thread(() -> {
+                    while (!line.equals("Over")) {
+                        try {
+                            line = in.readUTF();
+                            System.out.println(line);
+                            if (line.equals("true") || line.equals("false")) {
+                                FirstTurn.player1_turn.set(Boolean.parseBoolean(line));
+                            } else if (Integer.parseInt(line) != odchozi) {
+                                int index = Integer.parseInt(line);
+                                prichozi = index;
+                                JButton button = (JButton) buttons.get(index);
+                                for (Object button2 : buttons) {
+                                    piskvorky.buttonOn((JButton) button2);
+                                }
+                                button.doClick();
+                            }
+                        } catch (IOException i) {
+                            System.out.println(i);
+                        }
+                    }
+                });
+
                 socket = new Socket(address, port);
                 System.out.println("Connected");
                 startLan(piskvorky);
