@@ -20,9 +20,9 @@ public class SettingUpServer extends Piskvorky implements ActionListener{
 
 
     JButton send;
-
-    public SettingUpServer()throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-
+    Piskvorky piskvorky;
+    public SettingUpServer(Piskvorky piskvorky)throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+    this.piskvorky = piskvorky;
 
         dialogy = new JFrame("Dialogy");
 
@@ -135,7 +135,7 @@ public class SettingUpServer extends Piskvorky implements ActionListener{
         dialogy.dispose();
 
         try {
-            Server server = new Server();
+            Server server = new Server(piskvorky);
         } catch (UnsupportedAudioFileException unsupportedAudioFileException) {
             unsupportedAudioFileException.printStackTrace();
         } catch (LineUnavailableException lineUnavailableException) {

@@ -46,12 +46,13 @@ public class Piskvorky extends MyButtons implements Music{
     ButtonGroup bg;
     JLabel pocetK;
     int kola;
+    Piskvorky a;
 
 
 
 
     public Piskvorky() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        System.out.println("konstruktor");
+        a = this;
         clip = Music.nacteni("Adventure.wav");
         clip.loop(Clip.LOOP_CONTINUOUSLY);
         clip.stop();
@@ -152,7 +153,7 @@ public class Piskvorky extends MyButtons implements Music{
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    SettingUpClient setClient = new SettingUpClient();
+                    SettingUpClient setClient = new SettingUpClient(a);
                 } catch (UnsupportedAudioFileException ex) {
                     ex.printStackTrace();
                 } catch (LineUnavailableException ex) {
@@ -178,7 +179,7 @@ public class Piskvorky extends MyButtons implements Music{
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    SettingUpServer dialogs = new SettingUpServer();
+                    SettingUpServer dialogs = new SettingUpServer(a);
                 } catch (UnsupportedAudioFileException ex) {
                     ex.printStackTrace();
                 } catch (LineUnavailableException ex) {
@@ -269,7 +270,7 @@ public class Piskvorky extends MyButtons implements Music{
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
-                obj.start();
+                obj.start(a);
                 menu.dispose();
                 clip.stop();
             }

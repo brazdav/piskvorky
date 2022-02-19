@@ -19,14 +19,15 @@ public class Client extends Start implements FirstTurn{
     private int prichozi;
     private boolean connect;
     // constructor to put ip address and port
-    public Client(String address, int port) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+    public Client(String address, int port, Piskvorky piskvorky) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         // establish a connection
         connect = hostAvailabilityCheck(address,port);
+        Start start = new Start();
         if (connect){
         try {
             socket = new Socket(address, port);
             System.out.println("Connected");
-            startLan();
+            start.startLan(piskvorky);
             // takes input from terminal
             input = new BufferedReader(new InputStreamReader(System.in));
 
@@ -51,7 +52,7 @@ public class Client extends Start implements FirstTurn{
                         out.writeUTF(String.valueOf(indexTlaco));
                         odchozi = indexTlaco;
                         for (Object button : buttons) {
-                            buttonOff((JButton) button);
+                            piskvorky.buttonOff((JButton) button);
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -73,7 +74,7 @@ public class Client extends Start implements FirstTurn{
                             prichozi = index;
                             JButton button = (JButton) buttons.get(index);
                             for (Object button2 : buttons) {
-                                buttonOn((JButton) button2);
+                                piskvorky.buttonOn((JButton) button2);
                             }
                             button.doClick();
                         }
@@ -89,7 +90,7 @@ public class Client extends Start implements FirstTurn{
     }
         else {
             //menu.setVisible(false);
-            SettingUpClient obj = new SettingUpClient();
+            SettingUpClient obj = new SettingUpClient(piskvorky);
             JOptionPane.showMessageDialog(obj.dialogy, "Na této adrese není zapnutý žádný server");
         }
     }

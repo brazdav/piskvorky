@@ -21,7 +21,7 @@ public class Server extends Start{
     private int odchozi;
     private int prichozi;
     // constructor with port
-    public Server() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+    public Server(Piskvorky piskvorky) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         // starts server and waits for a connection
         try {
             server = new ServerSocket(port);
@@ -29,7 +29,7 @@ public class Server extends Start{
             System.out.println("Waiting for a client ...");
             socket = server.accept();
             System.out.println("Client accepted");
-            startLan();
+            startLan(piskvorky);
             // takes input from the client socket
             in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
 
@@ -38,7 +38,7 @@ public class Server extends Start{
             input = new BufferedReader(new InputStreamReader(System.in));
 
             try {
-                out.writeUTF(String.valueOf(player1_turn.get()));
+                out.writeUTF(String.valueOf(piskvorky.player1_turn.get()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -54,7 +54,7 @@ public class Server extends Start{
                             odchozi = indexTlaco;
                             System.out.println(odchozi);
                             for (Object button : buttons) {
-                                buttonOff((JButton) button);
+                                piskvorky.buttonOff((JButton) button);
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -73,7 +73,7 @@ public class Server extends Start{
                                 prichozi = index;
                                 JButton button = (JButton) buttons.get(index);
                             for (Object button2 : buttons) {
-                                buttonOn((JButton) button2);
+                                piskvorky.buttonOn((JButton) button2);
                             }
                                 button.doClick();
                         }
