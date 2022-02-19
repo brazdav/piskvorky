@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-public class SettingUpClient implements ActionListener{
+public class SettingUpClient extends Piskvorky implements ActionListener{
     JFrame dialogy;
     JTextField ipaddress;
     String adresa;
@@ -14,9 +14,9 @@ public class SettingUpClient implements ActionListener{
     JLabel nazev;
 
     JButton send;
-    Object piskvorky;
-    public SettingUpClient(Piskvorky piskvorky)throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        this.piskvorky = piskvorky;
+
+    public SettingUpClient()throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+
 
         dialogy = new JFrame("Dialogy");
 
@@ -79,6 +79,7 @@ public class SettingUpClient implements ActionListener{
         dialogy.add(barva);
 
         dialogy.setVisible(true);
+        menu.dispose();
     }
 
 
@@ -88,7 +89,7 @@ public class SettingUpClient implements ActionListener{
         adresa = ipaddress.getText();
         System.out.print(adresa);
         try {
-            Client client = new Client(adresa, 6669,(Piskvorky) piskvorky);
+            Client client = new Client(adresa, 6669);
         } catch (UnsupportedAudioFileException unsupportedAudioFileException) {
             unsupportedAudioFileException.printStackTrace();
         } catch (LineUnavailableException lineUnavailableException) {

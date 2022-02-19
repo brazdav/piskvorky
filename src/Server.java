@@ -5,7 +5,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class Server extends Start implements FirstTurn{
+public class Server extends Start{
     //initialize socket and input stream
     private Socket socket = null;
     private ServerSocket server = null;
@@ -21,7 +21,7 @@ public class Server extends Start implements FirstTurn{
     private int odchozi;
     private int prichozi;
     // constructor with port
-    public Server(Piskvorky piskvorky) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+    public Server() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         // starts server and waits for a connection
         try {
             server = new ServerSocket(port);
@@ -29,7 +29,7 @@ public class Server extends Start implements FirstTurn{
             System.out.println("Waiting for a client ...");
             socket = server.accept();
             System.out.println("Client accepted");
-            startLan(piskvorky);
+            startLan();
             // takes input from the client socket
             in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
 
@@ -54,7 +54,7 @@ public class Server extends Start implements FirstTurn{
                             odchozi = indexTlaco;
                             System.out.println(odchozi);
                             for (Object button : buttons) {
-                                piskvorky.buttonOff((JButton) button);
+                                buttonOff((JButton) button);
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -73,7 +73,7 @@ public class Server extends Start implements FirstTurn{
                                 prichozi = index;
                                 JButton button = (JButton) buttons.get(index);
                             for (Object button2 : buttons) {
-                                piskvorky.buttonOn((JButton) button2);
+                                buttonOn((JButton) button2);
                             }
                                 button.doClick();
                         }

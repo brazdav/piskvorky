@@ -45,13 +45,13 @@ public class Piskvorky extends MyButtons implements Music{
     JRadioButton r3;
     ButtonGroup bg;
     JLabel pocetK;
-    public int kola;
-    Object a;
+    int kola;
+
 
 
 
     public Piskvorky() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        a = this;
+        System.out.println("konstruktor");
         clip = Music.nacteni("Adventure.wav");
         clip.loop(Clip.LOOP_CONTINUOUSLY);
         clip.stop();
@@ -152,7 +152,7 @@ public class Piskvorky extends MyButtons implements Music{
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    SettingUpClient setClient = new SettingUpClient((Piskvorky)a);
+                    SettingUpClient setClient = new SettingUpClient();
                 } catch (UnsupportedAudioFileException ex) {
                     ex.printStackTrace();
                 } catch (LineUnavailableException ex) {
@@ -178,7 +178,7 @@ public class Piskvorky extends MyButtons implements Music{
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    SettingUpServer dialogs = new SettingUpServer((Piskvorky)a);
+                    SettingUpServer dialogs = new SettingUpServer();
                 } catch (UnsupportedAudioFileException ex) {
                     ex.printStackTrace();
                 } catch (LineUnavailableException ex) {
@@ -258,7 +258,7 @@ public class Piskvorky extends MyButtons implements Music{
 
         hra.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                pocetKol(r1,r2,r3);
+                pocetKol();
                 Start obj = null;
                 try {
                     obj = new Start();
@@ -269,7 +269,7 @@ public class Piskvorky extends MyButtons implements Music{
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
-                obj.start((Piskvorky) a);
+                obj.start();
                 menu.dispose();
                 clip.stop();
             }
@@ -298,7 +298,7 @@ public class Piskvorky extends MyButtons implements Music{
     }
 
 
-    public void pocetKol(JRadioButton r1,JRadioButton r2,JRadioButton r3){
+    public void pocetKol(){
         if (r1.isSelected()){
             kola = 1;
         }
