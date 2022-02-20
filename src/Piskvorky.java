@@ -167,16 +167,6 @@ public class Piskvorky extends MyButtons implements Music{
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
-
-                /*try {
-                    Client client = new Client("192.168.0.94", 6669);
-                } catch (UnsupportedAudioFileException unsupportedAudioFileException) {
-                    unsupportedAudioFileException.printStackTrace();
-                } catch (LineUnavailableException lineUnavailableException) {
-                    lineUnavailableException.printStackTrace();
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }*/
             }
         });
 

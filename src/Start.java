@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Start extends Piskvorky{
+public class Start{
     public int indexTlaco;
     private double height;
     private Dimension screenSize;

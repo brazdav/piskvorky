@@ -96,7 +96,7 @@ public class Server extends Start{
         }
     }
     public void end() throws IOException {
-        System.out.println("Closing connection");
+        System.out.println("Server se vyplnul");
         // close connection
         input.close();
         out.close();

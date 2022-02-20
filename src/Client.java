@@ -21,79 +21,82 @@ public class Client extends Start implements FirstTurn{
     public Client(String address, int port, Piskvorky piskvorky) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         // establish a connection
         Start start = new Start(this, "client");
-        try {
-            socket = new Socket(address, port);
-            System.out.println("Connected");
-            startLan(piskvorky);
-            // takes input from terminal
-            input = new BufferedReader(new InputStreamReader(System.in));
-
-            // sends output to the socket
-            out = new DataOutputStream(socket.getOutputStream());
-
-            in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
-        } catch (UnknownHostException u) {
-            System.out.println(u);
-        } catch (IOException i) {
-            System.out.println(i);
-        }
-
-        // string to read message from input
-
-        // keep reading until "Over" is input
-        thread = new Thread(() -> {
-            while (!line.equals("Over")){
-                getIndexTlaco();
-                if (indexTlacoPredchozi != indexTlaco && prichozi != indexTlaco) {
-                    try {
-                        out.writeUTF(String.valueOf(indexTlaco));
-                        odchozi = indexTlaco;
-                        for (Object button : buttons) {
-                            piskvorky.buttonOff((JButton) button);
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    indexTlacoPredchozi = indexTlaco;
-                }
-            }
-        });
-
-        thread2 = new Thread(() -> {
-        while (!line.equals("Over")) {
             try {
-                line = in.readUTF();
-                System.out.println(line);
-                if (line.equals("true") || line.equals("false")){
-                    player1_turn.set(Boolean.parseBoolean(line));
-                }
-                else if (Integer.parseInt(line) != odchozi){
-                    int index = Integer.parseInt(line);
-                    prichozi = index;
-                    JButton button = (JButton) buttons.get(index);
-                    for (Object button2 : buttons) {
-                        piskvorky.buttonOn((JButton) button2);
-                    }
-                    button.doClick();
-                }
+                socket = new Socket(address, port);
+                System.out.println("Connected");
+                startLan(piskvorky);
+                // takes input from terminal
+                input = new BufferedReader(new InputStreamReader(System.in));
+
+                // sends output to the socket
+                out = new DataOutputStream(socket.getOutputStream());
+
+                in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+                thread.start();
+                thread2.start();
+            } catch (UnknownHostException u) {
+                System.out.println(u);
             } catch (IOException i) {
                 System.out.println(i);
+                SettingUpClient obj = new SettingUpClient(piskvorky);
+                JOptionPane.showMessageDialog(obj.dialogy, "Na této adrese není zapnutý žádný server");
             }
-        }
-        });
-        thread.start();
-        thread2.start();
-        // close the connection
+
+            // string to read message from input
+
+            // keep reading until "Over" is input
+            thread = new Thread(() -> {
+                while (!line.equals("Over")) {
+                    getIndexTlaco();
+                    if (indexTlacoPredchozi != indexTlaco && prichozi != indexTlaco) {
+                        try {
+                            out.writeUTF(String.valueOf(indexTlaco));
+                            odchozi = indexTlaco;
+                            for (Object button : buttons) {
+                                piskvorky.buttonOff((JButton) button);
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        indexTlacoPredchozi = indexTlaco;
+                    }
+                }
+            });
+
+            thread2 = new Thread(() -> {
+                while (!line.equals("Over")) {
+                    try {
+                        line = in.readUTF();
+                        System.out.println(line);
+                        if (line.equals("true") || line.equals("false")) {
+                            player1_turn.set(Boolean.parseBoolean(line));
+                        } else if (Integer.parseInt(line) != odchozi) {
+                            int index = Integer.parseInt(line);
+                            prichozi = index;
+                            JButton button = (JButton) buttons.get(index);
+                            for (Object button2 : buttons) {
+                                piskvorky.buttonOn((JButton) button2);
+                            }
+                            button.doClick();
+                        }
+                    } catch (IOException i) {
+                        System.out.println(i);
+                    }
+                }
+            });
+
 
     }
     public void end() throws IOException {
-        System.out.println("Closing connection");
+        System.out.println("Client se vypnul");
 
         // close connection
         input.close();
         out.close();
         socket.close();
         in.close();
+        thread.stop();
+        thread2.stop();
     }
 
 }
