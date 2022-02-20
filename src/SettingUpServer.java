@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-public class SettingUpServer extends Piskvorky implements ActionListener{
+public class SettingUpServer implements ActionListener{
     JFrame dialogy;
     JRadioButton d1;
     JRadioButton d2;
@@ -22,7 +22,7 @@ public class SettingUpServer extends Piskvorky implements ActionListener{
     JButton send;
     Piskvorky piskvorky;
     public SettingUpServer(Piskvorky piskvorky)throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-    this.piskvorky = piskvorky;
+        this.piskvorky = piskvorky;
 
         dialogy = new JFrame("Dialogy");
 
@@ -109,20 +109,20 @@ public class SettingUpServer extends Piskvorky implements ActionListener{
 
         dialogy.setVisible(true);
 
-        menu.setVisible(false);
+        piskvorky.menu.setVisible(false);
 
     }
 
 
     public void pocetKolLan(){
         if (d1.isSelected()){
-            kola = 1;
+            piskvorky.kola = 1;
         }
         else if (d2.isSelected()){
-            kola = 3;
+            piskvorky.kola = 3;
         }
         else if (d3.isSelected()){
-            kola = 5;
+            piskvorky.kola = 5;
         }
     }
 
@@ -132,7 +132,8 @@ public class SettingUpServer extends Piskvorky implements ActionListener{
         FirstTurn.firstTurnLan();
         pocetKolLan();
 
-        dialogy.dispose();
+        dialogy.setVisible(false);
+
 
         try {
             Server server = new Server(piskvorky);

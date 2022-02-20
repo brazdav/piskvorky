@@ -23,6 +23,7 @@ public class Server extends Start{
     // constructor with port
     public Server(Piskvorky piskvorky) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         // starts server and waits for a connection
+        Start start = new Start(this, "server");
         try {
             server = new ServerSocket(port);
             System.out.println("Server started");
@@ -94,7 +95,7 @@ public class Server extends Start{
             System.out.println(i);
         }
     }
-    private void end() throws IOException {
+    public void end() throws IOException {
         System.out.println("Closing connection");
         // close connection
         input.close();

@@ -79,12 +79,16 @@ public class SettingUpClient implements ActionListener{
         dialogy.add(barva);
 
         dialogy.setVisible(true);
-        piskvorky.menu.dispose();
+
+        piskvorky.menu.setVisible(false);
+
     }
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        FirstTurn.firstTurn();
+        FirstTurn.firstTurnLan();
         dialogy.setVisible(false);
         adresa = ipaddress.getText();
         System.out.print(adresa);

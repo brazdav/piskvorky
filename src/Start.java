@@ -7,15 +7,26 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Start{
+public class Start extends Piskvorky{
     public int indexTlaco;
     private double height;
     private Dimension screenSize;
+    private Server server;
+    private Client client;
     public ArrayList buttons = new ArrayList<JButton>();
     public Start() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         height = screenSize.getHeight() - 35;
     }
+    public Start(Object obj, String st) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        if (st.equals("server"))
+            this.server = (Server) obj;
+        else
+            this.client = (Client) obj;
+
+    }
+
+
     public void start (Piskvorky piskvorky){
         JFrame frame = new JFrame();
         frame.setVisible(true);
@@ -84,7 +95,6 @@ public class Start{
     }
 
     public void startLan (Piskvorky piskvorky){
-        piskvorky.menu.dispose();
         JFrame frame = new JFrame();
         frame.setVisible(true);
 
@@ -129,9 +139,15 @@ public class Start{
                         piskvorky.button_panel.removeAll();
                         buttons.removeAll(buttons);
                         if (piskvorky.kola > 0) {
-                            startLan(piskvorky);
+                            start(piskvorky);
                         }
                         else {
+                            try {
+                                server.end();
+                                client.end();
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                            }
                             if(piskvorky.winX > piskvorky.winO){
                                 JOptionPane.showMessageDialog(frame, "Konec hry, vyhral X");
                             }else{
