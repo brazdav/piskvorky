@@ -1,3 +1,8 @@
+package AI;
+
+import Rozhrani.FirstTurn;
+import Spousteni_hry.Vykresleni;
+
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Random;

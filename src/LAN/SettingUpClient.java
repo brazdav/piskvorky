@@ -1,3 +1,8 @@
+package LAN;
+
+import Rozhrani.FirstTurn;
+import Tvoreni_menu.Piskvorky;
+
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
@@ -5,7 +10,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-
 public class SettingUpClient implements ActionListener{
     JFrame dialogy;
     JTextField ipaddress;

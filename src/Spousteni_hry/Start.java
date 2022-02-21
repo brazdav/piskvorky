@@ -1,3 +1,11 @@
+package Spousteni_hry;
+
+import LAN.Client;
+import LAN.Server;
+import Rozhrani.FirstTurn;
+import Tvoreni_menu.Piskvorky;
+import Uprava_tlacitka.MyButtons;
+
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;

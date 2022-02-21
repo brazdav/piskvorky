@@ -1,3 +1,7 @@
+package Spousteni_hry;
+
+import Rozhrani.FirstTurn;
+
 import javax.swing.*;
 import java.awt.*;
 

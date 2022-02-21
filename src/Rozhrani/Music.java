@@ -1,3 +1,5 @@
+package Rozhrani;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -17,7 +19,6 @@ public interface Music {
                 if (i != (pole.length - 1))
                     st += "\\\\";
             }
-            System.out.println(st);
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(new File(st));
             clip = AudioSystem.getClip();
             clip.open(audioStream);

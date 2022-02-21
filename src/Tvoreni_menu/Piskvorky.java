@@ -1,3 +1,12 @@
+package Tvoreni_menu;
+
+import LAN.SettingUpClient;
+import LAN.SettingUpServer;
+import Rozhrani.FirstTurn;
+import Rozhrani.Music;
+import Spousteni_hry.Start;
+import Spousteni_hry.Vykresleni;
+import Uprava_tlacitka.MyButtons;
 
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
@@ -11,43 +20,43 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 
-public class Piskvorky extends MyButtons implements Music{
-    JFrame menu = new JFrame();
-    JPanel title_panel = new JPanel();
+public class Piskvorky extends MyButtons implements Music {
+    public JFrame menu = new JFrame();
+    public JPanel title_panel = new JPanel();
 
-    ImageIcon lanImage= new ImageIcon(getClass().getResource("button.png"));
-    ImageIcon hraImage= new ImageIcon(getClass().getResource("hra.png"));
-    ImageIcon clientImage = new ImageIcon(getClass().getResource("client.png"));
-    ImageIcon serverImage = new ImageIcon(getClass().getResource("server.png"));
-    ImageIcon logoImage= new ImageIcon(getClass().getResource("tiktak.png"));
-    ImageIcon soundImage1 = new ImageIcon(getClass().getResource("sound.png"));
-    ImageIcon soundImage2 = new ImageIcon(getClass().getResource("mute.png"));
+    ImageIcon lanImage= new ImageIcon(getClass().getResource("/Obrazky/button.png"));
+    ImageIcon hraImage= new ImageIcon(getClass().getResource("/Obrazky/hra.png"));
+    ImageIcon clientImage = new ImageIcon(getClass().getResource("/Obrazky/client.png"));
+    ImageIcon serverImage = new ImageIcon(getClass().getResource("/Obrazky/server.png"));
+    ImageIcon logoImage= new ImageIcon(getClass().getResource("/Obrazky/tiktak.png"));
+    public ImageIcon soundImage1 = new ImageIcon(getClass().getResource("/Obrazky/sound.png"));
+    ImageIcon soundImage2 = new ImageIcon(getClass().getResource("/Obrazky/mute.png"));
 
     JLabel textfield1 = new JLabel();
 
     JButton hra;
     JButton lan;
     JLabel logoLabel;
-    JButton sound;
+    public JButton sound;
     JButton server = new JButton(serverImage);
     JButton client = new JButton(clientImage);
 
 
-    JLabel vyhranaKola = new JLabel("Vyhrana kola:");
+    public JLabel vyhranaKola = new JLabel("Vyhrana kola:");
 
 
 
 
 
     boolean turn = true;
-    Clip clip;
+    public Clip clip;
 
     JRadioButton r1;
     JRadioButton r2;
     JRadioButton r3;
     ButtonGroup bg;
     JLabel pocetK;
-    int kola;
+    public int kola;
 
     private String adresa;
     Piskvorky piskvorky = this;
@@ -119,13 +128,13 @@ public class Piskvorky extends MyButtons implements Music{
         vyhranaKola.setFont(new Font("SansSerif",Font.BOLD,20));
         vyhranaKola.setForeground(new Color(255, 255, 255));
 
-        textfield.setBackground(new Color(43, 135, 255));
-        textfield.setForeground(new Color(255, 255, 255));
-        textfield.setFont(new Font("SansSerif",Font.BOLD,75));
-        textfield.setHorizontalAlignment(JLabel.CENTER);
-        textfield.setText("Piškvorky");
-        textfield.setOpaque(true);
-        textfield.add(vyhranaKola);
+        FirstTurn.textfield.setBackground(new Color(43, 135, 255));
+        FirstTurn.textfield.setForeground(new Color(255, 255, 255));
+        FirstTurn.textfield.setFont(new Font("SansSerif",Font.BOLD,75));
+        FirstTurn.textfield.setHorizontalAlignment(JLabel.CENTER);
+        FirstTurn.textfield.setText("Piškvorky");
+        FirstTurn.textfield.setOpaque(true);
+        FirstTurn.textfield.add(vyhranaKola);
 
         client.setBounds(275,375,250,80);
         client.setVisible(true);
@@ -189,7 +198,7 @@ public class Piskvorky extends MyButtons implements Music{
                 FirstTurn.firstTurn();
                 FirstTurn.firstTurnLan();
                 try {
-                    Server server = new Server();
+                    LAN.Server server = new LAN.Server();
                 } catch (UnsupportedAudioFileException unsupportedAudioFileException) {
                     unsupportedAudioFileException.printStackTrace();
                 } catch (LineUnavailableException lineUnavailableException) {
@@ -311,7 +320,6 @@ public class Piskvorky extends MyButtons implements Music{
         InetAddress ip = null;
         try {
             ip = InetAddress.getLocalHost();
-            System.out.println("Your current IP address : " + ip);
 
         } catch (UnknownHostException e) {
 

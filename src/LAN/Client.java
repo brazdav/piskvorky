@@ -1,10 +1,17 @@
+package LAN;
+
+import Rozhrani.FirstTurn;
+import Spousteni_hry.Start;
+import Tvoreni_menu.Piskvorky;
+
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
-import java.net.*;
 import java.io.*;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
-public class Client extends Start implements FirstTurn{
+public class Client extends Start implements FirstTurn {
     // initialize socket and input output streams
     private Socket socket = null;
     private BufferedReader input = null;
@@ -69,7 +76,7 @@ public class Client extends Start implements FirstTurn{
                         line = in.readUTF();
                         System.out.println(line);
                         if (line.equals("true") || line.equals("false")) {
-                            player1_turn.set(Boolean.parseBoolean(line));
+                            FirstTurn.player1_turn.set(Boolean.parseBoolean(line));
                         } else if (Integer.parseInt(line) != odchozi) {
                             int index = Integer.parseInt(line);
                             prichozi = index;
@@ -88,7 +95,7 @@ public class Client extends Start implements FirstTurn{
 
     }
     public void end() throws IOException {
-        System.out.println("Client se vypnul");
+        System.out.println("LAN.Client se vypnul");
 
         // close connection
         input.close();

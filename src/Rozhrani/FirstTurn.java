@@ -1,8 +1,10 @@
+package Rozhrani;
+
 import javax.swing.*;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-interface FirstTurn{
+public interface FirstTurn{
     AtomicBoolean player1_turn = new AtomicBoolean(true);
     AtomicBoolean server_turn = new AtomicBoolean(true);
     Random random = new Random();

@@ -1,3 +1,8 @@
+package LAN;
+
+import Spousteni_hry.Start;
+import Tvoreni_menu.Piskvorky;
+
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
@@ -5,7 +10,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class Server extends Start{
+public class Server extends Start {
     //initialize socket and input stream
     private Socket socket = null;
     private ServerSocket server = null;
@@ -26,10 +31,10 @@ public class Server extends Start{
         Start start = new Start(this, "server");
         try {
             server = new ServerSocket(port);
-            System.out.println("Server started");
+            System.out.println("LAN.Server started");
             System.out.println("Waiting for a client ...");
             socket = server.accept();
-            System.out.println("Client accepted");
+            System.out.println("LAN.Client accepted");
             startLan(piskvorky);
             // takes input from the client socket
             in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
@@ -96,7 +101,7 @@ public class Server extends Start{
         }
     }
     public void end() throws IOException {
-        System.out.println("Server se vyplnul");
+        System.out.println("LAN.Server se vyplnul");
         // close connection
         input.close();
         out.close();

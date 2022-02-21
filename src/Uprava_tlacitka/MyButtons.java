@@ -1,14 +1,20 @@
+package Uprava_tlacitka;
+
+import AI.AI1;
+import Rozhrani.FirstTurn;
+import Rozhrani.Podminky;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class MyButtons extends AI1 implements FirstTurn, Podminky{
+public class MyButtons extends AI1 implements FirstTurn, Podminky {
     int xRada = 0;
     int oRada = 0;
-    int winX = 0;
-    int winO = 0;
-    JPanel button_panel = new JPanel();
-    boolean vyhra = false;
+    public int winX = 0;
+    public int winO = 0;
+    public JPanel button_panel = new JPanel();
+    public boolean vyhra = false;
     boolean turn;
 
     public MyButtons() {

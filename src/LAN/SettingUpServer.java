@@ -1,3 +1,8 @@
+package LAN;
+
+import Rozhrani.FirstTurn;
+import Tvoreni_menu.Piskvorky;
+
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
@@ -151,7 +156,6 @@ public class SettingUpServer implements ActionListener{
         InetAddress ip = null;
         try {
             ip = InetAddress.getLocalHost();
-            System.out.println("Your current IP address : " + ip);
 
         } catch (UnknownHostException e) {
 
