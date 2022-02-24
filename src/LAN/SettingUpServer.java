@@ -57,11 +57,6 @@ public class SettingUpServer implements ActionListener{
         dialogy.setLocationRelativeTo(null);
         dialogy.getContentPane().setBackground(new Color(50,50,50));
 
-
-        // setsize of dialog
-
-        dialogy.setLocation(500,500);
-        // set visibility of dialog
         barva.setBackground(new Color(43, 135, 255));
         barva.setForeground(new Color(255, 255, 255));
         barva.setFont(new Font("SansSerif",Font.BOLD,65));
