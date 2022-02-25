@@ -11,20 +11,23 @@ import java.util.Random;
 public class AI1 extends JButton implements FirstTurn {
     int pocet = 0;
     Random random = new Random();
+    private String znakAi;
     public void obrana (String znak, int poradi, ArrayList<JButton> buttons, String strana){
         pocet ++;
         System.out.println(poradi);
-        Vykresleni obj = new Vykresleni();
-
+        if (znak.equals("X"))
+            this.znakAi = "O";
+        else
+            this.znakAi = "X";
         if (pocet == 2){
             switch (strana){
                 case "leva": poradi--;
-                obj.vykresleni(buttons.get(poradi));
+                buttons.get(poradi).setText(znakAi);
             }
-
-        }
-        else {
-            obj.vykresleni(buttons.get(random.nextInt(225)));
+            if (znakAi.equals("X"))
+                textfield.setText("O turn");
+            else
+                textfield.setText("X turn");
         }
     }
 }

@@ -16,8 +16,10 @@ public class MyButtons extends AI1 implements FirstTurn, Podminky {
     public JPanel button_panel = new JPanel();
     public boolean vyhra = false;
     boolean turn;
+    private String lan_ai;
 
-    public MyButtons() {
+    public MyButtons(String lan_ai) {
+        this.lan_ai = lan_ai;
         this.setFont(new Font("MV Boli", Font.BOLD, 25));
         this.setBackground(new Color(255, 255, 255));
         this.setFocusable(false);
@@ -53,7 +55,9 @@ public class MyButtons extends AI1 implements FirstTurn, Podminky {
             poradi--;
         } else return;
         if (((JButton) buttons.get(poradi)).getText().equals(znak)) {
-            //obrana(znak, poradi, buttons, "leva");
+            if (lan_ai.equals("ai")) {
+                obrana(znak, poradi, buttons, "leva");
+            }
             if (znak.equals("X")) xWins();
             else oWins();
             checkLeva((JButton) buttons.get(poradi), buttons);

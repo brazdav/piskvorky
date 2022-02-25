@@ -7,9 +7,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public interface FirstTurn{
     AtomicBoolean player1_turn = new AtomicBoolean(true);
     AtomicBoolean server_turn = new AtomicBoolean(true);
+    AtomicBoolean player_turn = new AtomicBoolean(true);
     Random random = new Random();
     JLabel textfield = new JLabel();
-
     static void firstTurn(){
 
         if(random.nextInt(2)==1){
@@ -28,6 +28,15 @@ public interface FirstTurn{
         }
         else{
             server_turn.set(true);
+        }
+    }
+
+    default void firstTurnAI(){
+        if(random.nextInt(2)==1){
+            player_turn.set(false);
+        }
+        else{
+            player_turn.set(true);
         }
     }
 

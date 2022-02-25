@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Start{
+public class Start implements FirstTurn{
     public int indexTlaco;
     private double height;
     private Dimension screenSize;
@@ -35,6 +35,8 @@ public class Start{
     }
 
 
+
+
     public void start (Piskvorky piskvorky){
         JFrame frame = new JFrame();
         frame.setVisible(true);
@@ -52,7 +54,7 @@ public class Start{
         frame.add(piskvorky.button_panel);
 
         for (int i = 0; i < 225; i++) {
-            MyButtons obj = new MyButtons();
+            MyButtons obj = new MyButtons("ai");
             piskvorky.button_panel.add(obj);
             buttons.add(obj);
             obj.addActionListener(new ActionListener() {
@@ -97,9 +99,7 @@ public class Start{
             });
         }
         piskvorky.title_panel.add(piskvorky.textfield);
-
-
-        FirstTurn.firstTurn();
+        firstTurnAI();
     }
 
     public void startLan (Piskvorky piskvorky){
@@ -120,7 +120,7 @@ public class Start{
         frame.add(piskvorky.button_panel);
 
         for (int i = 0; i < 225; i++) {
-            MyButtons obj = new MyButtons();
+            MyButtons obj = new MyButtons("lan");
             piskvorky.button_panel.add(obj);
             buttons.add(obj);
             obj.addActionListener(new ActionListener() {
