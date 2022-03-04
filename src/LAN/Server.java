@@ -25,13 +25,11 @@ public class Server extends Start {
     private int indexTlacoPredchozi;
     private int odchozi;
     private int prichozi;
+    private Server obj;
     // constructor with port
-    public Server() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        sendEnd();
-    }
     public Server(Piskvorky piskvorky) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         // starts server and waits for a connection
-        Start start = new Start(this, "server");
+        this.obj = this;
         try {
             server = new ServerSocket(port);
             System.out.println("LAN.Server started");
@@ -39,6 +37,7 @@ public class Server extends Start {
             socket = server.accept();
             System.out.println("LAN.Client accepted");
             startLan(piskvorky);
+            getServer(obj);
             // takes input from the client socket
             in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
 
@@ -104,7 +103,7 @@ public class Server extends Start {
         }
     }
 
-    private void sendEnd() throws IOException {
+    public void sendEnd() throws IOException {
         out.writeUTF("Over");
     }
 

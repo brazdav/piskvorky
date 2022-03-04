@@ -25,12 +25,8 @@ public class Client extends Start implements FirstTurn {
     private int odchozi;
     private int prichozi;
     // constructor to put ip address and port
-    public Client() throws UnsupportedAudioFileException, LineUnavailableException, IOException{
-        sendEnd();
-    }
     public Client(String address, int port, Piskvorky piskvorky) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         // establish a connection
-        Start start = new Start(this, "client");
         thread = new Thread(() -> {
             while (!line.equals("Over")) {
                 getIndexTlaco();
@@ -103,9 +99,6 @@ public class Client extends Start implements FirstTurn {
 
 
 
-    }
-    private void sendEnd()  throws IOException {
-        out.writeUTF("Over");
     }
     private void end() throws IOException {
         System.out.println("LAN.Client se vypnul");

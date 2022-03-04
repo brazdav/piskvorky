@@ -26,13 +26,6 @@ public class Start implements FirstTurn{
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         height = screenSize.getHeight() - 35;
     }
-    public Start(Object obj, String st) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        if (st.equals("server"))
-            this.server = (Server) obj;
-        else
-            this.client = (Client) obj;
-
-    }
 
 
 
@@ -151,12 +144,8 @@ public class Start implements FirstTurn{
                         }
                         else {
                             try {
-                                Server server = new Server();
+                                server.sendEnd();
                                 //Client client = new Client();
-                            } catch (UnsupportedAudioFileException unsupportedAudioFileException) {
-                                unsupportedAudioFileException.printStackTrace();
-                            } catch (LineUnavailableException lineUnavailableException) {
-                                lineUnavailableException.printStackTrace();
                             } catch (IOException ioException) {
                                 ioException.printStackTrace();
                             }
@@ -180,7 +169,9 @@ public class Start implements FirstTurn{
 
     }
 
-
+    public void getServer(Server server){
+        this.server = server;
+    }
     public String getIndexTlaco(){
         return String.valueOf(indexTlaco);
     }
