@@ -15,8 +15,7 @@ public class MyButtons extends AI1 implements FirstTurn, Podminky {
     public int winO = 0;
     public JPanel button_panel = new JPanel();
     public boolean vyhra = false;
-    boolean turn;
-    private String lan_ai;
+    static private String lan_ai;
 
     public MyButtons(String lan_ai) {
         this.lan_ai = lan_ai;
@@ -35,6 +34,9 @@ public class MyButtons extends AI1 implements FirstTurn, Podminky {
                 MyButtons.this.setBackground(Color.WHITE);
             }
         });
+    }
+
+    public MyButtons() {
     }
 
     public void buttonOn(JButton tlaco){

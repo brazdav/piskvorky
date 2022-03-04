@@ -66,6 +66,11 @@ public class Client extends Start implements FirstTurn {
                     System.out.println(i);
                 }
             }
+            try {
+                end();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
             try {
                 socket = new Socket(address, port);

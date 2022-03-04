@@ -59,9 +59,9 @@ public class Server extends Start {
                             out.writeUTF(String.valueOf(indexTlaco));
                             odchozi = indexTlaco;
                             System.out.println(odchozi);
-                            for (Object button : buttons) {
+                            /*for (Object button : buttons) {
                                 piskvorky.buttonOff((JButton) button);
-                            }
+                            }*/
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -101,14 +101,16 @@ public class Server extends Start {
         }
     }
     public void end() throws IOException {
+        out.writeUTF("Over");
         System.out.println("LAN.Server se vyplnul");
         // close connection
+        thread.stop();
+        thread2.stop();
         input.close();
         out.close();
         socket.close();
         in.close();
-        thread.stop();
-        thread2.stop();
+
     }
 
 
