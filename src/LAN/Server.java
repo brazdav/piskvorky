@@ -26,6 +26,9 @@ public class Server extends Start {
     private int odchozi;
     private int prichozi;
     // constructor with port
+    public Server() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        sendEnd();
+    }
     public Server(Piskvorky piskvorky) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         // starts server and waits for a connection
         Start start = new Start(this, "server");
@@ -100,8 +103,12 @@ public class Server extends Start {
             System.out.println(i);
         }
     }
-    public void end() throws IOException {
+
+    private void sendEnd() throws IOException {
         out.writeUTF("Over");
+    }
+
+    private void end() throws IOException {
         System.out.println("LAN.Server se vyplnul");
         // close connection
         thread.stop();

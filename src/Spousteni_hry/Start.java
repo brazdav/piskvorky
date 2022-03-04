@@ -150,6 +150,16 @@ public class Start implements FirstTurn{
                             start(piskvorky);
                         }
                         else {
+                            try {
+                                Server server = new Server();
+                                //Client client = new Client();
+                            } catch (UnsupportedAudioFileException unsupportedAudioFileException) {
+                                unsupportedAudioFileException.printStackTrace();
+                            } catch (LineUnavailableException lineUnavailableException) {
+                                lineUnavailableException.printStackTrace();
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
+                            }
                             if(piskvorky.winX > piskvorky.winO){
                                 JOptionPane.showMessageDialog(frame, "Konec hry, vyhral X");
                             }else{
