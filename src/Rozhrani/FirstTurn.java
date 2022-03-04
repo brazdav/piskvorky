@@ -31,7 +31,7 @@ public interface FirstTurn{
         }
     }
 
-    default void firstTurnAI(){
+    static void firstTurnAI(){
         if(random.nextInt(2)==1){
             player_turn.set(false);
         }

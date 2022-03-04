@@ -31,6 +31,7 @@ public class Start implements FirstTurn{
 
 
     public void start (Piskvorky piskvorky){
+        MyButtons obj2 = new MyButtons("ai");
         JFrame frame = new JFrame();
         frame.setVisible(true);
 
@@ -47,7 +48,7 @@ public class Start implements FirstTurn{
         frame.add(piskvorky.button_panel);
 
         for (int i = 0; i < 225; i++) {
-            MyButtons obj = new MyButtons("ai");
+            MyButtons obj = new MyButtons();
             piskvorky.button_panel.add(obj);
             buttons.add(obj);
             obj.addActionListener(new ActionListener() {
@@ -92,10 +93,11 @@ public class Start implements FirstTurn{
             });
         }
         piskvorky.title_panel.add(piskvorky.textfield);
-        firstTurnAI();
+        FirstTurn.firstTurnAI();
     }
 
     public void startLan (Piskvorky piskvorky){
+        MyButtons obj2 = new MyButtons("lan");
         JFrame frame = new JFrame();
         frame.setVisible(true);
 
@@ -113,7 +115,7 @@ public class Start implements FirstTurn{
         frame.add(piskvorky.button_panel);
 
         for (int i = 0; i < 225; i++) {
-            MyButtons obj = new MyButtons("lan");
+            MyButtons obj = new MyButtons();
             piskvorky.button_panel.add(obj);
             buttons.add(obj);
             obj.addActionListener(new ActionListener() {

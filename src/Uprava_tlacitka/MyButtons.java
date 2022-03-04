@@ -36,9 +36,6 @@ public class MyButtons extends AI1 implements FirstTurn, Podminky {
         });
     }
 
-    public MyButtons() {
-    }
-
     public void buttonOn(JButton tlaco){
         tlaco.setEnabled(true);
     }
@@ -75,6 +72,9 @@ public class MyButtons extends AI1 implements FirstTurn, Podminky {
             poradi++;
         } else return;
         if (((JButton) buttons.get(poradi)).getText().equals(znak)) {
+            if (lan_ai.equals("ai")) {
+                obrana(znak, poradi, buttons, "prava", oRada, xRada);
+            }
             if (znak.equals("X")) xWins();
             else if (znak.equals("O")) oWins();
             checkPrava((JButton) buttons.get(poradi), buttons);
