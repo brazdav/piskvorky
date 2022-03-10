@@ -34,8 +34,10 @@ public class Client extends Start implements FirstTurn {
                     try {
                         out.writeUTF(String.valueOf(indexTlaco));
                         odchozi = indexTlaco;
-                        for (Object button : buttons) {
-                            piskvorky.buttonOff((JButton) button);
+                        if (buttons.get(0) != null) {
+                            for (Object button : buttons) {
+                                piskvorky.buttonOff((JButton) button);
+                            }
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -104,12 +106,12 @@ public class Client extends Start implements FirstTurn {
         System.out.println("LAN.Client se vypnul");
 
         // close connection
+        thread.stop();
+        thread2.stop();
         input.close();
         out.close();
         socket.close();
         in.close();
-        thread.stop();
-        thread2.stop();
     }
 
 }

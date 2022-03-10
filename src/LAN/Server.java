@@ -80,8 +80,10 @@ public class Server extends Start {
                                 int index = Integer.parseInt(line);
                                 prichozi = index;
                                 JButton button = (JButton) buttons.get(index);
-                            for (Object button2 : buttons) {
-                                piskvorky.buttonOn((JButton) button2);
+                            if (buttons.get(0) != null) {
+                                for (Object button2 : buttons) {
+                                    piskvorky.buttonOff((JButton) button2);
+                                }
                             }
                                 button.doClick();
                         }

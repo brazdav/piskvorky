@@ -31,7 +31,7 @@ public class Start implements FirstTurn{
 
 
     public void start (Piskvorky piskvorky){
-        MyButtons obj2 = new MyButtons("ai");
+        piskvorky.getString("ai");
         JFrame frame = new JFrame();
         frame.setVisible(true);
 
@@ -97,7 +97,7 @@ public class Start implements FirstTurn{
     }
 
     public void startLan (Piskvorky piskvorky){
-        MyButtons obj2 = new MyButtons("lan");
+        piskvorky.getString("lan");
         JFrame frame = new JFrame();
         frame.setVisible(true);
 
