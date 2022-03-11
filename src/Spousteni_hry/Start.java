@@ -136,12 +136,12 @@ public class Start implements FirstTurn{
                     piskvorky.checkPravaHore(obj, buttons);
                     if (piskvorky.vyhra){
                         piskvorky.vyhranaKola.setText("Vyhrana kola: X:" + piskvorky.winX + "  O:" + piskvorky.winO);
-                        piskvorky.kola --;
+                        piskvorky.kolaLan --;
                         frame.dispose();
                         piskvorky.vyhra = false;
                         piskvorky.button_panel.removeAll();
                         buttons.removeAll(buttons);
-                        if (piskvorky.kola > 0) {
+                        if (piskvorky.kolaLan > 0) {
                             start(piskvorky);
                         }
                         else {

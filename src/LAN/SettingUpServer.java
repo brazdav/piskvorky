@@ -114,23 +114,14 @@ public class SettingUpServer implements ActionListener{
     }
 
 
-    public void pocetKolLan(){
-        if (d1.isSelected()){
-            piskvorky.kola = 1;
-        }
-        else if (d2.isSelected()){
-            piskvorky.kola = 3;
-        }
-        else if (d3.isSelected()){
-            piskvorky.kola = 5;
-        }
-    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
         FirstTurn.firstTurn();
         FirstTurn.firstTurnLan();
-        pocetKolLan();
+
+        piskvorky.kolaLan = piskvorky.pocetKol(d1,d2,d3);
 
         dialogy.setVisible(false);
 

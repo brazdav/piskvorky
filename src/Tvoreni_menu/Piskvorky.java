@@ -57,6 +57,7 @@ public class Piskvorky extends MyButtons implements Music {
     ButtonGroup bg;
     JLabel pocetK;
     public int kola;
+    public int kolaLan;
 
     private String adresa;
     Piskvorky piskvorky = this;
@@ -265,7 +266,7 @@ public class Piskvorky extends MyButtons implements Music {
 
         hra.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                pocetKol();
+                kola = pocetKol(r1,r2,r3);
                 Start obj = null;
                 try {
                     obj = new Start();
@@ -303,16 +304,17 @@ public class Piskvorky extends MyButtons implements Music {
     }
 
 
-    public void pocetKol(){
+    public int pocetKol(JRadioButton r1, JRadioButton r2, JRadioButton r3){
         if (r1.isSelected()){
-            kola = 1;
+            return (1);
         }
         else if (r2.isSelected()){
-            kola = 3;
+            return (3);
         }
         else if (r3.isSelected()){
-            kola = 5;
+            return (5);
         }
+        return 0;
     }
 
     public String getAdress() {

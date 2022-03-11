@@ -82,7 +82,7 @@ public class Server extends Start {
                                 JButton button = (JButton) buttons.get(index);
                             if (buttons.get(0) != null) {
                                 for (Object button2 : buttons) {
-                                    piskvorky.buttonOff((JButton) button2);
+                                    piskvorky.buttonOn((JButton) button2);
                                 }
                             }
                                 button.doClick();
