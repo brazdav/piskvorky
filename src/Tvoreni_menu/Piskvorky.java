@@ -19,7 +19,15 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-
+/**
+ * Třída Piškvorky dědí z třídy MyButtons a implementuje rozhraní Music
+ * Obsahuje kontruktor, který tvoří celé základní menu. Obsahuje také 2 metody pocetKol() a getAdress().
+ * 5 tlačítek na kterých jsou přidané různé události
+ * @atuhor Simon Valeš, Vojtěch Brázda
+ * @version :)
+ *
+ *
+ **/
 public class Piskvorky extends MyButtons implements Music {
     public JFrame menu = new JFrame();
     public JPanel title_panel = new JPanel();
@@ -63,7 +71,13 @@ public class Piskvorky extends MyButtons implements Music {
     Piskvorky piskvorky = this;
 
 
-
+    /**
+     * Konstruktor třídy Piškvorky
+     * Zde tvoříme celý základ naší aplikace - menu a jeho prvky
+     * Hudba, ikony, tlačítka
+     * Taky nastavuje label pro počítání vyhraných kol
+     *
+    * */
     public Piskvorky() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         clip = Music.nacteni("Adventure.wav");
         clip.loop(Clip.LOOP_CONTINUOUSLY);
@@ -303,7 +317,16 @@ public class Piskvorky extends MyButtons implements Music {
 
     }
 
-
+    /**
+     * Metoda pocetKol počítá kolik kol se má odehrát podle vybraného radio buttonu
+     * Vrací číslo, které nám udává kolikrát se odehraje hra
+     * @param r1 vstupní parametr, selektor pro hodnotu 1
+     * @param r2 vstupní parametr, selektor pro hodnotu 3
+     * @param r3 vstupní parametr, selektor pro hodnotu 5
+     * @return číslo z vybraného radio buttonu
+     * 3 možnosti - 1 kolo, 3 kola a 5 kol
+     * základně je nastaveno 1 kolo
+     * */
     public int pocetKol(JRadioButton r1, JRadioButton r2, JRadioButton r3){
         if (r1.isSelected()){
             return (1);
@@ -316,7 +339,10 @@ public class Piskvorky extends MyButtons implements Music {
         }
         return 0;
     }
-
+    /**
+     * Metoda getAdress zjišťuje adresu PC na kterým je zaplý server od LAN
+     * @return lokolní IP adresu
+    * */
     public String getAdress() {
 
         InetAddress ip = null;
