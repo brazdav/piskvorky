@@ -61,9 +61,9 @@ public class Server extends Start {
                             out.writeUTF(String.valueOf(indexTlaco));
                             odchozi = indexTlaco;
                             System.out.println(odchozi);
-                            /*for (Object button : buttons) {
+                            for (Object button : buttons) {
                                 piskvorky.buttonOff((JButton) button);
-                            }*/
+                            }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -76,25 +76,33 @@ public class Server extends Start {
                 while (!line.equals("Over")) {
                     try {
                         line = in.readUTF();
-                        if (Integer.parseInt(line) != odchozi){
+                        if (!line.equals("Over")) {
+                            if (Integer.parseInt(line) != odchozi) {
                                 int index = Integer.parseInt(line);
                                 prichozi = index;
                                 JButton button = (JButton) buttons.get(index);
-                            if (buttons.get(0) != null) {
-                                for (Object button2 : buttons) {
-                                    piskvorky.buttonOn((JButton) button2);
+                                if (buttons.get(0) != null) {
+                                    for (Object button2 : buttons) {
+                                        piskvorky.buttonOn((JButton) button2);
+                                    }
                                 }
-                            }
                                 button.doClick();
+                            }
+                        }
+                        else {
+                            System.out.println("dostali jsme over");
+                            end();
+                            break;
                         }
                     } catch (IOException i) {
                         System.out.println(i);
+                        try {
+                            end();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        break;
                     }
-                }
-                try {
-                    end();
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
             });
             thread.start();
@@ -107,13 +115,11 @@ public class Server extends Start {
 
     public void sendEnd() throws IOException {
         out.writeUTF("Over");
+        System.out.println("Over");
     }
 
-    private void end() throws IOException {
+    public void end() throws IOException {
         System.out.println("LAN.Server se vyplnul");
-        // close connection
-        thread.stop();
-        thread2.stop();
         input.close();
         out.close();
         socket.close();

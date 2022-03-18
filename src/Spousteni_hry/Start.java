@@ -145,12 +145,6 @@ public class Start implements FirstTurn{
                             start(piskvorky);
                         }
                         else {
-                            try {
-                                server.sendEnd();
-                                //Client client = new Client();
-                            } catch (IOException ioException) {
-                                ioException.printStackTrace();
-                            }
                             if(piskvorky.winX > piskvorky.winO){
                                 JOptionPane.showMessageDialog(frame, "Konec hry, vyhral X");
                             }else{
@@ -162,6 +156,15 @@ public class Start implements FirstTurn{
                             piskvorky.menu.setVisible(true);
                             piskvorky.sound.setIcon(piskvorky.soundImage1);
                             piskvorky.clip.start();
+                            try {
+                                if(server != null) {
+                                    server.sendEnd();
+                                    server.end();
+                                }
+                                //Client client = new Client();
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
+                            }
                         }
                     }
                 }
