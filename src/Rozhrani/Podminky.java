@@ -11,7 +11,7 @@ public interface Podminky{
         return podminky;
     }
 
-    static ArrayList<Integer> napleni(int a, int pocatecni, int konecna, int b, int pocatecni2, int konecna2){
+    static ArrayList<Integer> naplneni(int a, int pocatecni, int konecna, int b, int pocatecni2, int konecna2){
         ArrayList<Integer> podminky = new ArrayList<>();
         for(int i = pocatecni; i <= konecna; i += a){
             podminky.add(i);

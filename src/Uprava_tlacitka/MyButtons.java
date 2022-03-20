@@ -33,6 +33,7 @@ public class MyButtons extends AI1 implements FirstTurn, Podminky {
                 MyButtons.this.setBackground(Color.WHITE);
             }
         });
+        getObject(this);
     }
 
 
@@ -47,47 +48,49 @@ public class MyButtons extends AI1 implements FirstTurn, Podminky {
 
 
 
-    public void checkLeva(JButton tlaco, ArrayList<JButton> buttons) {
+    public void checkLeva(JButton tlaco, ArrayList<JButton> buttons, String check) {
         String znak = tlaco.getText();
         int poradi = buttons.indexOf(tlaco);
         if (Podminky.vyhodnoceni(poradi, Podminky.naplneni(15, 0, 210))) {
             poradi--;
         } else return;
-        if (((JButton) buttons.get(poradi)).getText().equals(znak)) {
-            if (lan_ai.equals("ai")) {
-                obrana(znak, poradi, buttons, "leva", oRada, xRada);
-            }
-            if (znak.equals("X")) xWins();
-            else oWins();
-            checkLeva((JButton) buttons.get(poradi), buttons);
+            if (((JButton) buttons.get(poradi)).getText().equals(znak)) {
+                if (lan_ai.equals("ai")) {
+                    obrana(znak, poradi, buttons, "leva", oRada, xRada);
+                }
+                if (znak.equals("X")) xWins();
+                else oWins();
+                checkLeva((JButton) buttons.get(poradi), buttons, check);
 
 
-        } else return;
+            } else return;
     }
 
-    public void checkPrava(JButton tlaco, ArrayList<JButton> buttons) {
+
+    public void checkPrava(JButton tlaco, ArrayList<JButton> buttons, String check) {
         String znak = tlaco.getText();
         int poradi = buttons.indexOf(tlaco);
         if (Podminky.vyhodnoceni(poradi, Podminky.naplneni(15, 14, 224))) {
             poradi++;
         } else return;
-        if (((JButton) buttons.get(poradi)).getText().equals(znak)) {
-            if (lan_ai.equals("ai")) {
-                obrana(znak, poradi, buttons, "prava", oRada, xRada);
+            if (((JButton) buttons.get(poradi)).getText().equals(znak)) {
+                if (lan_ai.equals("ai")) {
+                    obrana(znak, poradi, buttons, "prava", oRada, xRada);
+                }
+                if (znak.equals("X")) xWins();
+                else if (znak.equals("O")) oWins();
+                checkPrava((JButton) buttons.get(poradi), buttons, check);
+
+
+            } else {
+                oRada = 0;
+                xRada = 0;
+                return;
             }
-            if (znak.equals("X")) xWins();
-            else if (znak.equals("O")) oWins();
-            checkPrava((JButton) buttons.get(poradi), buttons);
 
-
-        } else {
-            oRada = 0;
-            xRada = 0;
-            return;
-        }
     }
 
-    public void checkDole(JButton tlaco, ArrayList<JButton> buttons) {
+    public void checkDole(JButton tlaco, ArrayList<JButton> buttons, String check) {
         String znak = tlaco.getText();
         int poradi = buttons.indexOf(tlaco);
         if (Podminky.vyhodnoceni(poradi, Podminky.naplneni(1, 210, 254))) {
@@ -99,7 +102,7 @@ public class MyButtons extends AI1 implements FirstTurn, Podminky {
             }
             if (znak.equals("X")) xWins();
             else if (znak.equals("O")) oWins();
-            checkDole((JButton) buttons.get(poradi), buttons);
+            checkDole((JButton) buttons.get(poradi), buttons, check);
 
 
         } else {
@@ -109,7 +112,7 @@ public class MyButtons extends AI1 implements FirstTurn, Podminky {
         }
     }
 
-    public void checkHore(JButton tlaco, ArrayList<JButton> buttons) {
+    public void checkHore(JButton tlaco, ArrayList<JButton> buttons, String check) {
         String znak = tlaco.getText();
         int poradi = buttons.indexOf(tlaco);
         if (Podminky.vyhodnoceni(poradi, Podminky.naplneni(1, 0, 14))) {
@@ -121,17 +124,17 @@ public class MyButtons extends AI1 implements FirstTurn, Podminky {
             }
             if (znak.equals("X")) xWins();
             else if (znak.equals("O")) oWins();
-            checkHore((JButton) buttons.get(poradi), buttons);
+            checkHore((JButton) buttons.get(poradi), buttons, check);
 
 
         } else return;
     }
 
 
-    public void checkPravaHore(JButton tlaco, ArrayList<JButton> buttons) {
+    public void checkPravaHore(JButton tlaco, ArrayList<JButton> buttons, String check) {
         String znak = tlaco.getText();
         int poradi = buttons.indexOf(tlaco);
-        if (Podminky.vyhodnoceni(poradi, Podminky.napleni(1, 0, 14, 15, 14, 224))) {
+        if (Podminky.vyhodnoceni(poradi, Podminky.naplneni(1, 0, 14, 15, 14, 224))) {
             poradi -= 14;
         } else return;
         if (((JButton) buttons.get(poradi)).getText().equals(znak)) {
@@ -140,7 +143,7 @@ public class MyButtons extends AI1 implements FirstTurn, Podminky {
             }
             if (znak.equals("X")) xWins();
             else if (znak.equals("O")) oWins();
-            checkPravaHore((JButton) buttons.get(poradi), buttons);
+            checkPravaHore((JButton) buttons.get(poradi), buttons, check);
 
 
         } else {
@@ -150,10 +153,10 @@ public class MyButtons extends AI1 implements FirstTurn, Podminky {
         }
     }
 
-    public void checkPravaDole(JButton tlaco, ArrayList<JButton> buttons) {
+    public void checkPravaDole(JButton tlaco, ArrayList<JButton> buttons, String check) {
         String znak = tlaco.getText();
         int poradi = buttons.indexOf(tlaco);
-        if (Podminky.vyhodnoceni(poradi, Podminky.napleni(1, 210, 224, 15, 14, 224))) {
+        if (Podminky.vyhodnoceni(poradi, Podminky.naplneni(1, 210, 224, 15, 14, 224))) {
             poradi += 16;
         } else return;
         if (((JButton) buttons.get(poradi)).getText().equals(znak)) {
@@ -162,7 +165,7 @@ public class MyButtons extends AI1 implements FirstTurn, Podminky {
             }
             if (znak.equals("X")) xWins();
             else if (znak.equals("O")) oWins();
-            checkPravaDole((JButton) buttons.get(poradi), buttons);
+            checkPravaDole((JButton) buttons.get(poradi), buttons, check);
 
 
         } else {
@@ -172,10 +175,10 @@ public class MyButtons extends AI1 implements FirstTurn, Podminky {
         }
     }
 
-    public void checkLevaHore(JButton tlaco, ArrayList<JButton> buttons) {
+    public void checkLevaHore(JButton tlaco, ArrayList<JButton> buttons, String check) {
         String znak = tlaco.getText();
         int poradi = buttons.indexOf(tlaco);
-        if (Podminky.vyhodnoceni(poradi, Podminky.napleni(1, 0, 14, 15, 0, 210))) {
+        if (Podminky.vyhodnoceni(poradi, Podminky.naplneni(1, 0, 14, 15, 0, 210))) {
             poradi -= 16;
         } else return;
         if (((JButton) buttons.get(poradi)).getText().equals(znak)) {
@@ -184,16 +187,16 @@ public class MyButtons extends AI1 implements FirstTurn, Podminky {
             }
             if (znak.equals("X")) xWins();
             else if (znak.equals("O")) oWins();
-            checkLevaHore((JButton) buttons.get(poradi), buttons);
+            checkLevaHore((JButton) buttons.get(poradi), buttons, check);
 
 
         } else return;
     }
 
-    public void checkLevaDole(JButton tlaco, ArrayList<JButton> buttons) {
+    public void checkLevaDole(JButton tlaco, ArrayList<JButton> buttons, String check) {
         String znak = tlaco.getText();
         int poradi = buttons.indexOf(tlaco);
-        if (Podminky.vyhodnoceni(poradi, Podminky.napleni(1, 210, 224, 15, 0, 210))) {
+        if (Podminky.vyhodnoceni(poradi, Podminky.naplneni(1, 210, 224, 15, 0, 210))) {
             poradi += 14;
         } else return;
         if (((JButton) buttons.get(poradi)).getText().equals(znak)) {
@@ -202,7 +205,7 @@ public class MyButtons extends AI1 implements FirstTurn, Podminky {
             }
             if (znak.equals("X")) xWins();
             else if (znak.equals("O")) oWins();
-            checkLevaDole((JButton) buttons.get(poradi), buttons);
+            checkLevaDole((JButton) buttons.get(poradi), buttons, check);
 
 
         } else return;

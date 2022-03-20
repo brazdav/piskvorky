@@ -1,6 +1,7 @@
 package AI;
 
 import Rozhrani.FirstTurn;
+import Uprava_tlacitka.MyButtons;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -9,11 +10,16 @@ import java.util.Random;
 
 public class AI1 extends JButton implements FirstTurn {
     Random random = new Random();
+    private MyButtons obj;
     private String znakAi;
     private int count;
     private boolean zapsano;
+    public int utok;
+    public ArrayList<JButton> list = new ArrayList();
+    private String check = "ai";
+    private boolean found = false;
+    public boolean ai = false;
     public void obrana (String znak, int poradi, ArrayList<JButton> buttons, String strana, int oRada, int xRada){
-
         if (znak.equals("X")) {
             this.znakAi = "O";
             count = xRada;
@@ -22,113 +28,131 @@ public class AI1 extends JButton implements FirstTurn {
             this.znakAi = "X";
             count = oRada;
         }
-        if (count == 1){
+        if (count == 1 && ai){
             switch (strana){
                 case "leva": poradi--;
-                    zapsano = zapis(znakAi,poradi,buttons);
+                    zapsano = zapis(poradi,buttons);
                     if(!zapsano){
                         poradi = poradi+4;
-                        zapis2(znakAi,poradi,buttons);
-                        System.out.println("zapis2");
+                        zapis(poradi,buttons);
                     }
                     break;
                 case "prava": poradi++;
-                    zapsano = zapis(znakAi,poradi,buttons);
+                    zapsano = zapis(poradi,buttons);
                     if(!zapsano){
                         poradi = poradi-4;
-                        zapis2(znakAi,poradi,buttons);
-                        System.out.println("funguje");
+                        zapis(poradi,buttons);
                     }
+                    
                     break;
                 case "horni": poradi -=15;
-                    zapsano = zapis(znakAi,poradi,buttons);
+                    zapsano = zapis(poradi,buttons);
                     if(!zapsano){
                         poradi = poradi+60;
-                        zapis2(znakAi, poradi, buttons);
-                        System.out.println("hore more");
+                        zapis(poradi, buttons);
                     }
+                    
                     break;
                 case "dolni": poradi +=15;
-                    zapsano = zapis(znakAi,poradi,buttons);
+                    zapsano = zapis(poradi,buttons);
                     if(!zapsano){
                         poradi = poradi-60;
-                        zapis2(znakAi, poradi, buttons);
-                        System.out.println("dole more");
+                        zapis(poradi, buttons);
                     }
+                    
                     break;
                 case "pravaHorni": poradi -=14;
-                    zapsano = zapis(znakAi,poradi,buttons);
+                    zapsano = zapis(poradi,buttons);
                     if(!zapsano){
                         poradi = poradi+56;
-                        zapis2(znakAi, poradi, buttons);
-                        System.out.println("prava hore more");
+                        zapis(poradi, buttons);
                     }
+                    
                     break;
                 case "pravaDolni": poradi +=16;
-                    zapsano = zapis(znakAi,poradi,buttons);
+                    zapsano = zapis(poradi,buttons);
                     if(!zapsano){
                         poradi = poradi-64;
-                        zapis2(znakAi, poradi, buttons);
-                        System.out.println("prava dole more");
+                        zapis(poradi, buttons);
                     }
+                    
                     break;
                 case "levaHorni": poradi -=16;
-                    zapsano = zapis(znakAi,poradi,buttons);
+                    zapsano = zapis(poradi,buttons);
                     if(!zapsano){
                         poradi = poradi+64;
-                        zapis2(znakAi, poradi, buttons);
-                        System.out.println("leva hore more");
+                        zapis(poradi, buttons);
                     }
                     break;
                 case "levaDolni": poradi +=14;
-                    zapsano = zapis(znakAi,poradi,buttons);
+                    zapsano = zapis(poradi,buttons);
                     if(!zapsano){
                         poradi = poradi-56;
-                        zapis2(znakAi, poradi, buttons);
-                        System.out.println("leva hore more");
+                        zapis(poradi, buttons);
                     }
+                    
                     break;
             }
-            if (znakAi.equals("X"))
-                textfield.setText("O turn");
-            else
-                textfield.setText("X turn");
         }
-        /*else if (count == 2){
-            switch (strana){
-                case "leva": poradi=poradi-2;
-                    zapis(znakAi,poradi,buttons);
-                    break;
-                case "prava": poradi=poradi+2;
-                    zapis(znakAi,poradi,buttons);
-                    break;
+        else if (ai){
+            //utok(buttons);
+        }
+    }
+    public void utok(ArrayList<JButton> buttons, String znak){
+        for (JButton button:buttons) {
+            if (button.getText().equals(znak)){
+                int index = buttons.indexOf(button);
+                //move(index);
+                found = true;
+                break;
             }
-        }*/
-        else{
-            utok(znak,poradi,buttons);
+        }
+        if (!found){
+            for (JButton button:buttons) {
+                if (button.getText().equals("X")){
+                    int index = buttons.indexOf(button);
+                    move(index);
+                }
+            }
+            //zapis(generateNumber(), buttons);
         }
     }
-    private void utok(String znak, int poradi, ArrayList<JButton> buttons){
 
-    }
-
-    private boolean zapis2(String znak, int poradi,ArrayList<JButton> buttons){
+    private boolean zapis(int poradi, ArrayList<JButton> buttons) {
             if (poradi >= 0 && poradi <= 254 && buttons.get(poradi).getText().equals("")) {
-                buttons.get(poradi).setText(znak);
-                return true;
-             }
-            else{
-                return false;
-             }
-    }
-
-    private boolean zapis(String znak, int poradi, ArrayList<JButton> buttons) {
-            if (poradi >= 0 && poradi <= 254 && buttons.get(poradi).getText().equals("")) {
-                buttons.get(poradi).setText(znak);
+                buttons.get(poradi).doClick();
                 return true;
             }
             else{
                 return false;
+        }
+    }
+
+    public void getObject(MyButtons obj){
+        this.obj = obj;
+    }
+
+    private int generateNumber(int number) {
+        Random rd = new Random();
+        return rd.nextInt(number);
+    }
+    public void getList(ArrayList<JButton> buttons){
+        this.list = buttons;
+    }
+    private void move(int index){
+        ArrayList<Integer> l = new ArrayList<>();
+        l.add(index - 15);
+        l.add(index - 14);
+        l.add(index + 1);
+        l.add(index + 16);
+        l.add(index + 15);
+        l.add(index + 14);
+        l.add(index - 1);
+        l.add(index - 16);
+        int number = generateNumber(8);
+        boolean writen = zapis(l.get(number),list);
+        if (!writen){
+            move(index);
         }
     }
 }

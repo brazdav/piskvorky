@@ -8,17 +8,22 @@ import java.awt.*;
 
 public class Vykresleni implements FirstTurn {
 
-    public void vykresleni(JButton button) {
+    public void vykresleni(JButton button, Piskvorky piskvorky) {
         if (player_turn.get()) {
             if (button.getText().equals("")) {
                 button.setForeground(new Color(0, 0, 0));
                 button.setText("X");
                 textfield.setText("O turn");
+                player_turn.set(false);
+                piskvorky.utok(piskvorky.list, "O");
+                piskvorky.ai = true;
             }
         } else if (button.getText().equals("")) {
             button.setForeground(new Color(0, 0, 0));
             button.setText("O");
             textfield.setText("X turn");
+            player_turn.set(true);
+            piskvorky.ai = false;
         }
     }
 

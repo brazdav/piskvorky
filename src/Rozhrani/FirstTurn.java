@@ -33,7 +33,7 @@ public interface FirstTurn{
 
     static void firstTurnAI(){
         if(random.nextInt(2)==1){
-            player_turn.set(false);
+            player_turn.set(true);
         }
         else{
             player_turn.set(true);
