@@ -79,9 +79,9 @@ public class Piskvorky extends MyButtons implements Music {
      *
     * */
     public Piskvorky() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        clip = Music.nacteni("Adventure.wav");
+        /*clip = Music.nacteni("Adventure.wav");
         clip.loop(Clip.LOOP_CONTINUOUSLY);
-        clip.stop();
+        clip.stop();*/
 
         try{
             hra = new JButton(hraImage);
