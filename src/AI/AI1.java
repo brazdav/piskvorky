@@ -4,7 +4,10 @@ import Rozhrani.FirstTurn;
 import Uprava_tlacitka.MyButtons;
 
 import javax.swing.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 
@@ -19,6 +22,10 @@ public class AI1 extends JButton implements FirstTurn {
     private String check = "ai";
     private boolean found = false;
     public boolean ai = false;
+    final int LEFT = -1;
+    final int RIGHT = 1;
+    final int UP = -15;
+    final int DOWN = 15;
     public void obrana (String znak, int poradi, ArrayList<JButton> buttons, String strana, int oRada, int xRada){
         if (znak.equals("X")) {
             this.znakAi = "O";
@@ -102,9 +109,37 @@ public class AI1 extends JButton implements FirstTurn {
         for (JButton button:buttons) {
             if (button.getText().equals(znak)){
                 int index = buttons.indexOf(button);
-                //move(index);
+                CheckAI obj = new CheckAI();
+                ArrayList<CheckAI> list = new ArrayList<>();
+                list.add(obj.check(index,buttons,znak,"up"));
+                list.add(obj.check(index,buttons,znak,"left"));
+                list.add(obj.check(index,buttons,znak,"down"));
+                list.add(obj.check(index,buttons,znak,"righ"));
+                int max = 0;
+                String site = "";
+                for (int i = 0; i < list.size(); i++){
+                    int row = list.get(i).getRow();
+                    if (row > max){
+                        max = row;
+                        site = list.get(i).getSite();
+                    }
+                }
+                if (max > 0) {
+                    switch (site) {
+                        case "up": zapis(index+(max*UP),buttons);
+                        break;
+                        case "down": zapis(index+(max*DOWN), buttons);
+                        break;
+                        case "left": zapis(index+(max*LEFT), buttons);
+                        break;
+                        case "right": zapis(index+(max*RIGHT),buttons);
+                        break;
+                    }
+                }
+                else {
+
+                }
                 found = true;
-                break;
             }
         }
         if (!found){
@@ -155,4 +190,6 @@ public class AI1 extends JButton implements FirstTurn {
             move(index);
         }
     }
+
+
 }

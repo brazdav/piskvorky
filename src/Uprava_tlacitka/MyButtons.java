@@ -88,9 +88,9 @@ public class MyButtons extends AI1 implements FirstTurn, Podminky {
             poradi--;
         } else return;
             if (((JButton) buttons.get(poradi)).getText().equals(znak)) {
-                if (lan_ai.equals("ai")) {
+                /*if (lan_ai.equals("ai")) {
                     obrana(znak, poradi, buttons, "leva", oRada, xRada);
-                }
+                }*/
                 if (znak.equals("X")) xWins();
                 else oWins();
                 checkLeva((JButton) buttons.get(poradi), buttons, check);
@@ -115,9 +115,9 @@ public class MyButtons extends AI1 implements FirstTurn, Podminky {
             poradi++;
         } else return;
             if (((JButton) buttons.get(poradi)).getText().equals(znak)) {
-                if (lan_ai.equals("ai")) {
+                /*if (lan_ai.equals("ai")) {
                     obrana(znak, poradi, buttons, "prava", oRada, xRada);
-                }
+                }*/
                 if (znak.equals("X")) xWins();
                 else if (znak.equals("O")) oWins();
                 checkPrava((JButton) buttons.get(poradi), buttons, check);
@@ -146,9 +146,9 @@ public class MyButtons extends AI1 implements FirstTurn, Podminky {
             poradi += 15;
         } else return;
         if (((JButton) buttons.get(poradi)).getText().equals(znak)) {
-            if (lan_ai.equals("ai")) {
+            /*if (lan_ai.equals("ai")) {
                 obrana(znak, poradi, buttons, "dolni", oRada, xRada);
-            }
+            }*/
             if (znak.equals("X")) xWins();
             else if (znak.equals("O")) oWins();
             checkDole((JButton) buttons.get(poradi), buttons, check);
@@ -176,9 +176,9 @@ public class MyButtons extends AI1 implements FirstTurn, Podminky {
             poradi -= 15;
         } else return;
         if (((JButton) buttons.get(poradi)).getText().equals(znak)) {
-            if (lan_ai.equals("ai")) {
+            /*if (lan_ai.equals("ai")) {
                 obrana(znak, poradi, buttons, "horni", oRada, xRada);
-            }
+            }*/
             if (znak.equals("X")) xWins();
             else if (znak.equals("O")) oWins();
             checkHore((JButton) buttons.get(poradi), buttons, check);
@@ -202,9 +202,9 @@ public class MyButtons extends AI1 implements FirstTurn, Podminky {
             poradi -= 14;
         } else return;
         if (((JButton) buttons.get(poradi)).getText().equals(znak)) {
-            if (lan_ai.equals("ai")) {
+            /*if (lan_ai.equals("ai")) {
                 obrana(znak, poradi, buttons, "pravaHorni", oRada, xRada);
-            }
+            }*/
             if (znak.equals("X")) xWins();
             else if (znak.equals("O")) oWins();
             checkPravaHore((JButton) buttons.get(poradi), buttons, check);
@@ -232,9 +232,9 @@ public class MyButtons extends AI1 implements FirstTurn, Podminky {
             poradi += 16;
         } else return;
         if (((JButton) buttons.get(poradi)).getText().equals(znak)) {
-            if (lan_ai.equals("ai")) {
+            /*if (lan_ai.equals("ai")) {
                 obrana(znak, poradi, buttons, "pravaDolni", oRada, xRada);
-            }
+            }*/
             if (znak.equals("X")) xWins();
             else if (znak.equals("O")) oWins();
             checkPravaDole((JButton) buttons.get(poradi), buttons, check);
@@ -262,9 +262,9 @@ public class MyButtons extends AI1 implements FirstTurn, Podminky {
             poradi -= 16;
         } else return;
         if (((JButton) buttons.get(poradi)).getText().equals(znak)) {
-            if (lan_ai.equals("ai")) {
+            /*if (lan_ai.equals("ai")) {
                 obrana(znak, poradi, buttons, "levaHorni", oRada, xRada);
-            }
+            }*/
             if (znak.equals("X")) xWins();
             else if (znak.equals("O")) oWins();
             checkLevaHore((JButton) buttons.get(poradi), buttons, check);
@@ -288,9 +288,9 @@ public class MyButtons extends AI1 implements FirstTurn, Podminky {
             poradi += 14;
         } else return;
         if (((JButton) buttons.get(poradi)).getText().equals(znak)) {
-            if (lan_ai.equals("ai")) {
+            /*if (lan_ai.equals("ai")) {
                 obrana(znak, poradi, buttons, "levaDolni", oRada, xRada);
-            }
+            }*/
             if (znak.equals("X")) xWins();
             else if (znak.equals("O")) oWins();
             checkLevaDole((JButton) buttons.get(poradi), buttons, check);
