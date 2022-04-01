@@ -9,7 +9,13 @@ import javax.swing.*;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-
+/**
+ * Třída Server dědí z třídy Start
+ * Obsahuje konstruktor, který nám spouští server
+ * Také obsahuje metodu end, která vypíná komunikaci a metodu sendEnd
+ * @author Vojtěch Brázda
+ * @version 1.0.0
+ */
 public class Server extends Start {
     //initialize socket and input stream
     private Socket socket = null;

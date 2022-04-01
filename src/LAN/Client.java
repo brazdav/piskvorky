@@ -8,6 +8,14 @@ import javax.swing.*;
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
+
+/**
+ * Třída Client dědí z třídy Start a implementuje rozhraní FirstTurn
+ * Obsahuje konstruktor, který nám zaručuje chod klienta na serveru
+ * Také obsahuje metodu end, která vypíná komunikaci
+ * @author Vojtěch Brázda
+ * @version 1.0.0
+ */
 public class Client extends Start implements FirstTurn {
     // initialize socket and input output streams
     private Socket socket = null;

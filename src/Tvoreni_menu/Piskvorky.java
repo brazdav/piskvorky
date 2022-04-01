@@ -23,8 +23,8 @@ import java.net.UnknownHostException;
  * Třída Piškvorky dědí z třídy MyButtons a implementuje rozhraní Music
  * Obsahuje kontruktor, který tvoří celé základní menu. Obsahuje také 2 metody pocetKol() a getAdress().
  * 5 tlačítek na kterých jsou přidané různé události
- * @atuhor Simon Valeš, Vojtěch Brázda
- * @version :)
+ * @author Simon Valeš, Vojtěch Brázda
+ * @version 1.0.0
  *
  *
  **/
@@ -320,9 +320,9 @@ public class Piskvorky extends MyButtons implements Music {
     /**
      * Metoda pocetKol počítá kolik kol se má odehrát podle vybraného radio buttonu
      * Vrací číslo, které nám udává kolikrát se odehraje hra
-     * @param r1 vstupní parametr, selektor pro hodnotu 1
-     * @param r2 vstupní parametr, selektor pro hodnotu 3
-     * @param r3 vstupní parametr, selektor pro hodnotu 5
+     * @param r1 JRadioButton vstupní parametr, selektor pro hodnotu 1
+     * @param r2 JRadioButton vstupní parametr, selektor pro hodnotu 3
+     * @param r3 JRadioButton vstupní parametr, selektor pro hodnotu 5
      * @return číslo z vybraného radio buttonu
      * 3 možnosti - 1 kolo, 3 kola a 5 kol
      * základně je nastaveno 1 kolo

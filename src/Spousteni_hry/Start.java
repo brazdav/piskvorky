@@ -15,6 +15,11 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 /**
+ * Třída Start implementuje rozhraní FirstTurn
+ * Obsahuje konstruktor a 4 metody, slouží k zapnutí hry
+ * @author Vojtěch Brázda, Simon Valeš
+ * @version 1.0.0
+ *
  * */
 public class Start implements FirstTurn{
     public int indexTlaco;
@@ -30,8 +35,13 @@ public class Start implements FirstTurn{
     }
 
 
-
-
+    /**
+     * Metoda start nám zapíná hru proti AI
+     * Vytvoří okno, dá nám ho doprostřed obrazovky s danými rozměry, které nejdou měnit
+     * Zároveň vykreslí všechny tlačítka na hrací pole
+     * Nastavuje v pravém rohu okna label s počtem vyhraných kol pro X nebo O
+     * @param piskvorky
+     */
     public void start (Piskvorky piskvorky){
         piskvorky.getString("ai");
         JFrame frame = new JFrame();
@@ -100,6 +110,13 @@ public class Start implements FirstTurn{
         piskvorky.getList(buttons);
     }
 
+    /**
+     * Metoda startLan dělá skoro to samé jako metoda start, akorát pro hru po Lan
+     * Nepoužívá se zde AI
+     * Zároveň vykreslí všechny tlačítka na hrací pole
+     * Nastavuje v pravém rohu okna label s počtem vyhraných kol pro X nebo O
+     * @param piskvorky
+     */
     public void startLan (Piskvorky piskvorky){
         piskvorky.getString("lan");
         JFrame frame = new JFrame();
@@ -177,9 +194,18 @@ public class Start implements FirstTurn{
 
     }
 
+    /**
+     * Metoda getServer předává instanci třídy Server
+     * @param server
+     */
     public void getServer(Server server){
         this.server = server;
     }
+
+    /**
+     * Metoda getIndexTlaco vrací stringovou hodnotu z tlačítka
+     * @return
+     */
     public String getIndexTlaco(){
         return String.valueOf(indexTlaco);
     }
