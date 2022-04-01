@@ -8,10 +8,11 @@ public class CheckAI {
     private int row = 0;
     private String site;
     public CheckAI check(int index, ArrayList<JButton> buttons, String znak, String site){
+        this.site = site;
         switch (site){
             case "left": index --;
             break;
-            case "right": index++;
+            case "right": index ++;
             break;
             case "up": index = index -15;
             break;
@@ -21,9 +22,10 @@ public class CheckAI {
         if (buttons.get(index).getText().equals(znak)){
             row ++;
             check(index, buttons,znak,site);
+            //System.out.println(index);
         }
-        CheckAI obj = new CheckAI();
-        return obj;
+        //System.out.println("row: " + row + " site: " + site);
+        return this;
     }
 
     public String getSite(){

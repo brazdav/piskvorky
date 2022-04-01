@@ -26,120 +26,52 @@ public class AI1 extends JButton implements FirstTurn {
     final int RIGHT = 1;
     final int UP = -15;
     final int DOWN = 15;
-    public void obrana (String znak, int poradi, ArrayList<JButton> buttons, String strana, int oRada, int xRada){
-        if (znak.equals("X")) {
-            this.znakAi = "O";
-            count = xRada;
-        }
-        else {
-            this.znakAi = "X";
-            count = oRada;
-        }
-        if (count == 1 && ai){
-            switch (strana){
-                case "leva": poradi--;
-                    zapsano = zapis(poradi,buttons);
-                    if(!zapsano){
-                        poradi = poradi+4;
-                        zapis(poradi,buttons);
-                    }
-                    break;
-                case "prava": poradi++;
-                    zapsano = zapis(poradi,buttons);
-                    if(!zapsano){
-                        poradi = poradi-4;
-                        zapis(poradi,buttons);
-                    }
-                    
-                    break;
-                case "horni": poradi -=15;
-                    zapsano = zapis(poradi,buttons);
-                    if(!zapsano){
-                        poradi = poradi+60;
-                        zapis(poradi, buttons);
-                    }
-                    
-                    break;
-                case "dolni": poradi +=15;
-                    zapsano = zapis(poradi,buttons);
-                    if(!zapsano){
-                        poradi = poradi-60;
-                        zapis(poradi, buttons);
-                    }
-                    
-                    break;
-                case "pravaHorni": poradi -=14;
-                    zapsano = zapis(poradi,buttons);
-                    if(!zapsano){
-                        poradi = poradi+56;
-                        zapis(poradi, buttons);
-                    }
-                    
-                    break;
-                case "pravaDolni": poradi +=16;
-                    zapsano = zapis(poradi,buttons);
-                    if(!zapsano){
-                        poradi = poradi-64;
-                        zapis(poradi, buttons);
-                    }
-                    
-                    break;
-                case "levaHorni": poradi -=16;
-                    zapsano = zapis(poradi,buttons);
-                    if(!zapsano){
-                        poradi = poradi+64;
-                        zapis(poradi, buttons);
-                    }
-                    break;
-                case "levaDolni": poradi +=14;
-                    zapsano = zapis(poradi,buttons);
-                    if(!zapsano){
-                        poradi = poradi-56;
-                        zapis(poradi, buttons);
-                    }
-                    
-                    break;
-            }
-        }
-        else if (ai){
-            //utok(buttons);
-        }
+    private ArrayList<CheckAI> checkAI = new ArrayList<>();
+    public void obrana (ArrayList<JButton> buttons, String znak){
+
     }
     public void utok(ArrayList<JButton> buttons, String znak){
         for (JButton button:buttons) {
             if (button.getText().equals(znak)){
                 int index = buttons.indexOf(button);
+                System.out.println("tlačítko na indexu: " + index);
                 CheckAI obj = new CheckAI();
-                ArrayList<CheckAI> list = new ArrayList<>();
-                list.add(obj.check(index,buttons,znak,"up"));
-                list.add(obj.check(index,buttons,znak,"left"));
-                list.add(obj.check(index,buttons,znak,"down"));
-                list.add(obj.check(index,buttons,znak,"righ"));
+                CheckAI obj2 = new CheckAI();
+                CheckAI obj3 = new CheckAI();
+                CheckAI obj4 = new CheckAI();
+                checkAI.add(obj.check(index,buttons,znak,"up"));
+                checkAI.add(obj2.check(index,buttons,znak,"left"));
+                checkAI.add(obj3.check(index,buttons,znak,"down"));
+                checkAI.add(obj4.check(index,buttons,znak,"right"));
                 int max = 0;
                 String site = "";
-                for (int i = 0; i < list.size(); i++){
-                    int row = list.get(i).getRow();
+                for (int i = 0; i < checkAI.size(); i++){
+                    //System.out.println("row: " + checkAI.get(i).getRow() + " site: " + checkAI.get(i).getSite());
+                    int row = checkAI.get(i).getRow();
                     if (row > max){
                         max = row;
-                        site = list.get(i).getSite();
+                        site = checkAI.get(i).getSite();
+                        System.out.println("max: " + max);
                     }
                 }
-                if (max > 0) {
+                if (max > 0 && ai) {
+                    found = true;
                     switch (site) {
-                        case "up": zapis(index+(max*UP),buttons);
+                        case "up": zapis(index+((max)*UP),buttons);
                         break;
-                        case "down": zapis(index+(max*DOWN), buttons);
+                        case "down": zapis(index+((max)*DOWN), buttons);
                         break;
-                        case "left": zapis(index+(max*LEFT), buttons);
+                        case "left": zapis(index+((max)*LEFT), buttons);
                         break;
-                        case "right": zapis(index+(max*RIGHT),buttons);
+                        case "right": zapis(index+((max)*RIGHT),buttons);
                         break;
                     }
                 }
-                else {
-
+                else if (max == 0 && ai){
+                    found = true;
+                    move(index);
+                    System.out.println("metoda move");
                 }
-                found = true;
             }
         }
         if (!found){
@@ -156,6 +88,8 @@ public class AI1 extends JButton implements FirstTurn {
     private boolean zapis(int poradi, ArrayList<JButton> buttons) {
             if (poradi >= 0 && poradi <= 254 && buttons.get(poradi).getText().equals("")) {
                 buttons.get(poradi).doClick();
+                System.out.println(poradi);
+                checkAI.clear();
                 return true;
             }
             else{
@@ -189,6 +123,7 @@ public class AI1 extends JButton implements FirstTurn {
         if (!writen){
             move(index);
         }
+        l.clear();
     }
 
 
