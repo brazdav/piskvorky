@@ -1,31 +1,43 @@
 package AI;
 
 import javax.swing.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class CheckAI {
     private int row = 0;
     private String site;
+    private int index;
     public CheckAI check(int index, ArrayList<JButton> buttons, String znak, String site){
         this.site = site;
+        this.index = index;
         switch (site){
-            case "left": index --;
+            case "left": this.index --;
             break;
-            case "right": index ++;
+            case "right": this.index ++;
             break;
-            case "up": index = index -15;
+            case "up": this.index = this.index -15;
             break;
-            case "down": index = index +15;
+            case "down": this.index = this.index +15;
             break;
+            case "leftup": this.index = this.index - 16;
+                break;
+            case "leftdown": this.index = this.index + 14;
+                break;
+            case "rightup": this.index = this.index - 14;
+                break;
+            case "rightdown": this.index = this.index + 16;
+                break;
         }
-        if (buttons.get(index).getText().equals(znak)){
+        if (buttons.get(this.index).getText().equals(znak)){
             row ++;
-            check(index, buttons,znak,site);
+            check(this.index, buttons,znak,site);
             //System.out.println(index);
         }
-        //System.out.println("row: " + row + " site: " + site);
         return this;
+    }
+
+    public int getIndex(){
+        return this.index;
     }
 
     public String getSite(){

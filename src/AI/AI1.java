@@ -4,10 +4,7 @@ import Rozhrani.FirstTurn;
 import Uprava_tlacitka.MyButtons;
 
 import javax.swing.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 
@@ -22,79 +19,78 @@ public class AI1 extends JButton implements FirstTurn {
     private String check = "ai";
     private boolean found = false;
     public boolean ai = false;
-    final int LEFT = -1;
-    final int RIGHT = 1;
-    final int UP = -15;
-    final int DOWN = 15;
     private ArrayList<CheckAI> checkAI = new ArrayList<>();
     public void obrana (ArrayList<JButton> buttons, String znak){
 
     }
     public void utok(ArrayList<JButton> buttons, String znak){
-        for (JButton button:buttons) {
-            if (button.getText().equals(znak)){
-                int index = buttons.indexOf(button);
-                System.out.println("tlačítko na indexu: " + index);
-                CheckAI obj = new CheckAI();
-                CheckAI obj2 = new CheckAI();
-                CheckAI obj3 = new CheckAI();
-                CheckAI obj4 = new CheckAI();
-                checkAI.add(obj.check(index,buttons,znak,"up"));
-                checkAI.add(obj2.check(index,buttons,znak,"left"));
-                checkAI.add(obj3.check(index,buttons,znak,"down"));
-                checkAI.add(obj4.check(index,buttons,znak,"right"));
-                int max = 0;
-                String site = "";
-                for (int i = 0; i < checkAI.size(); i++){
+            for (int i = 0; i < buttons.size(); i++) {
+                if (buttons.get(i).getText().equals(znak)){
+                    CheckAI obj1 = new CheckAI();
+                    CheckAI obj2 = new CheckAI();
+                    CheckAI obj3 = new CheckAI();
+                    CheckAI obj4 = new CheckAI();
+                    CheckAI obj6 = new CheckAI();
+                    CheckAI obj7 = new CheckAI();
+                    CheckAI obj8 = new CheckAI();
+                    CheckAI obj9 = new CheckAI();
+                    checkAI.add(obj1.check(i,buttons,znak,"up"));
+                    checkAI.add(obj2.check(i,buttons,znak,"left"));
+                    checkAI.add(obj3.check(i,buttons,znak,"down"));
+                    checkAI.add(obj4.check(i,buttons,znak,"right"));
+                    checkAI.add(obj6.check(i,buttons,znak,"leftup"));
+                    checkAI.add(obj7.check(i,buttons,znak,"leftdown"));
+                    checkAI.add(obj8.check(i,buttons,znak,"rightup"));
+                    checkAI.add(obj9.check(i,buttons,znak,"rightdown"));
+                    System.out.println(checkAI);
+                }
+                    int max = 0;
+                    CheckAI obj5 = new CheckAI();
+                for (int x = 0; x < checkAI.size(); x++) {
                     //System.out.println("row: " + checkAI.get(i).getRow() + " site: " + checkAI.get(i).getSite());
-                    int row = checkAI.get(i).getRow();
-                    if (row > max){
-                        max = row;
-                        site = checkAI.get(i).getSite();
-                        System.out.println("max: " + max);
+                    if (checkAI.get(x) != null) {
+                        if (checkAI.get(x).getRow() > max) {
+                            obj5 = checkAI.get(x);
+                        }
                     }
                 }
-                if (max > 0 && ai) {
-                    found = true;
-                    switch (site) {
-                        case "up": zapis(index+((max)*UP),buttons);
-                        break;
-                        case "down": zapis(index+((max)*DOWN), buttons);
-                        break;
-                        case "left": zapis(index+((max)*LEFT), buttons);
-                        break;
-                        case "right": zapis(index+((max)*RIGHT),buttons);
-                        break;
+                    if (obj5.getRow() > 0 && ai) {
+                        found = true;
+                        zapis(obj5.getIndex(), buttons);
+                    }
+                    else if (obj5.getRow() == 0 && ai){
+                        found = true;
+                        move(find(buttons, "O"));
                     }
                 }
-                else if (max == 0 && ai){
-                    found = true;
-                    move(index);
-                    System.out.println("metoda move");
-                }
+
+            if (!found){
+                move(find(buttons, "X"));
+                //zapis(generateNumber(), buttons);
             }
-        }
-        if (!found){
-            for (JButton button:buttons) {
-                if (button.getText().equals("X")){
-                    int index = buttons.indexOf(button);
-                    move(index);
-                }
-            }
-            //zapis(generateNumber(), buttons);
-        }
+
+
     }
 
     private boolean zapis(int poradi, ArrayList<JButton> buttons) {
-            if (poradi >= 0 && poradi <= 254 && buttons.get(poradi).getText().equals("")) {
+            if (poradi >= 0 && poradi <= 224 && buttons.get(poradi).getText().equals("")) {
                 buttons.get(poradi).doClick();
-                System.out.println(poradi);
                 checkAI.clear();
                 return true;
             }
             else{
                 return false;
         }
+    }
+
+    private int find(ArrayList<JButton> buttons, String znak){
+        int index = 0;
+        for (JButton button:buttons) {
+            if (button.getText().equals(znak)){
+                index = buttons.indexOf(button);
+            }
+        }
+        return index;
     }
 
     public void getObject(MyButtons obj){

@@ -60,7 +60,7 @@ public interface Podminky{
         if (podminky.contains(poradi)){
             return false;
         }
-        else pravda = true;
+        else if (poradi >= 0)pravda = true;
         return pravda;
     }
 

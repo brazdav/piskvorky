@@ -81,7 +81,7 @@ public class Start implements FirstTurn{
                         if (piskvorky.vyhra) {
                             piskvorky.vyhranaKola.setText("Vyhrana kola: X:" + piskvorky.winX + "  O:" + piskvorky.winO);
                             piskvorky.kola--;
-                            frame.dispose();
+                            //frame.dispose();
                             piskvorky.vyhra = false;
                             piskvorky.button_panel.removeAll();
                             buttons.removeAll(buttons);
@@ -93,12 +93,17 @@ public class Start implements FirstTurn{
                                 } else {
                                     JOptionPane.showMessageDialog(frame, "Konec hry, vyhral O");
                                 }
-                                piskvorky.winX = 0;
-                                piskvorky.winO = 0;
-                                piskvorky.vyhranaKola.setText("Vyhrana kola: X:" + piskvorky.winX + "  O:" + piskvorky.winO);
-                                piskvorky.menu.setVisible(true);
-                                piskvorky.sound.setIcon(piskvorky.soundImage1);
-                                piskvorky.clip.start();
+                                try {
+                                    frame.dispose();
+                                    Piskvorky piskvorky1 = new Piskvorky();
+                                } catch (UnsupportedAudioFileException ex) {
+                                    ex.printStackTrace();
+                                } catch (LineUnavailableException ex) {
+                                    ex.printStackTrace();
+                                } catch (IOException ex) {
+                                    ex.printStackTrace();
+                                }
+
                             }
                         }
                     }
