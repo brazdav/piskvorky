@@ -28,10 +28,39 @@ public class CheckAI {
             case "rightdown": this.index = this.index + 16;
                 break;
         }
-        if (buttons.get(this.index).getText().equals(znak)){
-            row ++;
-            check(this.index, buttons,znak,site);
-            //System.out.println(index);
+        if (this.index >= 0 && this.index < 225) {
+            if (buttons.get(this.index).getText().equals(znak)) {
+                row++;
+                check(this.index, buttons, znak, site);
+                //System.out.println(index);
+            } else if (buttons.get(this.index).getText().equals("O")) {
+                switch (site) {
+                    case "left":
+                        this.index = this.index + this.row + 2;
+                        break;
+                    case "right":
+                        this.index = this.index - this.row + 2;
+                        break;
+                    case "up":
+                        this.index = this.index + (this.row + 2) * 15;
+                        break;
+                    case "down":
+                        this.index = this.index - (this.row + 2) * 15;
+                        break;
+                    case "leftup":
+                        this.index = this.index + (this.row + 2) * 16;
+                        break;
+                    case "leftdown":
+                        this.index = this.index - (this.row + 2) * 14;
+                        break;
+                    case "rightup":
+                        this.index = this.index + (this.row + 2) * 14;
+                        break;
+                    case "rightdown":
+                        this.index = this.index - (this.row + 2) * 16;
+                        break;
+                }
+            }
         }
         return this;
     }

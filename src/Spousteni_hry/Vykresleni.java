@@ -28,7 +28,8 @@ public class Vykresleni implements FirstTurn {
                 button.setText("X");
                 textfield.setText("O turn");
                 player_turn.set(false);
-                piskvorky.utok(piskvorky.list, "O");
+                piskvorky.obrana(piskvorky.list, "X");
+                //piskvorky.utok(piskvorky.list, "O");
                 piskvorky.ai = true;
             }
         } else if (button.getText().equals("")) {
