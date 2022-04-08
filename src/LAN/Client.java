@@ -11,8 +11,8 @@ import java.net.UnknownHostException;
 
 /**
  * Třída Client dědí z třídy Start a implementuje rozhraní FirstTurn
- * Obsahuje konstruktor, který nám zaručuje chod klienta na serveru
- * Také obsahuje metodu end, která vypíná komunikaci
+ * Obsahuje konstruktor, který otevírá socket na adrese serveru a portu, na kterém server běží
+ * Také obsahuje metodu end, která ukončuje stream serveru a metodu sendEnd, která posílá clientovi informace potřebné pro ukončení
  * @author Vojtěch Brázda
  * @version 1.0.0
  */
@@ -30,6 +30,19 @@ public class Client extends Start implements FirstTurn {
     private int odchozi;
     private int prichozi;
     // constructor to put ip address and port
+
+    /**
+     * Konstruktor třídy client se připojuje k serveru na jeho IP adrese a portu, na kterém server běží
+     * Otevírá všechny potřebné streamy pro přenos infomrací mezi serverem a clientem
+     * V konstruktoru jsou vytvořeny dvě vlákna, aby client mohl posílat a zároveň přijímat packety.
+     * Ve vláknech je cyklus, který se ukončí po výhry jednoho z hráčů
+     * @param address řetězec, který se přenáší z formuláře při spuštění clienta, určuje, ke teré IP adrese se bude připojovat
+     * @param port číslo, které je předem definováno a určuje na kterém portu bude client přijímat a odeslíat
+     * @param piskvorky objekt, přes který spouštíme metodu buttonOff a buttonOn
+     * @throws UnsupportedAudioFileException
+     * @throws LineUnavailableException
+     * @throws IOException
+     */
     public Client(String address, int port, Piskvorky piskvorky) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         // establish a connection
         thread = new Thread(() -> {

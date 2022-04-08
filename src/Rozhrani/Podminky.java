@@ -13,11 +13,11 @@ import java.util.ArrayList;
 public interface Podminky{
     /**
      * Metoda naplneni, naplňuje ArrayList typu Integer jménem podminky
-     * Pomocí cyklu for přidá všechny hodnoty do ArrayListu
+     * Pomocí cyklu for přidá všechny hodnoty z daného okraje do ArrayListu
      * Pomáhá ošetřovat metody
-     * @param b o kolik se bude posouvat v tom ArrayListu
-     * @param pocatecni
-     * @param konecna
+     * @param b o kolik indexů se budou hraniční tlačítka posouvat v tom ArrayListu
+     * @param pocatecni jaké hraniční tlačítko je první
+     * @param konecna určuje, jaké hraniční tlačitko bude jako poslední
      * @return ArrayList podmínky
      */
     static ArrayList<Integer> naplneni(int b, int pocatecni, int konecna){
@@ -29,14 +29,15 @@ public interface Podminky{
     }
 
     /**
-     *
-     * @param a
-     * @param pocatecni
-     * @param konecna
-     * @param b
-     * @param pocatecni2
-     * @param konecna2
-     * @return
+     * Přetížená metoda naplnění, potřebujeme jí k oštření křížových směrů.
+     * Metoda nastavuje dva typy hranice.
+     * @param a určuje o kolik se bude posouvat první hranice
+     * @param pocatecni určuje první index hraničního tlačitka z první hranice
+     * @param konecna   určuje poslední index hraničního tlačitka z první hranice
+     * @param b určuje o kolik se bude posouvat druhé hranice
+     * @param pocatecni2 určuje první index hraničního tlačitka z druhé hranice
+     * @param konecna2 určuje poslední index hraničního tlačitka z druhé hranice
+     * @return ArrayList podminky
      */
     static ArrayList<Integer> naplneni(int a, int pocatecni, int konecna, int b, int pocatecni2, int konecna2){
         ArrayList<Integer> podminky = new ArrayList<>();
@@ -50,10 +51,12 @@ public interface Podminky{
     }
 
     /**
-     *
-     * @param poradi
-     * @param podminky
-     * @return
+     * Metoda vyhodnoceni vyhodnocuje zda je nebo není index právě hraniční hodnotou.
+     * Pokud ArrayList podminky bude obsahovat vloženou hodnotu z parametru poradí, vrátí false.
+     * Naopak pokud ArrayList podminky hodnotu obsahovat nebu a zároveň hodnota bude větší nebo rovna nule, metoda vrátí true.
+     * @param poradi je index tlačítka, u kterého cheme zkontrolovat, zda-li je hraniční
+     * @param podminky je ArrayList naplněný předchozími metodami
+     * @return boolean pravda
      */
     static boolean vyhodnoceni(int poradi, ArrayList<Integer> podminky){
         boolean pravda = false;

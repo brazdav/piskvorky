@@ -12,7 +12,7 @@ import java.net.Socket;
 /**
  * Třída Server dědí z třídy Start
  * Obsahuje konstruktor, který nám spouští server
- * Také obsahuje metodu end, která vypíná komunikaci a metodu sendEnd
+ * Také obsahuje metodu end, která ukončuje stream serveru a metodu sendEnd, která posílá clientovi informace potřebné pro ukončení
  * @author Vojtěch Brázda
  * @version 1.0.0
  */
@@ -33,6 +33,18 @@ public class Server extends Start {
     private int prichozi;
     private Server obj;
     // constructor with port
+
+    /**
+     * Konstruktor třídy server, po vytvoření instance třídy spustí server na určeném portu.
+     * Po připojení clienta k serveru pomocí IP adresy se provede metoda startLan, která načte hrací pole.
+     * Následovně se otevřou všechny ptřebné streamy pro posílání packetů mezi serverem a clientem.
+     * V konstruktoru jsou vytvořeny dvě vlákna, aby server mohl posílat a zároveň přijímat packety.
+     * Ve vláknech je cyklus, který se ukončí po výhry jednoho z hráčů
+     * @param piskvorky objekt, přes který spouštíme metodu buttonOff a buttonOn
+     * @throws UnsupportedAudioFileException
+     * @throws LineUnavailableException
+     * @throws IOException
+     */
     public Server(Piskvorky piskvorky) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         // starts server and waits for a connection
         this.obj = this;
@@ -119,11 +131,19 @@ public class Server extends Start {
         }
     }
 
+    /**
+     * Metoda sendEnd posílá přes lan komunikaci infomraci o ukončení hry
+     * @throws IOException
+     */
     public void sendEnd() throws IOException {
         out.writeUTF("Over");
         System.out.println("Over");
     }
 
+    /**
+     * Metoda end ukončuje všechny zapnuté streamy, které jsou potřebné ke komunikaci serveru s clientem
+     * @throws IOException
+     */
     public void end() throws IOException {
         System.out.println("LAN.Server se vyplnul");
         server.close();
