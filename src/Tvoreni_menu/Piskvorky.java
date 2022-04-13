@@ -39,15 +39,17 @@ public class Piskvorky extends MyButtons implements Music {
     ImageIcon logoImage= new ImageIcon(getClass().getResource("/Obrazky/tiktak.png"));
     public ImageIcon soundImage1 = new ImageIcon(getClass().getResource("/Obrazky/sound.png"));
     ImageIcon soundImage2 = new ImageIcon(getClass().getResource("/Obrazky/mute.png"));
+    public ImageIcon zpet = new ImageIcon(getClass().getResource("/Obrazky/zpet.png"));
 
     JLabel textfield1 = new JLabel();
 
-    JButton hra;
-    JButton lan;
+    public JButton hra;
+    public JButton lan;
     JLabel logoLabel;
     public JButton sound;
-    JButton server = new JButton(serverImage);
-    JButton client = new JButton(clientImage);
+    public JButton server = new JButton(serverImage);
+    public JButton client = new JButton(clientImage);
+    public JButton zpatky = new JButton(zpet);
 
 
     public JLabel vyhranaKola = new JLabel("Vyhrana kola:");
@@ -59,11 +61,11 @@ public class Piskvorky extends MyButtons implements Music {
     boolean turn = true;
     public Clip clip;
 
-    JRadioButton r1;
-    JRadioButton r2;
-    JRadioButton r3;
+    public JRadioButton r1;
+    public JRadioButton r2;
+    public JRadioButton r3;
     ButtonGroup bg;
-    JLabel pocetK;
+    public JLabel pocetK;
     public int kola;
     public int kolaLan;
 
@@ -166,6 +168,15 @@ public class Piskvorky extends MyButtons implements Music {
         server.setBorderPainted(false);
         server.setFocusable(false);
         server.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+        zpatky.setBounds(10,500,50,50);
+        zpatky.setOpaque(false);
+        zpatky.setContentAreaFilled(false);
+        zpatky.setBorderPainted(false);
+        zpatky.setFocusable(false);
+        zpatky.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        zpatky.setVisible(false);
+        textfield1.add(zpatky);
 
         textfield1.add(client);
         textfield1.add(server);
@@ -297,13 +308,30 @@ public class Piskvorky extends MyButtons implements Music {
                 r3.setVisible(false);
                 pocetK.setVisible(false);
 
+                zpatky.setVisible(true);
+
                 client.setVisible(true);
                 server.setVisible(true);
 
             }
         });
 
+        zpatky.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                lan.setVisible(true);
+                hra.setVisible(true);
 
+                pocetK.setVisible(true);
+                r1.setVisible(true);
+                r2.setVisible(true);
+                r3.setVisible(true);
+
+                zpatky.setVisible(false);
+
+                client.setVisible(false);
+                server.setVisible(false);
+            }
+        });
     }
 
     /**

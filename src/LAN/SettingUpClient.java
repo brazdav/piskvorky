@@ -16,6 +16,7 @@ public class SettingUpClient implements ActionListener{
     String adresa;
     JLabel barva;
     JLabel nazev;
+    JButton zpatky;
 
     JButton send;
     Piskvorky piskvorky;
@@ -23,6 +24,8 @@ public class SettingUpClient implements ActionListener{
         this.piskvorky = piskvorky;
 
         dialogy = new JFrame("Dialogy");
+
+        zpatky = new JButton(piskvorky.zpet);
 
         nazev = new JLabel("Zadej IP serveru:");
         barva = new JLabel();
@@ -65,10 +68,20 @@ public class SettingUpClient implements ActionListener{
         send.setOpaque(false);
 
 
+        zpatky.setBounds(0,160,50,50);
+        zpatky.setOpaque(false);
+        zpatky.setContentAreaFilled(false);
+        zpatky.setBorderPainted(false);
+        zpatky.setFocusable(false);
+        zpatky.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        zpatky.setVisible(true);
+
+
 
         barva.add(nazev);
         barva.add(ipaddress);
         barva.add(send);
+        barva.add(zpatky);
 
         send.addActionListener(this);
 
@@ -79,6 +92,13 @@ public class SettingUpClient implements ActionListener{
 
         piskvorky.menu.setVisible(false);
 
+        zpatky.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent f){
+                piskvorky.menu.setVisible(true);
+                dialogy.dispose();
+            }
+        });
+
     }
 
 
@@ -86,7 +106,7 @@ public class SettingUpClient implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         FirstTurn.firstTurn();
         FirstTurn.firstTurnLan();
-        dialogy.setVisible(false);
+        dialogy.dispose();
         adresa = ipaddress.getText();
         System.out.print(adresa);
         try {

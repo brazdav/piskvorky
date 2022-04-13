@@ -45,7 +45,7 @@ public class CheckAI {
                 if (buttons.get(this.index).getText().equals("O"))
                     this.row = 0;
 
-                else if (buttons.get(this.index).getText().equals("X"))
+                else if (buttons.get(prom).getText().equals("X"))
                     this.row = 0;
 
             }

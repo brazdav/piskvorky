@@ -22,6 +22,7 @@ public class SettingUpServer implements ActionListener{
     JLabel pocetK1;
     JLabel ipaddress;
     JLabel barva;
+    JButton zpatky;
 
 
     JButton send;
@@ -30,6 +31,8 @@ public class SettingUpServer implements ActionListener{
         this.piskvorky = piskvorky;
 
         dialogy = new JFrame("Dialogy");
+
+        zpatky = new JButton(piskvorky.zpet);
 
         barva = new JLabel();
         ipaddress = new JLabel("IP: " + getAdress());
@@ -74,6 +77,14 @@ public class SettingUpServer implements ActionListener{
         send.setBounds(72,125,100,50);
         send.setOpaque(false);
 
+        zpatky.setBounds(0,160,50,50);
+        zpatky.setOpaque(false);
+        zpatky.setContentAreaFilled(false);
+        zpatky.setBorderPainted(false);
+        zpatky.setFocusable(false);
+        zpatky.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        zpatky.setVisible(true);
+
 
 
         //pocetK1.setBounds(40, 40, 100, 30);
@@ -101,6 +112,7 @@ public class SettingUpServer implements ActionListener{
         barva.add(d1);barva.add(d2);barva.add(d3);
         barva.add(pocetK1);
         barva.add(send);
+        barva.add(zpatky);
 
         send.addActionListener(this);
 
@@ -111,6 +123,12 @@ public class SettingUpServer implements ActionListener{
 
         piskvorky.menu.setVisible(false);
 
+        zpatky.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent f){
+                piskvorky.menu.setVisible(true);
+                dialogy.dispose();
+            }
+        });
     }
 
 
