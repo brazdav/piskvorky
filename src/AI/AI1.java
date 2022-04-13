@@ -1,7 +1,6 @@
 package AI;
 
 import Rozhrani.FirstTurn;
-import Uprava_tlacitka.MyButtons;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -10,7 +9,6 @@ import java.util.Random;
 
 public class AI1 extends JButton implements FirstTurn {
     Random random = new Random();
-    private MyButtons obj;
     private String znakAi;
     private int count;
     private boolean zapsano;
@@ -22,6 +20,7 @@ public class AI1 extends JButton implements FirstTurn {
     private ArrayList<CheckAI> utokList = new ArrayList<>();
     private ArrayList<CheckAI> obranaList = new ArrayList<>();
     public void obrana (ArrayList<JButton> buttons, String znak) {
+        found = false;
         for (int i = 0; i < buttons.size(); i++) {
             if (buttons.get(i).getText().equals(znak)) {
                 CheckAI obj1 = new CheckAI();
@@ -45,26 +44,24 @@ public class AI1 extends JButton implements FirstTurn {
         int max = 0;
         CheckAI obj5 = new CheckAI();
         for (int x = 0; x < obranaList.size(); x++) {
-            //System.out.println("row: " + obranakList.get(i).getRow() + " site: " + obranakList.get(i).getSite());
-            if (obranaList.get(x) != null) {
                 if (obranaList.get(x).getRow() > max) {
+                    max = obranaList.get(x).getRow();
                     obj5 = obranaList.get(x);
-                }
             }
+                System.out.println("Počet v řadě: " + obranaList.get(x).getRow() + "Index: " + obranaList.get(x).getIndex());
         }
+        System.out.println(ai);
         if (obj5.getRow() > 0 && ai) {
-            found = true;
             zapis(obj5.getIndex(), buttons);
         }
         else if (obj5.getRow() == 0 && ai){
-            found = true;
             move(find(buttons, "O"));
+            System.out.println("move1");
         }
-
 
         if (!found){
             move(find(buttons, "X"));
-            //zapis(generateNumber(), buttons);
+            System.out.println("move2");
         }
     }
 
@@ -111,16 +108,19 @@ public class AI1 extends JButton implements FirstTurn {
 
             if (!found){
                 move(find(buttons, "X"));
-                //zapis(generateNumber(), buttons);
+                System.out.println("move");
             }
 
 
     }
 
     private boolean zapis(int poradi, ArrayList<JButton> buttons) {
-            if (poradi >= 0 && poradi <= 224 && buttons.get(poradi).getText().equals("")) {
+            if (buttons.get(poradi).getText().equals("")) {
+                System.out.println("projde");
                 buttons.get(poradi).doClick();
+                obranaList.clear();
                 utokList.clear();
+                found = true;
                 return true;
             }
             else{
@@ -136,10 +136,6 @@ public class AI1 extends JButton implements FirstTurn {
             }
         }
         return index;
-    }
-
-    public void getObject(MyButtons obj){
-        this.obj = obj;
     }
 
     private int generateNumber(int number) {

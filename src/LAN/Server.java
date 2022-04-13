@@ -145,7 +145,6 @@ public class Server extends Start {
      * @throws IOException
      */
     public void end() throws IOException {
-        System.out.println("LAN.Server se vyplnul");
         server.close();
         input.close();
         out.close();

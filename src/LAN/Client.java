@@ -23,7 +23,6 @@ public class Client extends Start implements FirstTurn {
     private DataOutputStream out = null;
     private DataInputStream in = null;
     private String line = "";
-    private String send;
     private int indexTlacoPredchozi;
     private Thread thread;
     private Thread thread2;
@@ -115,11 +114,12 @@ public class Client extends Start implements FirstTurn {
         // keep reading until "Over" is input
 
     }
+
+    /**
+     * Metoda end ukončuje komunikaci se serverem
+     * @throws IOException
+     */
     private void end() throws IOException {
-        System.out.println("LAN.Client se vypnul");
-        // close connection
-        //thread.stop();
-        //thread2.stop();
         input.close();
         out.close();
         socket.close();

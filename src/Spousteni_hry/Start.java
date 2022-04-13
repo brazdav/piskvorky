@@ -1,6 +1,5 @@
 package Spousteni_hry;
 
-import LAN.Client;
 import LAN.Server;
 import Rozhrani.FirstTurn;
 import Tvoreni_menu.Piskvorky;
@@ -26,7 +25,6 @@ public class Start implements FirstTurn{
     private double height;
     private Dimension screenSize;
     private Server server;
-    private Client client;
     private String check = "check";
     public ArrayList buttons = new ArrayList<JButton>();
     public Start() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
@@ -42,7 +40,7 @@ public class Start implements FirstTurn{
      * Nastavuje v pravém rohu okna label s počtem vyhraných kol pro X nebo O
      * @param piskvorky
      */
-    public void start (Piskvorky piskvorky){
+    public void start (Piskvorky piskvorky, String ai){
         piskvorky.getString("ai");
         JFrame frame = new JFrame();
         frame.setVisible(true);
@@ -68,7 +66,11 @@ public class Start implements FirstTurn{
                 public void actionPerformed(ActionEvent e) {
                     if (obj.getText().equals("")) {
                         Vykresleni vykresleni = new Vykresleni();
-                        vykresleni.vykresleni(obj, piskvorky);
+                        if(ai.equals("Lehčí"))
+                            vykresleni.vykresleniEz(obj, piskvorky);
+                        else
+                            //vykresleni.vykresleniHard(obj, piskvorky);
+                            System.out.println("težší");
 
                         piskvorky.checkLeva(obj, buttons, check);
                         piskvorky.checkPrava(obj, buttons, check);
@@ -86,7 +88,8 @@ public class Start implements FirstTurn{
                             piskvorky.button_panel.removeAll();
                             buttons.removeAll(buttons);
                             if (piskvorky.kola > 0) {
-                                start(piskvorky);
+                                frame.dispose();
+                                start(piskvorky, ai);
                             } else {
                                 if (piskvorky.winX > piskvorky.winO) {
                                     JOptionPane.showMessageDialog(frame, "Konec hry, vyhral X");
@@ -167,7 +170,7 @@ public class Start implements FirstTurn{
                         piskvorky.button_panel.removeAll();
                         buttons.removeAll(buttons);
                         if (piskvorky.kolaLan > 0) {
-                            start(piskvorky);
+                            startLan(piskvorky);
                         }
                         else {
                             if(piskvorky.winX > piskvorky.winO){

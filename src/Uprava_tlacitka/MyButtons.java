@@ -51,7 +51,6 @@ public class MyButtons extends AI1 implements FirstTurn, Podminky {
                 MyButtons.this.setBackground(Color.WHITE);
             }
         });
-        getObject(this);
     }
 
     /**

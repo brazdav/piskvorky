@@ -1,10 +1,10 @@
 package Tvoreni_menu;
 
+import AI.MenuAI;
 import LAN.SettingUpClient;
 import LAN.SettingUpServer;
 import Rozhrani.FirstTurn;
 import Rozhrani.Music;
-import Spousteni_hry.Start;
 import Spousteni_hry.Vykresleni;
 import Uprava_tlacitka.MyButtons;
 
@@ -281,19 +281,8 @@ public class Piskvorky extends MyButtons implements Music {
         hra.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 kola = pocetKol(r1,r2,r3);
-                Start obj = null;
-                try {
-                    obj = new Start();
-                } catch (UnsupportedAudioFileException ex) {
-                    ex.printStackTrace();
-                } catch (LineUnavailableException ex) {
-                    ex.printStackTrace();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-                obj.start(piskvorky);
+                MenuAI obj = new MenuAI(piskvorky);
                 menu.dispose();
-                clip.stop();
             }
         });
 
