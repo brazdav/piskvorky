@@ -69,8 +69,7 @@ public class Start implements FirstTurn{
                         if(ai.equals("Lehčí"))
                             vykresleni.vykresleniEz(obj, piskvorky);
                         else
-                            //vykresleni.vykresleniHard(obj, piskvorky);
-                            System.out.println("težší");
+                            vykresleni.vykresleniHard(obj, piskvorky);
 
                         piskvorky.checkLeva(obj, buttons, check);
                         piskvorky.checkPrava(obj, buttons, check);

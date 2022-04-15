@@ -17,7 +17,7 @@ public class MenuAI implements ActionListener{
     ImageIcon pokrocily = new ImageIcon(getClass().getResource("/Obrazky/pokrocily.png"));
 
     private JFrame frame = new JFrame("Menu");
-    private JButton b1 = new JButton(zacatecnik );
+    private JButton b1 = new JButton(zacatecnik);
     private JButton b2 = new JButton(pokrocily);
     private Piskvorky obj;
     private JLabel vzhled;
