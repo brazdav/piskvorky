@@ -82,18 +82,17 @@ public class Start implements FirstTurn{
                         if (piskvorky.vyhra) {
                             piskvorky.vyhranaKola.setText("Vyhrana kola: X:" + piskvorky.winX + "  O:" + piskvorky.winO);
                             piskvorky.kola--;
-                            //frame.dispose();
                             piskvorky.vyhra = false;
-                            piskvorky.button_panel.removeAll();
                             buttons.removeAll(buttons);
                             if (piskvorky.kola > 0) {
+                                piskvorky.button_panel.removeAll();
                                 frame.dispose();
                                 start(piskvorky, ai);
                             } else {
                                 if (piskvorky.winX > piskvorky.winO) {
-                                    JOptionPane.showMessageDialog(frame, "Konec hry, vyhral X");
+                                    JOptionPane.showMessageDialog(null, "Konec hry, vyhral X");
                                 } else {
-                                    JOptionPane.showMessageDialog(frame, "Konec hry, vyhral O");
+                                    JOptionPane.showMessageDialog(null, "Konec hry, vyhral O");
                                 }
                                 try {
                                     frame.dispose();

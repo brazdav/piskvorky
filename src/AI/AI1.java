@@ -41,7 +41,7 @@ public class AI1 extends JButton implements FirstTurn {
                 obranaList.add(obj9.check(i, buttons, znak, "rightdown"));
             }
         }
-        if (!type.equals("hard"))
+        if (type.equals("ez"))
             evaluationEz(buttons, obranaList);
     }
 
@@ -75,7 +75,6 @@ public class AI1 extends JButton implements FirstTurn {
         int max = 0;
         CheckAI obj = new CheckAI();
         for (int i = 0; i < list.size(); i++) {
-            System.out.println("Row: " + list.get(i).getRow() + " Index: " + list.get(i).getIndex());
                 if (list.get(i).getRow() > max) {
                     max = list.get(i).getRow();
                     obj = list.get(i);
@@ -84,43 +83,23 @@ public class AI1 extends JButton implements FirstTurn {
         if (obj.getRow() > 0 && ai) {
             found = true;
             zapis(obj.getIndex(), buttons);
-            System.out.println("zapis");
         }
         else if (obj.getRow() == 0 && ai){
-            found = true;
-            move(find(buttons, "O"));
-            System.out.println("move1");
+            int number = find(buttons, "O");
+            if (found){
+                move(number);
+            }
         }
 
 
         if (!found){
             move(find(buttons, "X"));
-            System.out.println("move2");
         }
     }
 
     private void evaluationHa(ArrayList<JButton> buttons){
         found = false;
         CheckAI obj = new CheckAI();
-        for (int i = 0; i < utokList.size(); i++) {
-            if (utokList.get(i).getRow() == 3) {
-                obj = utokList.get(i);
-                if (!found && ai){
-                    zapis(obj.getIndex(), buttons);
-                    found = true;
-                }
-            }
-        }
-        for (int i = 0; i < obranaList.size(); i++) {
-            if (obranaList.get(i).getRow() == 2) {
-                obj = obranaList.get(i);
-                if (!found && ai){
-                    zapis(obj.getIndex(), buttons);
-                    found = true;
-                }
-            }
-        }
-        if (!found){
             int max = 0;
             for (int i = 0; i < utokList.size(); i ++){
                 if (utokList.get(i).getRow() > max) {
@@ -140,8 +119,10 @@ public class AI1 extends JButton implements FirstTurn {
                 System.out.println("zapis");
             }
             else if (obj.getRow() == 0 && ai){
-                found = true;
-                move(find(buttons, "O"));
+                int number = find(buttons, "O");
+                if (found){
+                    move(number);
+                }
                 System.out.println("move1");
             }
 
@@ -150,16 +131,14 @@ public class AI1 extends JButton implements FirstTurn {
                 move(find(buttons, "X"));
                 System.out.println("move2");
             }
-        }
-
-
     }
 
     private boolean zapis(int poradi, ArrayList<JButton> buttons) {
-            if (buttons.get(poradi).getText().equals("")) {
+            if (poradi >= 0 && poradi < 225 && buttons.get(poradi).getText().equals("")) {
+                System.out.println("zapis: " + poradi);
                 buttons.get(poradi).doClick();
-                obranaList.clear();
                 utokList.clear();
+                obranaList.clear();
                 found = true;
                 return true;
             }
@@ -170,10 +149,13 @@ public class AI1 extends JButton implements FirstTurn {
 
     private int find(ArrayList<JButton> buttons, String znak){
         int index = 0;
-        for (JButton button:buttons) {
-            if (button.getText().equals(znak)){
-                index = buttons.indexOf(button);
+        for (int i = 0; i < buttons.size(); i++){
+            if (buttons.get(i).getText().equals(znak)) {
+                found = true;
+                index = i;
+                break;
             }
+
         }
         return index;
     }
