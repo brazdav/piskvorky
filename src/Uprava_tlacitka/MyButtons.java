@@ -1,6 +1,6 @@
 package Uprava_tlacitka;
 
-import AI.AI1;
+import AI.AI;
 import Rozhrani.FirstTurn;
 import Rozhrani.Podminky;
 
@@ -19,7 +19,7 @@ import java.util.ArrayList;
  *
  *
  * */
-public class MyButtons extends AI1 implements FirstTurn, Podminky {
+public class MyButtons extends AI implements FirstTurn, Podminky {
     int xRada = 0;
     int oRada = 0;
     public int winX = 0;

@@ -22,7 +22,7 @@ public class Vykresleni implements FirstTurn {
      *
      * */
     public void vykresleniEz(JButton button, Piskvorky piskvorky) {
-        if (player_turn.get()) {
+        if (player_turn.get()){
             if (button.getText().equals("")) {
                 button.setForeground(new Color(0, 0, 0));
                 button.setText("X");

@@ -52,6 +52,7 @@ public class CheckAI {
                         prom = prom - (this.row + 2) * 16;
                         break;
                 }
+                this.row --;
                 if (buttons.get(this.index).getText().equals(znak2))
                     this.row = 0;
 

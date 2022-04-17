@@ -11,6 +11,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+/**
+ * Třídá MenuAI implemetuje rozhraní ActionListener, aby bylo možné přepsat abstraktní metodu actionPerformed a ta byla přiřazena dvoum tlačítkům
+ * Obsahuje konstruktor MenuAI, který vytváří menu pro spouštění hry s umělou inteligencí
+ */
 public class MenuAI implements ActionListener{
 
     ImageIcon zacatecnik = new ImageIcon(getClass().getResource("/Obrazky/zacatecnik.png"));
@@ -20,12 +24,19 @@ public class MenuAI implements ActionListener{
     private JButton b1 = new JButton(zacatecnik);
     private JButton b2 = new JButton(pokrocily);
     private Piskvorky obj;
-    private JLabel vzhled;
+    private JLabel vzhled = new JLabel();
     private JButton zpatky;
 
 
-
-
+    /**
+     * Konstruktor MenuAI si ukládá do vlastní globální proměnné instanci třídy Piskvorky
+     * Následně vytvoří tlačítko s ikonou zpět, na tlačítka b1 a b2 nastaví implementovaný ActionListener
+     * Nastavuje vlastnosti JFrame frame, na který se bude vázat JLabel vzhled
+     * Nastavuje vlastnosti JLable vzhled, na který se následovně vykreslí tlačítka a je přidán na JFrame frame
+     * Nastavuje vlastnosti tlačítek b1 a b2, které jsou přidány na JLabel vzhled
+     * Nastavuje tlačítko zpet, které slouží k vracení se na předchozí frame, nakonec je taktéž přidáno na JLabel vzhled
+     * @param obj instance třídy Piskvorky
+     */
     public MenuAI(Piskvorky obj){
 
         this.obj = obj;
@@ -35,14 +46,11 @@ public class MenuAI implements ActionListener{
         b1.addActionListener(this);
         b2.addActionListener(this);
 
-        vzhled = new JLabel();
-
         frame.setResizable(false);
         frame.setLayout(new BorderLayout());
         frame.setSize(800,600);
         frame.setLocationRelativeTo(null);
         frame.getContentPane().setBackground(new Color(50,50,50));
-
 
         vzhled.setBackground(new Color(43, 135, 255));
         vzhled.setForeground(new Color(255, 255, 255));
