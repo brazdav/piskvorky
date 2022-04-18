@@ -20,7 +20,7 @@ public interface Podminky{
      * @param konecna určuje, jaké hraniční tlačitko bude jako poslední
      * @return ArrayList podmínky
      */
-    static ArrayList<Integer> naplneni(int b, int pocatecni, int konecna){
+    default ArrayList<Integer> naplneni(int b, int pocatecni, int konecna){
         ArrayList<Integer> podminky = new ArrayList<>();
         for(int i = pocatecni; i <= konecna; i += b){
             podminky.add(i);
@@ -39,7 +39,7 @@ public interface Podminky{
      * @param konecna2 určuje poslední index hraničního tlačitka z druhé hranice
      * @return ArrayList podminky
      */
-    static ArrayList<Integer> naplneni(int a, int pocatecni, int konecna, int b, int pocatecni2, int konecna2){
+    default ArrayList<Integer> naplneni(int a, int pocatecni, int konecna, int b, int pocatecni2, int konecna2){
         ArrayList<Integer> podminky = new ArrayList<>();
         for(int i = pocatecni; i <= konecna; i += a){
             podminky.add(i);
@@ -58,7 +58,7 @@ public interface Podminky{
      * @param podminky je ArrayList naplněný předchozími metodami
      * @return boolean pravda
      */
-    static boolean vyhodnoceni(int poradi, ArrayList<Integer> podminky){
+    default boolean vyhodnoceni(int poradi, ArrayList<Integer> podminky){
         boolean pravda = false;
         if (podminky.contains(poradi)){
             return false;

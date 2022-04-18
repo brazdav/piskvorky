@@ -83,7 +83,7 @@ public class MyButtons extends AI implements FirstTurn, Podminky {
     public void checkLeva(JButton tlaco, ArrayList<JButton> buttons, String check) {
         String znak = tlaco.getText();
         int poradi = buttons.indexOf(tlaco);
-        if (Podminky.vyhodnoceni(poradi, Podminky.naplneni(15, 0, 210))) {
+        if (vyhodnoceni(poradi, naplneni(15, 0, 210))) {
             poradi--;
         } else return;
             if (((JButton) buttons.get(poradi)).getText().equals(znak)) {
@@ -107,7 +107,7 @@ public class MyButtons extends AI implements FirstTurn, Podminky {
     public void checkPrava(JButton tlaco, ArrayList<JButton> buttons, String check) {
         String znak = tlaco.getText();
         int poradi = buttons.indexOf(tlaco);
-        if (Podminky.vyhodnoceni(poradi, Podminky.naplneni(15, 14, 224))) {
+        if (vyhodnoceni(poradi, naplneni(15, 14, 224))) {
             poradi++;
         } else return;
             if (((JButton) buttons.get(poradi)).getText().equals(znak)) {
@@ -135,7 +135,7 @@ public class MyButtons extends AI implements FirstTurn, Podminky {
     public void checkDole(JButton tlaco, ArrayList<JButton> buttons, String check) {
         String znak = tlaco.getText();
         int poradi = buttons.indexOf(tlaco);
-        if (Podminky.vyhodnoceni(poradi, Podminky.naplneni(1, 210, 254))) {
+        if (vyhodnoceni(poradi, naplneni(1, 210, 224))) {
             poradi += 15;
         } else return;
         if (((JButton) buttons.get(poradi)).getText().equals(znak)) {
@@ -162,7 +162,7 @@ public class MyButtons extends AI implements FirstTurn, Podminky {
     public void checkHore(JButton tlaco, ArrayList<JButton> buttons, String check) {
         String znak = tlaco.getText();
         int poradi = buttons.indexOf(tlaco);
-        if (Podminky.vyhodnoceni(poradi, Podminky.naplneni(1, 0, 14))) {
+        if (vyhodnoceni(poradi, naplneni(1, 0, 14))) {
             poradi -= 15;
         } else return;
         if (((JButton) buttons.get(poradi)).getText().equals(znak)) {
@@ -185,7 +185,7 @@ public class MyButtons extends AI implements FirstTurn, Podminky {
     public void checkPravaHore(JButton tlaco, ArrayList<JButton> buttons, String check) {
         String znak = tlaco.getText();
         int poradi = buttons.indexOf(tlaco);
-        if (Podminky.vyhodnoceni(poradi, Podminky.naplneni(1, 0, 14, 15, 14, 224))) {
+        if (vyhodnoceni(poradi, naplneni(1, 0, 14, 15, 14, 224))) {
             poradi -= 14;
         } else return;
         if (((JButton) buttons.get(poradi)).getText().equals(znak)) {
@@ -212,7 +212,7 @@ public class MyButtons extends AI implements FirstTurn, Podminky {
     public void checkPravaDole(JButton tlaco, ArrayList<JButton> buttons, String check) {
         String znak = tlaco.getText();
         int poradi = buttons.indexOf(tlaco);
-        if (Podminky.vyhodnoceni(poradi, Podminky.naplneni(1, 210, 224, 15, 14, 224))) {
+        if (vyhodnoceni(poradi, naplneni(1, 210, 224, 15, 14, 224))) {
             poradi += 16;
         } else return;
         if (((JButton) buttons.get(poradi)).getText().equals(znak)) {
@@ -239,7 +239,7 @@ public class MyButtons extends AI implements FirstTurn, Podminky {
     public void checkLevaHore(JButton tlaco, ArrayList<JButton> buttons, String check) {
         String znak = tlaco.getText();
         int poradi = buttons.indexOf(tlaco);
-        if (Podminky.vyhodnoceni(poradi, Podminky.naplneni(1, 0, 14, 15, 0, 210))) {
+        if (vyhodnoceni(poradi, naplneni(1, 0, 14, 15, 0, 210))) {
             poradi -= 16;
         } else return;
         if (((JButton) buttons.get(poradi)).getText().equals(znak)) {
@@ -262,7 +262,7 @@ public class MyButtons extends AI implements FirstTurn, Podminky {
     public void checkLevaDole(JButton tlaco, ArrayList<JButton> buttons, String check) {
         String znak = tlaco.getText();
         int poradi = buttons.indexOf(tlaco);
-        if (Podminky.vyhodnoceni(poradi, Podminky.naplneni(1, 210, 224, 15, 0, 210))) {
+        if (vyhodnoceni(poradi, naplneni(1, 210, 224, 15, 0, 210))) {
             poradi += 14;
         } else return;
         if (((JButton) buttons.get(poradi)).getText().equals(znak)) {
