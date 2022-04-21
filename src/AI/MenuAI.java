@@ -20,12 +20,12 @@ public class MenuAI implements ActionListener{
     ImageIcon zacatecnik = new ImageIcon(getClass().getResource("/Obrazky/zacatecnik.png"));
     ImageIcon pokrocily = new ImageIcon(getClass().getResource("/Obrazky/pokrocily.png"));
 
-    private JFrame frame = new JFrame("Menu");
-    private JButton b1 = new JButton(zacatecnik);
-    private JButton b2 = new JButton(pokrocily);
-    private Piskvorky obj;
-    private JLabel vzhled = new JLabel();
-    private JButton zpatky;
+    private final JFrame frame = new JFrame("Menu");
+    private final JButton b1 = new JButton(zacatecnik);
+    private final JButton b2 = new JButton(pokrocily);
+    private final Piskvorky obj;
+    private final JLabel vzhled = new JLabel();
+    private final JButton zpatky;
 
 
     /**
@@ -110,7 +110,7 @@ public class MenuAI implements ActionListener{
         String st;
         Start start = null;
         try {
-            start = new Start();
+            start = new Start(this.obj);
         } catch (UnsupportedAudioFileException | LineUnavailableException | IOException ex) {
             ex.printStackTrace();
         }
@@ -118,6 +118,6 @@ public class MenuAI implements ActionListener{
             st = "Lehčí";
         else
             st = "Těžší";
-        start.start(obj, st);
+        start.start(st);
     }
 }

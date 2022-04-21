@@ -28,7 +28,8 @@ public class Vykresleni implements FirstTurn {
                 button.setText("X");
                 textfield.setText("O turn");
                 player_turn.set(false);
-                piskvorky.obrana(piskvorky.list, "X", "ez");
+                piskvorky.getZnak(piskvorky.list, "X");
+                piskvorky.evaluationEz();
                 piskvorky.ai = true;
             }
         } else if (button.getText().equals("")) {
@@ -47,8 +48,9 @@ public class Vykresleni implements FirstTurn {
                 button.setText("X");
                 textfield.setText("O turn");
                 player_turn.set(false);
-                piskvorky.obrana(piskvorky.list, "X", "hard");
-                piskvorky.utok(piskvorky.list, "O");
+                piskvorky.getZnak(piskvorky.list, "X");
+                piskvorky.getZnak(piskvorky.list, "O");
+                piskvorky.evaluationHa();
                 piskvorky.ai = true;
             }
         } else if (button.getText().equals("")) {

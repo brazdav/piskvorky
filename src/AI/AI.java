@@ -13,13 +13,30 @@ import java.util.Random;
  * @version 1.0.0
  */
 public class AI extends JButton implements FirstTurn {
-    Random random = new Random();
     public ArrayList<JButton> list = new ArrayList();
     private boolean found;
     public boolean ai = false;
     private ArrayList<CheckAI> utokList = new ArrayList<>();
     private ArrayList<CheckAI> obranaList = new ArrayList<>();
+    private ArrayList<JButton> buttons;
 
+    /**
+     * Metoda getZnak získává ArrayList buttons, který obsahuje tlačítka z herní plochy, uloží ho do globálního ArrayListu buttons
+     * Následně zavolá metodu naplneni() podle vyhodnocené podmínky, která se rozhoduje na základě parametru znak
+     * @param buttons ArrayList tlačítek z herní plochy
+     * @param znak String který rozhoduje jaký text se na tlačítkách vyhledávat
+     */
+    public void getZnak(ArrayList<JButton> buttons, String znak){
+        this.buttons = buttons;
+        if (znak.equals("X")) {
+            naplneni(buttons, znak, obranaList);
+            System.out.println("naplnění ez");
+        }
+        else {
+            naplneni(buttons, znak, utokList);
+            System.out.println("naplnění hard");
+        }
+    }
     /**
      * Metoda při zavolání nastaví proměnnou found na false
      * poté vyhledá všechna tlačítka, na kterých je daný text
@@ -27,9 +44,9 @@ public class AI extends JButton implements FirstTurn {
      * následně jsou objekty uloženy do ArrayListu
      * @param buttons ArrayList tlačítek, ve kterém hledáme tlačítka s daným textem
      * @param znak text který na tlačítku hledáme
-     * @param type proměnná zamezuje spouštění vyhodnocování v nesprávný moment
+     * @param list proměnná zamezuje spouštění vyhodnocování v nesprávný moment
      */
-    public void obrana (ArrayList<JButton> buttons, String znak, String type) {
+    private void naplneni (ArrayList<JButton> buttons, String znak, ArrayList<CheckAI> list) {
         found = false;
         for (int i = 0; i < buttons.size(); i++) {
             if (buttons.get(i).getText().equals(znak)) {
@@ -41,52 +58,16 @@ public class AI extends JButton implements FirstTurn {
                 CheckAI obj7 = new CheckAI();
                 CheckAI obj8 = new CheckAI();
                 CheckAI obj9 = new CheckAI();
-                obranaList.add(obj1.check(i, buttons, znak, "up"));
-                obranaList.add(obj2.check(i, buttons, znak, "left"));
-                obranaList.add(obj3.check(i, buttons, znak, "down"));
-                obranaList.add(obj4.check(i, buttons, znak, "right"));
-                obranaList.add(obj6.check(i, buttons, znak, "leftup"));
-                obranaList.add(obj7.check(i, buttons, znak, "leftdown"));
-                obranaList.add(obj8.check(i, buttons, znak, "rightup"));
-                obranaList.add(obj9.check(i, buttons, znak, "rightdown"));
+                list.add(obj1.check(i, buttons, znak, "up"));
+                list.add(obj2.check(i, buttons, znak, "left"));
+                list.add(obj3.check(i, buttons, znak, "down"));
+                list.add(obj4.check(i, buttons, znak, "right"));
+                list.add(obj6.check(i, buttons, znak, "leftup"));
+                list.add(obj7.check(i, buttons, znak, "leftdown"));
+                list.add(obj8.check(i, buttons, znak, "rightup"));
+                list.add(obj9.check(i, buttons, znak, "rightdown"));
             }
         }
-        if (type.equals("ez"))
-            evaluationEz(buttons, obranaList);
-    }
-
-    /**
-     * Metoda vyhledá všechna tlačítka, na kterých je daný text
-     * po nalezení vytvoří 8 objektů, které představují jednotlivé směry hledání dalších tlačítek
-     * následně jsou objekty uloženy do ArrayListu
-     * volá metodu evaluationHa() s parametrem ArrayList buttons
-     * @param buttons ArrayList tlačítek, ve kterém hledáme tlačítka s daným textem
-     * @param znak text který na tlačítku hledáme
-     */
-    public void utok(ArrayList<JButton> buttons, String znak){
-            for (int i = 0; i < buttons.size(); i++) {
-                if (buttons.get(i).getText().equals(znak)){
-                    CheckAI obj1 = new CheckAI();
-                    CheckAI obj2 = new CheckAI();
-                    CheckAI obj3 = new CheckAI();
-                    CheckAI obj4 = new CheckAI();
-                    CheckAI obj6 = new CheckAI();
-                    CheckAI obj7 = new CheckAI();
-                    CheckAI obj8 = new CheckAI();
-                    CheckAI obj9 = new CheckAI();
-                    utokList.add(obj1.check(i,buttons,znak,"up"));
-                    utokList.add(obj2.check(i,buttons,znak,"left"));
-                    utokList.add(obj3.check(i,buttons,znak,"down"));
-                    utokList.add(obj4.check(i,buttons,znak,"right"));
-                    utokList.add(obj6.check(i,buttons,znak,"leftup"));
-                    utokList.add(obj7.check(i,buttons,znak,"leftdown"));
-                    utokList.add(obj8.check(i,buttons,znak,"rightup"));
-                    utokList.add(obj9.check(i,buttons,znak,"rightdown"));
-                }
-            }
-            evaluationHa(buttons);
-
-
     }
 
     /**
@@ -94,20 +75,17 @@ public class AI extends JButton implements FirstTurn {
      * Pokud bude row větší než nula a zároveň proměnná ai bude true, proměnná found se nastaví na treu a zavolá se metoda zapis()
      * Pokud bude row roven nule a zároveň proměnná ai bude true zavolá se metoda find() jejíž výstup bude uložen do proměnné number, když se metoda find() přepíše proměnnou found na true, zavolá se i metoda move
      * Za podmínky, že zůstane proměnná found nastvená jako false, se vykoná metoda move
-     * @param buttons proměnná v sobě obsahuje ArrayList tlačítek z herní plochy
-     * @param list ArrayList, ve kterém chceme hledat největší proměnnou row
      */
-    private void evaluationEz(ArrayList<JButton> buttons, ArrayList<CheckAI> list){
+    public void evaluationEz(){
         int max = 0;
         CheckAI obj = new CheckAI();
-        for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).getRow() > max) {
-                    max = list.get(i).getRow();
-                    obj = list.get(i);
+        for (int i = 0; i < obranaList.size(); i++) {
+                if (obranaList.get(i).getRow() > max) {
+                    max = obranaList.get(i).getRow();
+                    obj = obranaList.get(i);
             }
         }
         if (obj.getRow() > 0 && ai) {
-            found = true;
             zapis(obj.getIndex(), buttons);
         }
         else if (obj.getRow() == 0 && ai){
@@ -130,9 +108,8 @@ public class AI extends JButton implements FirstTurn {
      * Pokud bude row větší než nula a zároveň proměnná ai bude true, proměnná found se nastaví na treu a zavolá se metoda zapis()
      * Pokud bude row roven nule a zároveň proměnná ai bude true zavolá se metoda find() jejíž výstup bude uložen do proměnné number, když se metoda find() přepíše proměnnou found na true, zavolá se i metoda move
      * Za podmínky, že zůstane proměnná found nastvená jako false, se vykoná metoda move
-     * @param buttons proměnná v sobě obsahuje ArrayList tlačítek z herní plochy
      */
-    private void evaluationHa(ArrayList<JButton> buttons){
+    public void evaluationHa(){
         found = false;
         CheckAI obj = new CheckAI();
             int max = 0;
@@ -141,12 +118,14 @@ public class AI extends JButton implements FirstTurn {
                     max = utokList.get(i).getRow();
                     obj = utokList.get(i);
                 }
+                System.out.println("utok row: " + utokList.get(i).getRow() + " index: " + utokList.get(i).getIndex());
             }
             for (int i = 0; i < obranaList.size(); i ++){
                 if (obranaList.get(i).getRow() > max) {
                     max = obranaList.get(i).getRow();
                     obj = obranaList.get(i);
                 }
+                System.out.println("obrana row: " + obranaList.get(i).getRow() + " index: " + obranaList.get(i).getIndex());
             }
             if (obj.getRow() > 0 && ai) {
                 found = true;

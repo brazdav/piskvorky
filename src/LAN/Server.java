@@ -46,6 +46,7 @@ public class Server extends Start {
      * @throws IOException
      */
     public Server(Piskvorky piskvorky) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        super(piskvorky);
         // starts server and waits for a connection
         this.obj = this;
         try {
@@ -54,7 +55,7 @@ public class Server extends Start {
             System.out.println("Waiting for a client ...");
             socket = server.accept();
             System.out.println("LAN.Client accepted");
-            startLan(piskvorky);
+            startLan();
             getServer(obj);
             // takes input from the client socket
             in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));

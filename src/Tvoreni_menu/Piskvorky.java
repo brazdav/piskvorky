@@ -52,7 +52,7 @@ public class Piskvorky extends MyButtons implements Music {
     public JButton zpatky = new JButton(zpet);
 
 
-    public JLabel vyhranaKola = new JLabel("Vyhrana kola:");
+    //public JLabel vyhranaKola = new JLabel("Vyhrana kola:");
 
 
 
@@ -81,7 +81,7 @@ public class Piskvorky extends MyButtons implements Music {
      *
     * */
     public Piskvorky() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        clip = Music.nacteni("Adventure.wav");
+        clip = nacteni("Adventure.wav");
         clip.loop(Clip.LOOP_CONTINUOUSLY);
         clip.stop();
 
@@ -139,19 +139,13 @@ public class Piskvorky extends MyButtons implements Music {
         sound.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         textfield1.add(sound);
 
-
-        vyhranaKola.setBounds(790,60,250,40);
-        vyhranaKola.setText("Vyhrana kola: X: " + winX + "  O: " + winO);
-        vyhranaKola.setFont(new Font("SansSerif",Font.BOLD,20));
-        vyhranaKola.setForeground(new Color(255, 255, 255));
-
         FirstTurn.textfield.setBackground(new Color(43, 135, 255));
         FirstTurn.textfield.setForeground(new Color(255, 255, 255));
         FirstTurn.textfield.setFont(new Font("SansSerif",Font.BOLD,75));
         FirstTurn.textfield.setHorizontalAlignment(JLabel.CENTER);
         FirstTurn.textfield.setText("Piškvorky");
         FirstTurn.textfield.setOpaque(true);
-        FirstTurn.textfield.add(vyhranaKola);
+        FirstTurn.textfield.setLayout(new BorderLayout());
 
         client.setBounds(275,375,250,80);
         client.setVisible(true);
@@ -279,7 +273,7 @@ public class Piskvorky extends MyButtons implements Music {
         lan.addActionListener(new ActionListener(){//potreba dve tlacitka, kde se nastavuje turn
             public void actionPerformed(ActionEvent e){
                 Vykresleni obj = new Vykresleni();
-                clip.stop();
+                //clip.stop();
                 lan.setVisible(false);
                 hra.setVisible(false);
                 r1.setVisible(false);

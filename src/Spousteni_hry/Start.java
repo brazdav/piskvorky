@@ -27,9 +27,17 @@ public class Start implements FirstTurn{
     private Server server;
     private String check = "check";
     public ArrayList buttons = new ArrayList<JButton>();
-    public Start() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+    private static JLabel vyhranaKola = new JLabel();
+    private Piskvorky piskvorky;
+    public Start(Piskvorky obj) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        this.piskvorky = obj;
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         height = screenSize.getHeight() - 35;
+        vyhranaKola.setText("Vyhrana kola: X: " + obj.winX + "  O: " + obj.winO);
+        vyhranaKola.setFont(new Font("SansSerif",Font.BOLD,20));
+        vyhranaKola.setForeground(new Color(255, 255, 255));
+        vyhranaKola.setHorizontalAlignment(JLabel.RIGHT);
+        FirstTurn.textfield.add(vyhranaKola, BorderLayout.PAGE_END);
     }
 
 
@@ -38,9 +46,10 @@ public class Start implements FirstTurn{
      * Vytvoří okno, dá nám ho doprostřed obrazovky s danými rozměry, které nejdou měnit
      * Zároveň vykreslí všechny tlačítka na hrací pole
      * Nastavuje v pravém rohu okna label s počtem vyhraných kol pro X nebo O
-     * @param piskvorky
+     * @param ai
      */
-    public void start (Piskvorky piskvorky, String ai){
+    public void start (String ai){
+
         piskvorky.getString("ai");
         JFrame frame = new JFrame();
         frame.setVisible(true);
@@ -80,14 +89,14 @@ public class Start implements FirstTurn{
                         piskvorky.checkLevaDole(obj, buttons, check);
                         piskvorky.checkPravaHore(obj, buttons, check);
                         if (piskvorky.vyhra) {
-                            piskvorky.vyhranaKola.setText("Vyhrana kola: X:" + piskvorky.winX + "  O:" + piskvorky.winO);
+                            vyhranaKola.setText("Vyhrana kola: X:" + piskvorky.winX + "  O:" + piskvorky.winO);
                             piskvorky.kola--;
                             piskvorky.vyhra = false;
                             buttons.removeAll(buttons);
                             if (piskvorky.kola > 0) {
                                 piskvorky.button_panel.removeAll();
                                 frame.dispose();
-                                start(piskvorky, ai);
+                                start(ai);
                             } else {
                                 if (piskvorky.winX > piskvorky.winO) {
                                     JOptionPane.showMessageDialog(null, "Konec hry, vyhral X");
@@ -121,9 +130,8 @@ public class Start implements FirstTurn{
      * Nepoužívá se zde AI
      * Zároveň vykreslí všechny tlačítka na hrací pole
      * Nastavuje v pravém rohu okna label s počtem vyhraných kol pro X nebo O
-     * @param piskvorky
      */
-    public void startLan (Piskvorky piskvorky){
+    public void startLan (){
         piskvorky.getString("lan");
         JFrame frame = new JFrame();
         frame.setVisible(true);
@@ -161,14 +169,14 @@ public class Start implements FirstTurn{
                     piskvorky.checkLevaDole(obj, buttons, check);
                     piskvorky.checkPravaHore(obj, buttons, check);
                     if (piskvorky.vyhra){
-                        piskvorky.vyhranaKola.setText("Vyhrana kola: X:" + piskvorky.winX + "  O:" + piskvorky.winO);
+                        vyhranaKola.setText("Vyhrana kola: X:" + piskvorky.winX + "  O:" + piskvorky.winO);
                         piskvorky.kolaLan --;
                         frame.dispose();
                         piskvorky.vyhra = false;
                         piskvorky.button_panel.removeAll();
                         buttons.removeAll(buttons);
                         if (piskvorky.kolaLan > 0) {
-                            startLan(piskvorky);
+                            startLan();
                         }
                         else {
                             if(piskvorky.winX > piskvorky.winO){
@@ -178,10 +186,10 @@ public class Start implements FirstTurn{
                             }
                             piskvorky.winX = 0;
                             piskvorky.winO = 0;
-                            piskvorky.vyhranaKola.setText("Vyhrana kola: X:" + piskvorky.winX + "  O:" + piskvorky.winO);
+                            vyhranaKola.setText("Vyhrana kola: X:" + piskvorky.winX + "  O:" + piskvorky.winO);
                             piskvorky.menu.setVisible(true);
                             piskvorky.sound.setIcon(piskvorky.soundImage1);
-                            piskvorky.clip.start();
+                            //piskvorky.clip.start();
                             try {
                                 if(server != null) {
                                     server.sendEnd();

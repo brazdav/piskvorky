@@ -30,7 +30,7 @@ public class SettingUpServer implements ActionListener{
     public SettingUpServer(Piskvorky piskvorky)throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         this.piskvorky = piskvorky;
 
-        dialogy = new JFrame("Dialogy");
+        dialogy = new JFrame("Zapnutí serveru");
 
         zpatky = new JButton(piskvorky.zpet);
 
@@ -146,12 +146,8 @@ public class SettingUpServer implements ActionListener{
 
         try {
             Server server = new Server(piskvorky);
-        } catch (UnsupportedAudioFileException unsupportedAudioFileException) {
+        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException unsupportedAudioFileException) {
             unsupportedAudioFileException.printStackTrace();
-        } catch (LineUnavailableException lineUnavailableException) {
-            lineUnavailableException.printStackTrace();
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
         }
     }
 

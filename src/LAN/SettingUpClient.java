@@ -17,28 +17,17 @@ public class SettingUpClient implements ActionListener{
     JLabel barva;
     JLabel nazev;
     JButton zpatky;
-
     JButton send;
     Piskvorky piskvorky;
+
     public SettingUpClient(Piskvorky piskvorky)throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         this.piskvorky = piskvorky;
 
-        dialogy = new JFrame("Dialogy");
-
+        dialogy = new JFrame("Zapnutí clienta");
         zpatky = new JButton(piskvorky.zpet);
-
         nazev = new JLabel("Zadej IP serveru:");
         barva = new JLabel();
         ipaddress = new JTextField();
-
-        // create a dialog Box
-
-
-
-
-        // create a label
-
-        JLabel aa = new JLabel();
         send = new JButton("Spustit");
 
         dialogy.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -66,7 +55,7 @@ public class SettingUpClient implements ActionListener{
 
         send.setBounds(72,125,100,50);
         send.setOpaque(false);
-
+        send.addActionListener(this);
 
         zpatky.setBounds(0,160,50,50);
         zpatky.setOpaque(false);
@@ -75,23 +64,6 @@ public class SettingUpClient implements ActionListener{
         zpatky.setFocusable(false);
         zpatky.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         zpatky.setVisible(true);
-
-
-
-        barva.add(nazev);
-        barva.add(ipaddress);
-        barva.add(send);
-        barva.add(zpatky);
-
-        send.addActionListener(this);
-
-
-        dialogy.add(barva);
-
-        dialogy.setVisible(true);
-
-        piskvorky.menu.setVisible(false);
-
         zpatky.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent f){
                 piskvorky.menu.setVisible(true);
@@ -99,6 +71,14 @@ public class SettingUpClient implements ActionListener{
             }
         });
 
+        barva.add(nazev);
+        barva.add(ipaddress);
+        barva.add(send);
+        barva.add(zpatky);
+
+        dialogy.add(barva);
+        dialogy.setVisible(true);
+        piskvorky.menu.setVisible(false);
     }
 
 
@@ -111,12 +91,8 @@ public class SettingUpClient implements ActionListener{
         System.out.print(adresa);
         try {
             Client client = new Client(adresa, 6669, piskvorky);
-        } catch (UnsupportedAudioFileException unsupportedAudioFileException) {
+        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException unsupportedAudioFileException) {
             unsupportedAudioFileException.printStackTrace();
-        } catch (LineUnavailableException lineUnavailableException) {
-            lineUnavailableException.printStackTrace();
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
         }
     }
 

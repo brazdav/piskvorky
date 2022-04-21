@@ -50,48 +50,7 @@ public class CheckAI implements Podminky{
                 check(this.index, buttons, znak1, site);
             }
             else if (buttons.get(this.index).getText().equals(znak2)) {
-                int prom = this.index;
-                switch (site) {
-                    case "left":
-                        if (vyhodnoceni(prom, naplneni(15,0,210)))
-                            prom = prom + (prom + 2);
-                        break;
-                    case "right":
-                        if (vyhodnoceni(prom, naplneni(15, 14,224)))
-                            prom = prom - (this.row + 2);
-                        break;
-                    case "up":
-                        if (vyhodnoceni(prom, naplneni(1,0,14)))
-                            prom = prom + (this.row + 2) * 15;
-                        break;
-                    case "down":
-                        if (vyhodnoceni(prom, naplneni(1,210,224)))
-                            prom = prom - (this.row + 2) * 15;
-                        break;
-                    case "leftup":
-                        if (vyhodnoceni(prom, naplneni(1,0,14,15,0,210)))
-                            prom = prom + (this.row + 2) * 16;
-                        break;
-                    case "leftdown":
-                        if (vyhodnoceni(prom, naplneni(15,0,210,1,210,224)))
-                            prom = prom - (this.row + 2) * 14;
-                        break;
-                    case "rightup":
-                        if (vyhodnoceni(prom, naplneni(15,14,224,1,0,14)))
-                            prom = prom + (this.row + 2) * 14;
-                        break;
-                    case "rightdown":
-                        if (vyhodnoceni(prom, naplneni(15,14,224,1,210,224)))
-                            prom = prom - (this.row + 2) * 16;
-                        break;
-                }
-                this.row --;
-                if (buttons.get(this.index).getText().equals(znak2))
-                    this.row = 0;
-
-                else if (buttons.get(prom).getText().equals(znak1))
-                    this.row = 0;
-
+                this.row = 0;
             }
             else if (buttons.get(this.index).getText().equals("")){
                 int prom = countIndex(site,this.index);

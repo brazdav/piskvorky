@@ -2,12 +2,12 @@ package LAN;
 import Rozhrani.FirstTurn;
 import Spousteni_hry.Start;
 import Tvoreni_menu.Piskvorky;
+
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.io.*;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 /**
  * Třída Client dědí z třídy Start a implementuje rozhraní FirstTurn
@@ -43,6 +43,7 @@ public class Client extends Start implements FirstTurn {
      * @throws IOException
      */
     public Client(String address, int port, Piskvorky piskvorky) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        super(piskvorky);
         // establish a connection
         thread = new Thread(() -> {
             while (!line.equals("Over")) {
@@ -95,7 +96,7 @@ public class Client extends Start implements FirstTurn {
         try {
             socket = new Socket(address, port);
             System.out.println("Connected");
-            startLan(piskvorky);
+            startLan();
             // takes input from terminal
             input = new BufferedReader(new InputStreamReader(System.in));
             // sends output to the socket
@@ -103,16 +104,11 @@ public class Client extends Start implements FirstTurn {
             in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             thread.start();
             thread2.start();
-        } catch (UnknownHostException u) {
+        } catch (IOException u) {
             System.out.println(u);
-        } catch (IOException i) {
-            System.out.println(i);
             SettingUpClient obj = new SettingUpClient(piskvorky);
             JOptionPane.showMessageDialog(obj.dialogy, "Na této adrese není zapnutý žádný server");
         }
-        // string to read message from input
-        // keep reading until "Over" is input
-
     }
 
     /**
