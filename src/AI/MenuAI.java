@@ -110,7 +110,7 @@ public class MenuAI implements ActionListener{
         String st;
         Start start = null;
         try {
-            start = new Start(this.obj);
+            start = new Start(this.obj, "ai");
         } catch (UnsupportedAudioFileException | LineUnavailableException | IOException ex) {
             ex.printStackTrace();
         }

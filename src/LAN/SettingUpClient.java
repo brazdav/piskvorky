@@ -85,7 +85,6 @@ public class SettingUpClient implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         FirstTurn.firstTurn();
-        FirstTurn.firstTurnLan();
         dialogy.dispose();
         adresa = ipaddress.getText();
         System.out.print(adresa);

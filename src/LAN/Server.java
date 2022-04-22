@@ -1,8 +1,11 @@
 package LAN;
 
+import Rozhrani.FirstTurn;
+import Rozhrani.Music;
 import Spousteni_hry.Start;
 import Tvoreni_menu.Piskvorky;
 
+import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
@@ -16,7 +19,7 @@ import java.net.Socket;
  * @author Vojtěch Brázda
  * @version 1.0.0
  */
-public class Server extends Start {
+public class Server extends Start implements Music {
     //initialize socket and input stream
     private Socket socket = null;
     private ServerSocket server = null;
@@ -46,14 +49,18 @@ public class Server extends Start {
      * @throws IOException
      */
     public Server(Piskvorky piskvorky) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        super(piskvorky);
+        super(piskvorky,"server");
         // starts server and waits for a connection
         this.obj = this;
         try {
+            Clip clip = nacteni("s2.wav");
+            piskvorky.clip.stop();
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
             server = new ServerSocket(port);
             System.out.println("LAN.Server started");
             System.out.println("Waiting for a client ...");
             socket = server.accept();
+            clip.stop();
             System.out.println("LAN.Client accepted");
             startLan();
             getServer(obj);
@@ -96,7 +103,15 @@ public class Server extends Start {
                     try {
                         line = in.readUTF();
                         if (!line.equals("Over")) {
-                            if (Integer.parseInt(line) != odchozi) {
+                            if (line.equals("true") || line.equals("false")){
+                                FirstTurn.server_turn.set(Boolean.parseBoolean(line));
+                                if (!FirstTurn.server_turn.get()){
+                                    for (Object button2 : buttons) {
+                                        piskvorky.buttonOff((JButton) button2);
+                                    }
+                                }
+                            }
+                            else if (Integer.parseInt(line) != odchozi) {
                                 int index = Integer.parseInt(line);
                                 prichozi = index;
                                 JButton button = (JButton) buttons.get(index);

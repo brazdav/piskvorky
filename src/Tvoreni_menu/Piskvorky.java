@@ -51,13 +51,6 @@ public class Piskvorky extends MyButtons implements Music {
     public JButton client = new JButton(clientImage);
     public JButton zpatky = new JButton(zpet);
 
-
-    //public JLabel vyhranaKola = new JLabel("Vyhrana kola:");
-
-
-
-
-
     boolean turn = true;
     public Clip clip;
 
@@ -83,7 +76,7 @@ public class Piskvorky extends MyButtons implements Music {
     public Piskvorky() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         clip = nacteni("Adventure.wav");
         clip.loop(Clip.LOOP_CONTINUOUSLY);
-        clip.stop();
+        //clip.stop();
 
         try{
             hra = new JButton(hraImage);

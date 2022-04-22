@@ -14,8 +14,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public interface FirstTurn{
     AtomicBoolean player1_turn = new AtomicBoolean(true);
-    AtomicBoolean server_turn = new AtomicBoolean(true);
     AtomicBoolean player_turn = new AtomicBoolean(true);
+    AtomicBoolean server_turn = new AtomicBoolean(true);
     Random random = new Random();
     JLabel textfield = new JLabel();
 
@@ -44,10 +44,11 @@ public interface FirstTurn{
      */
     static void firstTurnLan(){
         if(random.nextInt(2)==1){
-            server_turn.set(false);
+            server_turn.set(true);
+
         }
         else{
-            server_turn.set(true);
+            server_turn.set(false);
         }
     }
 

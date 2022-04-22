@@ -29,7 +29,10 @@ public class Start implements FirstTurn{
     public ArrayList buttons = new ArrayList<JButton>();
     private static JLabel vyhranaKola = new JLabel();
     private Piskvorky piskvorky;
-    public Start(Piskvorky obj) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+    public static String server_znak;
+    private String lan;
+    public Start(Piskvorky obj, String lan) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        this.lan = lan;
         this.piskvorky = obj;
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         height = screenSize.getHeight() - 35;
@@ -39,7 +42,6 @@ public class Start implements FirstTurn{
         vyhranaKola.setHorizontalAlignment(JLabel.RIGHT);
         FirstTurn.textfield.add(vyhranaKola, BorderLayout.PAGE_END);
     }
-
 
     /**
      * Metoda start nám zapíná hru proti AI
@@ -171,19 +173,28 @@ public class Start implements FirstTurn{
                     if (piskvorky.vyhra){
                         vyhranaKola.setText("Vyhrana kola: X:" + piskvorky.winX + "  O:" + piskvorky.winO);
                         piskvorky.kolaLan --;
-                        frame.dispose();
                         piskvorky.vyhra = false;
-                        piskvorky.button_panel.removeAll();
                         buttons.removeAll(buttons);
                         if (piskvorky.kolaLan > 0) {
+                            piskvorky.button_panel.removeAll();
+                            frame.dispose();
                             startLan();
                         }
                         else {
-                            if(piskvorky.winX > piskvorky.winO){
-                                JOptionPane.showMessageDialog(frame, "Konec hry, vyhral X");
-                            }else{
-                                JOptionPane.showMessageDialog(frame, "Konec hry, vyhral O");
+                            if (server_znak.equals("X") && lan.equals("server") && (piskvorky.winX > piskvorky.winO)){
+                                JOptionPane.showMessageDialog(frame, "Vyhrál jsi");
                             }
+                            else if (server_znak.equals("X") && lan.equals("server") && (piskvorky.winX < piskvorky.winO)){
+                                JOptionPane.showMessageDialog(frame, "Prohrál jsi");
+                            }
+
+                            if (server_znak.equals("X") && lan.equals("client") && (piskvorky.winX > piskvorky.winO)){
+                                JOptionPane.showMessageDialog(frame, "Prohrál jsi");
+                            }
+                            else if (server_znak.equals("X") && lan.equals("client") && (piskvorky.winX < piskvorky.winO)){
+                                JOptionPane.showMessageDialog(frame, "Vyhrál jsi");
+                            }
+
                             piskvorky.winX = 0;
                             piskvorky.winO = 0;
                             vyhranaKola.setText("Vyhrana kola: X:" + piskvorky.winX + "  O:" + piskvorky.winO);

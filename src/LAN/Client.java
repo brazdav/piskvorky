@@ -43,8 +43,13 @@ public class Client extends Start implements FirstTurn {
      * @throws IOException
      */
     public Client(String address, int port, Piskvorky piskvorky) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        super(piskvorky);
+        super(piskvorky, "client");
         // establish a connection
+        FirstTurn.firstTurnLan();
+        if (player_turn.get() && server_turn.get())
+            server_znak = "X";
+        else
+            server_znak = "O";
         thread = new Thread(() -> {
             while (!line.equals("Over")) {
                 getIndexTlaco();
@@ -72,13 +77,16 @@ public class Client extends Start implements FirstTurn {
                         System.out.println(line);
                         if (line.equals("true") || line.equals("false")) {
                             FirstTurn.player1_turn.set(Boolean.parseBoolean(line));
+                            out.writeUTF(String.valueOf(FirstTurn.server_turn.get()));
+                            if (FirstTurn.server_turn.get()){
+                                for (Object button2 : buttons) {
+                                    piskvorky.buttonOff((JButton) button2);
+                                }
+                            }
                         } else if (Integer.parseInt(line) != odchozi) {
                             int index = Integer.parseInt(line);
                             prichozi = index;
                             JButton button = (JButton) buttons.get(index);
-                            for (Object button2 : buttons) {
-                                piskvorky.buttonOn((JButton) button2);
-                            }
                             button.doClick();
                         }
                     }
