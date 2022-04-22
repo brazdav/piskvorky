@@ -53,7 +53,7 @@ public class Server extends Start implements Music {
         // starts server and waits for a connection
         this.obj = this;
         try {
-            Clip clip = nacteni("s2.wav");
+            Clip clip = nacteni("Adventure.wav");
             piskvorky.clip.stop();
             clip.loop(Clip.LOOP_CONTINUOUSLY);
             server = new ServerSocket(port);
