@@ -51,8 +51,7 @@ public class Piskvorky extends MyButtons implements Music {
     public JButton client = new JButton(clientImage);
     public JButton zpatky = new JButton(zpet);
 
-    boolean turn = true;
-    public Clip clip;
+    public boolean turn_music = true;
 
     public JRadioButton r1;
     public JRadioButton r2;
@@ -61,7 +60,9 @@ public class Piskvorky extends MyButtons implements Music {
     public JLabel pocetK;
     public int kola;
     public int kolaLan;
-
+    public Clip win;
+    public Clip lose;
+    public Clip waiting;
     private String adresa;
     Piskvorky piskvorky = this;
 
@@ -73,16 +74,21 @@ public class Piskvorky extends MyButtons implements Music {
      * Taky nastavuje label pro počítání vyhraných kol
      *
     * */
-    public Piskvorky() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        clip = nacteni("Adventure.wav");
-        clip.loop(Clip.LOOP_CONTINUOUSLY);
-        //clip.stop();
+    public Piskvorky(boolean turn) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        this.turn_music = turn;
+
+        win = nacteni("win.wav");
+        lose = nacteni("lose.wav");
+        waiting = nacteni("waiting.wav");
 
         try{
             hra = new JButton(hraImage);
             lan = new JButton(lanImage);
             logoLabel = new JLabel(logoImage);
-            sound = new JButton(soundImage1);
+            if (turn)
+                sound = new JButton(soundImage1);
+            else
+                sound = new JButton(soundImage2);
         }
         catch (Exception e){
             System.out.println("špátná cesta k souboru obrázku");
@@ -241,16 +247,12 @@ public class Piskvorky extends MyButtons implements Music {
         sound.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (turn) {
-                    clip.stop();
-                    turn = false;
+                if (turn_music) {
+                    turn_music = false;
                     sound.setIcon(soundImage2);
-                }
-                else {
-                    clip.start();
-                    clip.loop(Clip.LOOP_CONTINUOUSLY);
+                } else {
                     sound.setIcon(soundImage1);
-                    turn = true;
+                    turn_music = true;
                 }
             }
         });

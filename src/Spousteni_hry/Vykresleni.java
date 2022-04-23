@@ -26,7 +26,6 @@ public class Vykresleni implements FirstTurn {
             if (button.getText().equals("")) {
                 button.setForeground(new Color(0, 0, 0));
                 button.setText("X");
-                textfield.setText("O turn");
                 player_turn.set(false);
                 piskvorky.getZnak(piskvorky.list, "X");
                 piskvorky.evaluationEz();
@@ -35,7 +34,6 @@ public class Vykresleni implements FirstTurn {
         } else if (button.getText().equals("")) {
             button.setForeground(new Color(0, 0, 0));
             button.setText("O");
-            textfield.setText("X turn");
             player_turn.set(true);
             piskvorky.ai = false;
         }
@@ -46,7 +44,6 @@ public class Vykresleni implements FirstTurn {
             if (button.getText().equals("")) {
                 button.setForeground(new Color(0, 0, 0));
                 button.setText("X");
-                textfield.setText("O turn");
                 player_turn.set(false);
                 piskvorky.getZnak(piskvorky.list, "X");
                 piskvorky.getZnak(piskvorky.list, "O");
@@ -56,7 +53,6 @@ public class Vykresleni implements FirstTurn {
         } else if (button.getText().equals("")) {
             button.setForeground(new Color(0, 0, 0));
             button.setText("O");
-            textfield.setText("X turn");
             player_turn.set(true);
             piskvorky.ai = false;
         }
@@ -74,13 +70,11 @@ public class Vykresleni implements FirstTurn {
                 button.setForeground(new Color(0, 0, 0));
                 button.setText("X");
                 player1_turn.set(false);
-                textfield.setText("O turn");
             }
         } else if (button.getText().equals("")) {
             button.setForeground(new Color(0, 0, 0));
             button.setText("O");
             player1_turn.set(true);
-            textfield.setText("X turn");
         }
     }
 }

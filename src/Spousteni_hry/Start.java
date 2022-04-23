@@ -1,10 +1,13 @@
 package Spousteni_hry;
 
+import LAN.Client;
 import LAN.Server;
 import Rozhrani.FirstTurn;
+import Rozhrani.Music;
 import Tvoreni_menu.Piskvorky;
 import Uprava_tlacitka.MyButtons;
 
+import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
@@ -20,7 +23,7 @@ import java.util.ArrayList;
  * @version 1.0.0
  *
  * */
-public class Start implements FirstTurn{
+public class Start implements FirstTurn, Music {
     public int indexTlaco;
     private double height;
     private Dimension screenSize;
@@ -29,8 +32,9 @@ public class Start implements FirstTurn{
     public ArrayList buttons = new ArrayList<JButton>();
     private static JLabel vyhranaKola = new JLabel();
     private Piskvorky piskvorky;
-    public static String server_znak;
+    public String server_znak;
     private String lan;
+    public JFrame frame = new JFrame();
     public Start(Piskvorky obj, String lan) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         this.lan = lan;
         this.piskvorky = obj;
@@ -52,8 +56,8 @@ public class Start implements FirstTurn{
      */
     public void start (String ai){
 
+        textfield.setText("Piškvorky");
         piskvorky.getString("ai");
-        JFrame frame = new JFrame();
         frame.setVisible(true);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -101,18 +105,18 @@ public class Start implements FirstTurn{
                                 start(ai);
                             } else {
                                 if (piskvorky.winX > piskvorky.winO) {
-                                    JOptionPane.showMessageDialog(null, "Konec hry, vyhral X");
+                                    JOptionPane.showMessageDialog(frame, "Vyhrál jsi");
+                                    if (piskvorky.turn_music)
+                                        piskvorky.win.start();
                                 } else {
-                                    JOptionPane.showMessageDialog(null, "Konec hry, vyhral O");
+                                    JOptionPane.showMessageDialog(frame, "Prohrál jsi");
+                                    if (piskvorky.turn_music)
+                                        piskvorky.lose.start();
                                 }
                                 try {
                                     frame.dispose();
-                                    Piskvorky piskvorky1 = new Piskvorky();
-                                } catch (UnsupportedAudioFileException ex) {
-                                    ex.printStackTrace();
-                                } catch (LineUnavailableException ex) {
-                                    ex.printStackTrace();
-                                } catch (IOException ex) {
+                                    Piskvorky piskvorky1 = new Piskvorky(piskvorky.turn_music);
+                                } catch (UnsupportedAudioFileException | LineUnavailableException | IOException ex) {
                                     ex.printStackTrace();
                                 }
 
@@ -126,6 +130,10 @@ public class Start implements FirstTurn{
         FirstTurn.firstTurnAI();
         piskvorky.getList(buttons);
     }
+    public void stop(Clip clip){
+        clip.stop();
+        clip.close();
+    }
 
     /**
      * Metoda startLan dělá skoro to samé jako metoda start, akorát pro hru po Lan
@@ -133,9 +141,9 @@ public class Start implements FirstTurn{
      * Zároveň vykreslí všechny tlačítka na hrací pole
      * Nastavuje v pravém rohu okna label s počtem vyhraných kol pro X nebo O
      */
-    public void startLan (){
+    public void startLan (Object obj_lan){
+        textfield.setText("Jste na řadě");
         piskvorky.getString("lan");
-        JFrame frame = new JFrame();
         frame.setVisible(true);
 
 
@@ -178,37 +186,23 @@ public class Start implements FirstTurn{
                         if (piskvorky.kolaLan > 0) {
                             piskvorky.button_panel.removeAll();
                             frame.dispose();
-                            startLan();
+                            startLan(obj_lan);
                         }
                         else {
-                            if (server_znak.equals("X") && lan.equals("server") && (piskvorky.winX > piskvorky.winO)){
-                                JOptionPane.showMessageDialog(frame, "Vyhrál jsi");
-                            }
-                            else if (server_znak.equals("X") && lan.equals("server") && (piskvorky.winX < piskvorky.winO)){
-                                JOptionPane.showMessageDialog(frame, "Prohrál jsi");
-                            }
-
-                            if (server_znak.equals("X") && lan.equals("client") && (piskvorky.winX > piskvorky.winO)){
-                                JOptionPane.showMessageDialog(frame, "Prohrál jsi");
-                            }
-                            else if (server_znak.equals("X") && lan.equals("client") && (piskvorky.winX < piskvorky.winO)){
-                                JOptionPane.showMessageDialog(frame, "Vyhrál jsi");
-                            }
-
-                            piskvorky.winX = 0;
-                            piskvorky.winO = 0;
                             vyhranaKola.setText("Vyhrana kola: X:" + piskvorky.winX + "  O:" + piskvorky.winO);
-                            piskvorky.menu.setVisible(true);
-                            piskvorky.sound.setIcon(piskvorky.soundImage1);
-                            //piskvorky.clip.start();
-                            try {
-                                if(server != null) {
-                                    server.sendEnd();
-                                    server.end();
+                            if (obj_lan instanceof Client){
+                                try {
+                                    ((Client) obj_lan).end();
+                                } catch (IOException | UnsupportedAudioFileException | LineUnavailableException ex) {
+                                    ex.printStackTrace();
                                 }
-                                //Client client = new Client();
-                            } catch (IOException ioException) {
-                                ioException.printStackTrace();
+                            }
+                            else {
+                                try {
+                                    ((Server) obj_lan).end();
+                                } catch (IOException | UnsupportedAudioFileException | LineUnavailableException ex) {
+                                    ex.printStackTrace();
+                                }
                             }
                         }
                     }
@@ -233,6 +227,30 @@ public class Start implements FirstTurn{
      */
     public String getIndexTlaco(){
         return String.valueOf(indexTlaco);
+    }
+
+    public void lose(){
+        if (this.piskvorky.turn_music)
+            piskvorky.lose.start();
+
+        JOptionPane.showMessageDialog(frame, "Prohrál jsi");
+        restart();
+    }
+
+    public void win(){
+        if (this.piskvorky.turn_music)
+            piskvorky.win.start();
+
+        JOptionPane.showMessageDialog(frame, "Vyhrál jsi");
+        restart();
+    }
+
+    private void restart(){
+        frame.dispose();
+        piskvorky.winX = 0;
+        piskvorky.winO = 0;
+        piskvorky.menu.setVisible(true);
+        piskvorky.sound.setIcon(piskvorky.soundImage1);
     }
 
 }

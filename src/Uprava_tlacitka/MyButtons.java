@@ -6,6 +6,9 @@ import Rozhrani.Podminky;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 /**
  * Třída MyButtons dědí z třídy AI1 a implementuje rozhraní FirstTurn a Podminky
@@ -19,7 +22,7 @@ import java.util.ArrayList;
  *
  *
  * */
-public class MyButtons extends AI implements FirstTurn, Podminky {
+public class MyButtons extends AI implements FirstTurn, Podminky{
     int xRada = 0;
     int oRada = 0;
     public int winX = 0;
@@ -27,6 +30,9 @@ public class MyButtons extends AI implements FirstTurn, Podminky {
     public JPanel button_panel = new JPanel();
     public boolean vyhra = false;
     static private String lan_ai;
+    private MouseListener on;
+    private MouseListener out;
+    private MouseListener off;
     /**
      * Konstruktor třídy MyButtons
      * Nastavujeme zde různé vzhledové prvky, pro písmo, pozadí
@@ -39,32 +45,47 @@ public class MyButtons extends AI implements FirstTurn, Podminky {
         this.setFont(new Font("MV Boli", Font.BOLD, 25));
         this.setBackground(new Color(255, 255, 255));
         this.setFocusable(false);
-        this.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
+        on = new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
                 if (MyButtons.this.getText().equals(""))
                     MyButtons.this.setBackground(new Color(197, 245, 191));
                 else
                     MyButtons.this.setBackground(new Color(245, 191, 191));
             }
-
-            public void mouseExited(java.awt.event.MouseEvent evt) {
+        };
+        out = new MouseAdapter() {
+            @Override
+            public void mouseExited(MouseEvent e) {
                 MyButtons.this.setBackground(Color.WHITE);
             }
-        });
+        };
+        off = new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                MyButtons.this.setBackground(new Color(245, 191, 191));
+            }
+        };
+        this.addMouseListener(on);
+        this.addMouseListener(out);
     }
 
     /**
      * Metoda buttonOn nastavuje tlačítko na aktivní, takže na něj lze kliknout
      * @param tlaco je to JButton
      * */
-    public void buttonOn(JButton tlaco){
+    public void componentsOn(JButton tlaco){
+        textfield.setText("Jste na řadě");
         tlaco.setEnabled(true);
     }
     /**
      * Metoda buttonOn nastavuje tlačítko na neaktivní, takže na něj nelze kliknout
      * @param tlaco je to JButton
      * */
-    public void buttonOff(JButton tlaco){
+    public void componentsOff(JButton tlaco){
+        textfield.setText("Vyčkejte na tah");
         tlaco.setEnabled(false);
     }
 

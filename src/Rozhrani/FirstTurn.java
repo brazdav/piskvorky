@@ -28,11 +28,9 @@ public interface FirstTurn{
 
         if(random.nextInt(2)==1){
             player1_turn.set(true);
-            textfield.setText("X turn");
         }
         else{
             player1_turn.set(false);
-            textfield.setText("O turn");
         }
     }
 

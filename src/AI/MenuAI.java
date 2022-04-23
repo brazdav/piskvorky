@@ -92,7 +92,7 @@ public class MenuAI implements ActionListener{
         zpatky.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent f){
                 try {
-                    Piskvorky obj = new Piskvorky();
+                    Piskvorky obj2 = new Piskvorky(obj.turn_music);
                 } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
                     e.printStackTrace();
                 }

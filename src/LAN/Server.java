@@ -20,7 +20,7 @@ import java.net.Socket;
  * @version 1.0.0
  */
 public class Server extends Start implements Music {
-    //initialize socket and input stream
+
     private Socket socket = null;
     private ServerSocket server = null;
     private DataInputStream in = null;
@@ -35,7 +35,8 @@ public class Server extends Start implements Music {
     private int odchozi;
     private int prichozi;
     private Server obj;
-    // constructor with port
+    private Piskvorky piskvorky;
+    private boolean vypnuto = false;
 
     /**
      * Konstruktor třídy server, po vytvoření instance třídy spustí server na určeném portu.
@@ -43,26 +44,28 @@ public class Server extends Start implements Music {
      * Následovně se otevřou všechny ptřebné streamy pro posílání packetů mezi serverem a clientem.
      * V konstruktoru jsou vytvořeny dvě vlákna, aby server mohl posílat a zároveň přijímat packety.
      * Ve vláknech je cyklus, který se ukončí po výhry jednoho z hráčů
-     * @param piskvorky objekt, přes který spouštíme metodu buttonOff a buttonOn
+     * @param piskvorky objekt, přes který spouštíme metodu componentsOff a componentsOn
      * @throws UnsupportedAudioFileException
      * @throws LineUnavailableException
      * @throws IOException
      */
     public Server(Piskvorky piskvorky) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         super(piskvorky,"server");
+        this.piskvorky = piskvorky;
         // starts server and waits for a connection
         this.obj = this;
         try {
-            Clip clip = nacteni("Adventure.wav");
-            piskvorky.clip.stop();
-            clip.loop(Clip.LOOP_CONTINUOUSLY);
+            if (piskvorky.turn_music)
+                piskvorky.waiting.loop(Clip.LOOP_CONTINUOUSLY);
             server = new ServerSocket(port);
             System.out.println("LAN.Server started");
             System.out.println("Waiting for a client ...");
             socket = server.accept();
-            clip.stop();
+            if (piskvorky.turn_music) {
+                piskvorky.waiting.stop();
+            }
             System.out.println("LAN.Client accepted");
-            startLan();
+            startLan(this.obj);
             getServer(obj);
             // takes input from the client socket
             in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
@@ -87,8 +90,8 @@ public class Server extends Start implements Music {
                             out.writeUTF(String.valueOf(indexTlaco));
                             odchozi = indexTlaco;
                             System.out.println(odchozi);
-                            for (Object button : buttons) {
-                                piskvorky.buttonOff((JButton) button);
+                            for (int i = 0; i < buttons.size(); i++) {
+                                piskvorky.componentsOff((JButton) buttons.get(i));
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -107,9 +110,13 @@ public class Server extends Start implements Music {
                                 FirstTurn.server_turn.set(Boolean.parseBoolean(line));
                                 if (!FirstTurn.server_turn.get()){
                                     for (Object button2 : buttons) {
-                                        piskvorky.buttonOff((JButton) button2);
+                                        piskvorky.componentsOff((JButton) button2);
                                     }
                                 }
+                                if ((player1_turn.get() && server_turn.get()) || (!player1_turn.get() && !server_turn.get()))
+                                    server_znak = "X";
+                                else
+                                    server_znak = "O";
                             }
                             else if (Integer.parseInt(line) != odchozi) {
                                 int index = Integer.parseInt(line);
@@ -117,7 +124,7 @@ public class Server extends Start implements Music {
                                 JButton button = (JButton) buttons.get(index);
                                 if (buttons.get(0) != null) {
                                     for (Object button2 : buttons) {
-                                        piskvorky.buttonOn((JButton) button2);
+                                        piskvorky.componentsOn((JButton) button2);
                                     }
                                 }
                                 button.doClick();
@@ -131,11 +138,18 @@ public class Server extends Start implements Music {
                     } catch (IOException i) {
                         System.out.println(i);
                         try {
-                            end();
-                        } catch (IOException e) {
+                            if (!vypnuto) {
+                                JOptionPane.showMessageDialog(frame, "Client se odpojil");
+                                frame.dispose();
+                                SettingUpServer obj = new SettingUpServer(piskvorky);
+                                end();
+                            }
+                        } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
                             e.printStackTrace();
                         }
                         break;
+                    }catch (UnsupportedAudioFileException | LineUnavailableException e) {
+                        e.printStackTrace();
                     }
                 }
             });
@@ -148,25 +162,24 @@ public class Server extends Start implements Music {
     }
 
     /**
-     * Metoda sendEnd posílá přes lan komunikaci infomraci o ukončení hry
-     * @throws IOException
-     */
-    public void sendEnd() throws IOException {
-        out.writeUTF("Over");
-        System.out.println("Over");
-    }
-
-    /**
      * Metoda end ukončuje všechny zapnuté streamy, které jsou potřebné ke komunikaci serveru s clientem
      * @throws IOException
      */
-    public void end() throws IOException {
+    public void end() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+        JOptionPane.showMessageDialog(null,"Server Server znak: "+server_znak+" winX "+ piskvorky.winX+" winO "+ piskvorky.winO);
+        //System.out.println("Server znak: "+server_znak+" winX "+ piskvorky.winX+" winO "+ piskvorky.winO);
+        if ((server_znak.equals("X") && piskvorky.winO < piskvorky.winX) || ((server_znak.equals("O") && piskvorky.winO > piskvorky.winX)))
+            win();
+        else
+            lose();
+        vypnuto = true;
+        buttons.removeAll(buttons);
+        piskvorky.button_panel.removeAll();
         server.close();
         input.close();
         out.close();
         socket.close();
         in.close();
-
     }
 
 
