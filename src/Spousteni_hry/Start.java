@@ -7,7 +7,6 @@ import Rozhrani.Music;
 import Tvoreni_menu.Piskvorky;
 import Uprava_tlacitka.MyButtons;
 
-import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
@@ -35,6 +34,7 @@ public class Start implements FirstTurn, Music {
     public String server_znak;
     private String lan;
     public JFrame frame = new JFrame();
+
     public Start(Piskvorky obj, String lan) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         this.lan = lan;
         this.piskvorky = obj;
@@ -105,13 +105,13 @@ public class Start implements FirstTurn, Music {
                                 start(ai);
                             } else {
                                 if (piskvorky.winX > piskvorky.winO) {
-                                    JOptionPane.showMessageDialog(frame, "Vyhrál jsi");
                                     if (piskvorky.turn_music)
                                         piskvorky.win.start();
+                                    JOptionPane.showMessageDialog(frame, "Vyhrál jsi");
                                 } else {
-                                    JOptionPane.showMessageDialog(frame, "Prohrál jsi");
                                     if (piskvorky.turn_music)
                                         piskvorky.lose.start();
+                                    JOptionPane.showMessageDialog(frame, "Prohrál jsi");
                                 }
                                 try {
                                     frame.dispose();
@@ -129,10 +129,6 @@ public class Start implements FirstTurn, Music {
         piskvorky.title_panel.add(piskvorky.textfield);
         FirstTurn.firstTurnAI();
         piskvorky.getList(buttons);
-    }
-    public void stop(Clip clip){
-        clip.stop();
-        clip.close();
     }
 
     /**
@@ -169,7 +165,6 @@ public class Start implements FirstTurn, Music {
                     Vykresleni vykresleni = new Vykresleni();
                     vykresleni.vykresleniLan(obj);
                     indexTlaco = buttons.indexOf(obj);
-
                     piskvorky.checkLeva(obj, buttons, check);
                     piskvorky.checkPrava(obj, buttons, check);
                     piskvorky.checkHore(obj, buttons, check);
@@ -251,6 +246,11 @@ public class Start implements FirstTurn, Music {
         piskvorky.winO = 0;
         piskvorky.menu.setVisible(true);
         piskvorky.sound.setIcon(piskvorky.soundImage1);
+    }
+
+    public void music_off(){
+        piskvorky.win.stop();
+        piskvorky.lose.stop();
     }
 
 }

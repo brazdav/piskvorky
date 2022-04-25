@@ -144,8 +144,6 @@ public class Client extends Start implements FirstTurn {
      * @throws IOException
      */
     public void end() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
-        JOptionPane.showMessageDialog(null,"Client Server znak: "+server_znak+" winX "+ obj.winX+" winO "+ obj.winO);
-        //System.out.println("Server znak: "+server_znak+" winX "+ obj.winX+" winO "+ obj.winO);
         if ((server_znak.equals("X") && obj.winO > obj.winX) || ((server_znak.equals("O") && obj.winO < obj.winX)))
             win();
         else

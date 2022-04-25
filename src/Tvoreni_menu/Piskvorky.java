@@ -51,7 +51,7 @@ public class Piskvorky extends MyButtons implements Music {
     public JButton client = new JButton(clientImage);
     public JButton zpatky = new JButton(zpet);
 
-    public boolean turn_music = true;
+    public boolean turn_music;
 
     public JRadioButton r1;
     public JRadioButton r2;

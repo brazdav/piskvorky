@@ -166,8 +166,6 @@ public class Server extends Start implements Music {
      * @throws IOException
      */
     public void end() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
-        JOptionPane.showMessageDialog(null,"Server Server znak: "+server_znak+" winX "+ piskvorky.winX+" winO "+ piskvorky.winO);
-        //System.out.println("Server znak: "+server_znak+" winX "+ piskvorky.winX+" winO "+ piskvorky.winO);
         if ((server_znak.equals("X") && piskvorky.winO < piskvorky.winX) || ((server_znak.equals("O") && piskvorky.winO > piskvorky.winX)))
             win();
         else

@@ -27,7 +27,6 @@ public class MenuAI implements ActionListener{
     private final JLabel vzhled = new JLabel();
     private final JButton zpatky;
 
-
     /**
      * Konstruktor MenuAI si ukládá do vlastní globální proměnné instanci třídy Piskvorky
      * Následně vytvoří tlačítko s ikonou zpět, na tlačítka b1 a b2 nastaví implementovaný ActionListener
@@ -86,6 +85,8 @@ public class MenuAI implements ActionListener{
         zpatky.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         zpatky.setVisible(true);
         vzhled.add(zpatky);
+
+        vzhled.add(obj.sound);
 
         frame.setVisible(true);
 
