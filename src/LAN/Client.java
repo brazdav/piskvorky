@@ -137,12 +137,12 @@ public class Client extends Start implements FirstTurn {
      * @throws IOException
      */
     public void end() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+        vypnuto = true;
         if ((server_znak.equals("X") && obj.winO > obj.winX) || ((server_znak.equals("O") && obj.winO < obj.winX)))
             win();
         else if ((server_znak.equals("X") && obj.winO < obj.winX) || ((server_znak.equals("O") && obj.winO > obj.winX)))
             lose();
         restart();
-        vypnuto = true;
         obj.button_panel.removeAll();
         comunication = false;
         input.close();

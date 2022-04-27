@@ -132,12 +132,12 @@ public class Server extends Start implements Music {
      * @throws IOException
      */
     public void end() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+        vypnuto = true;
         if ((server_znak.equals("X") && piskvorky.winO < piskvorky.winX) || ((server_znak.equals("O") && piskvorky.winO > piskvorky.winX)))
             win();
         else if ((server_znak.equals("X") && piskvorky.winO > piskvorky.winX) || ((server_znak.equals("O") && piskvorky.winO < piskvorky.winX)))
             lose();
         restart();
-        vypnuto = true;
         piskvorky.button_panel.removeAll();
         comunication = false;
         server.close();
