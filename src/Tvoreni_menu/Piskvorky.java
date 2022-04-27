@@ -38,10 +38,10 @@ public class Piskvorky extends MyButtons implements Music {
     ImageIcon serverImage = new ImageIcon(getClass().getResource("/Obrazky/server.png"));
     ImageIcon logoImage= new ImageIcon(getClass().getResource("/Obrazky/tiktak.png"));
     public ImageIcon soundImage1 = new ImageIcon(getClass().getResource("/Obrazky/sound.png"));
-    ImageIcon soundImage2 = new ImageIcon(getClass().getResource("/Obrazky/mute.png"));
+    public ImageIcon soundImage2 = new ImageIcon(getClass().getResource("/Obrazky/mute.png"));
     public ImageIcon zpet = new ImageIcon(getClass().getResource("/Obrazky/zpet.png"));
 
-    JLabel textfield1 = new JLabel();
+    public JLabel textfield1 = new JLabel();
 
     public JButton hra;
     public JButton lan;
@@ -268,7 +268,6 @@ public class Piskvorky extends MyButtons implements Music {
         lan.addActionListener(new ActionListener(){//potreba dve tlacitka, kde se nastavuje turn
             public void actionPerformed(ActionEvent e){
                 Vykresleni obj = new Vykresleni();
-                //clip.stop();
                 lan.setVisible(false);
                 hra.setVisible(false);
                 r1.setVisible(false);

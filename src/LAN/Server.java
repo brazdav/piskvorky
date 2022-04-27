@@ -29,7 +29,6 @@ public class Server extends Start implements Music {
     private String line = "";
     private String send;
     private Thread thread;
-    private Thread thread2;
     private int port = 6669;
     private int indexTlacoPredchozi;
     private int odchozi;
@@ -37,6 +36,7 @@ public class Server extends Start implements Music {
     private Server obj;
     private Piskvorky piskvorky;
     private boolean vypnuto = false;
+    private boolean comunication = true;
 
     /**
      * Konstruktor třídy server, po vytvoření instance třídy spustí server na určeném portu.
@@ -66,6 +66,7 @@ public class Server extends Start implements Music {
             }
             System.out.println("LAN.Client accepted");
             startLan(this.obj);
+            server_turned_on = true;
             getServer(obj);
             // takes input from the client socket
             in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
@@ -74,38 +75,13 @@ public class Server extends Start implements Music {
 
             input = new BufferedReader(new InputStreamReader(System.in));
 
-            try {
-                out.writeUTF(String.valueOf(piskvorky.player1_turn.get()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            sendData();
 
 
-            // reads message from client until "Over" is sent
             thread = new Thread(() -> {
-                while (!line.equals("Over")){
-                    getIndexTlaco();
-                    if (indexTlacoPredchozi != indexTlaco && prichozi != indexTlaco) {
-                        try {
-                            out.writeUTF(String.valueOf(indexTlaco));
-                            odchozi = indexTlaco;
-                            System.out.println(odchozi);
-                            for (int i = 0; i < buttons.size(); i++) {
-                                piskvorky.componentsOff((JButton) buttons.get(i));
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        indexTlacoPredchozi = indexTlaco;
-                    }
-                }
-            });
-
-            thread2 = new Thread(() -> {
-                while (!line.equals("Over")) {
+                while (comunication) {
                     try {
                         line = in.readUTF();
-                        if (!line.equals("Over")) {
                             if (line.equals("true") || line.equals("false")){
                                 FirstTurn.server_turn.set(Boolean.parseBoolean(line));
                                 if (!FirstTurn.server_turn.get()){
@@ -129,32 +105,22 @@ public class Server extends Start implements Music {
                                 }
                                 button.doClick();
                             }
-                        }
-                        else {
-                            System.out.println("dostali jsme over");
-                            end();
-                            break;
-                        }
                     } catch (IOException i) {
                         System.out.println(i);
                         try {
                             if (!vypnuto) {
                                 JOptionPane.showMessageDialog(frame, "Client se odpojil");
                                 frame.dispose();
-                                SettingUpServer obj = new SettingUpServer(piskvorky);
                                 end();
                             }
                         } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
                             e.printStackTrace();
                         }
                         break;
-                    }catch (UnsupportedAudioFileException | LineUnavailableException e) {
-                        e.printStackTrace();
                     }
                 }
             });
             thread.start();
-            thread2.start();
 
         } catch (IOException i) {
             System.out.println(i);
@@ -168,11 +134,12 @@ public class Server extends Start implements Music {
     public void end() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         if ((server_znak.equals("X") && piskvorky.winO < piskvorky.winX) || ((server_znak.equals("O") && piskvorky.winO > piskvorky.winX)))
             win();
-        else
+        else if ((server_znak.equals("X") && piskvorky.winO > piskvorky.winX) || ((server_znak.equals("O") && piskvorky.winO < piskvorky.winX)))
             lose();
+        restart();
         vypnuto = true;
-        buttons.removeAll(buttons);
         piskvorky.button_panel.removeAll();
+        comunication = false;
         server.close();
         input.close();
         out.close();
@@ -180,5 +147,30 @@ public class Server extends Start implements Music {
         in.close();
     }
 
+    public void sendData(){
+        try {
+            out.writeUTF(String.valueOf(piskvorky.player1_turn.get()));
+            out.writeUTF("Kola:" + piskvorky.kolaLan);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendIndex(int indexTlaco){
+        try {
+            if (indexTlaco != prichozi) {
+                out.writeUTF(String.valueOf(indexTlaco));
+                System.out.println("Odchozí od serveru: " + indexTlaco);
+                odchozi = indexTlaco;
+                if (buttons.get(0) != null) {
+                    for (Object button : buttons) {
+                        piskvorky.componentsOff((JButton) button);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

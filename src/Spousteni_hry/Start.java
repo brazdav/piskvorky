@@ -31,8 +31,9 @@ public class Start implements FirstTurn, Music {
     public ArrayList buttons = new ArrayList<JButton>();
     private static JLabel vyhranaKola = new JLabel();
     private Piskvorky piskvorky;
-    public String server_znak;
+    public String server_znak = "";
     private String lan;
+    public boolean server_turned_on = false;
     public JFrame frame = new JFrame();
 
     public Start(Piskvorky obj, String lan) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
@@ -138,9 +139,13 @@ public class Start implements FirstTurn, Music {
      * Nastavuje v pravém rohu okna label s počtem vyhraných kol pro X nebo O
      */
     public void startLan (Object obj_lan){
+        if (obj_lan instanceof Server)
+            frame.setTitle("Server");
+        else
+            frame.setTitle("Client");
+
         textfield.setText("Jste na řadě");
         piskvorky.getString("lan");
-        frame.setVisible(true);
 
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -153,7 +158,6 @@ public class Start implements FirstTurn, Music {
         frame.setLayout(new BorderLayout());
 
         frame.add(piskvorky.title_panel,BorderLayout.NORTH);
-        frame.add(piskvorky.button_panel);
 
         for (int i = 0; i < 225; i++) {
             MyButtons obj = new MyButtons();
@@ -162,6 +166,10 @@ public class Start implements FirstTurn, Music {
             obj.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    if (obj_lan instanceof Server)
+                        ((Server) obj_lan).sendIndex(buttons.indexOf(obj));
+                    else if (obj_lan instanceof Client)
+                        ((Client) obj_lan).sendIndex(buttons.indexOf(obj));
                     Vykresleni vykresleni = new Vykresleni();
                     vykresleni.vykresleniLan(obj);
                     indexTlaco = buttons.indexOf(obj);
@@ -204,6 +212,22 @@ public class Start implements FirstTurn, Music {
                 }
             });
         }
+            if (obj_lan instanceof Server){
+                if (server_znak.equals("X") && !player1_turn.get())
+                    for (Object button : buttons) {
+                        piskvorky.componentsOff((JButton) button);
+                    }
+            }
+            if (obj_lan instanceof Client){
+                if (server_znak.equals("X") && player1_turn.get()){
+                    for (Object button : buttons) {
+                        piskvorky.componentsOff((JButton) button);
+                    }
+                }
+            }
+
+        frame.add(piskvorky.button_panel);
+        frame.setVisible(true);
         piskvorky.title_panel.add(piskvorky.textfield);
 
     }
@@ -229,7 +253,6 @@ public class Start implements FirstTurn, Music {
             piskvorky.lose.start();
 
         JOptionPane.showMessageDialog(frame, "Prohrál jsi");
-        restart();
     }
 
     public void win(){
@@ -237,20 +260,13 @@ public class Start implements FirstTurn, Music {
             piskvorky.win.start();
 
         JOptionPane.showMessageDialog(frame, "Vyhrál jsi");
-        restart();
     }
 
-    private void restart(){
+    public void restart(){
         frame.dispose();
         piskvorky.winX = 0;
         piskvorky.winO = 0;
         piskvorky.menu.setVisible(true);
-        piskvorky.sound.setIcon(piskvorky.soundImage1);
-    }
-
-    public void music_off(){
-        piskvorky.win.stop();
-        piskvorky.lose.stop();
     }
 
 }

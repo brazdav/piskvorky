@@ -25,12 +25,12 @@ public class Client extends Start implements FirstTurn {
     private String line = "";
     private int indexTlacoPredchozi;
     private Thread thread;
-    private Thread thread2;
     private int odchozi;
     private int prichozi;
     private Piskvorky obj;
     private Client obj2;
     private boolean vypnuto;
+    private boolean comunication = true;
 
     /**
      * Konstruktor třídy client se připojuje k serveru na jeho IP adrese a portu, na kterém server běží
@@ -49,32 +49,14 @@ public class Client extends Start implements FirstTurn {
         // establish a connection
         this.obj2 = this;
         this.obj = piskvorky;
+        server_turned_on = true;
         FirstTurn.firstTurnLan();
         System.out.println("Server znak: "+server_znak);
+
         thread = new Thread(() -> {
-            while (!line.equals("Over")) {
-                getIndexTlaco();
-                if (indexTlacoPredchozi != indexTlaco && prichozi != indexTlaco) {
-                    try {
-                        out.writeUTF(String.valueOf(indexTlaco));
-                        odchozi = indexTlaco;
-                        if (buttons.get(0) != null) {
-                            for (Object button : buttons) {
-                                piskvorky.componentsOff((JButton) button);
-                            }
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    indexTlacoPredchozi = indexTlaco;
-                }
-            }
-        });
-        thread2 = new Thread(() -> {
-            while (!line.equals("Over")) {
+            while (comunication) {
                 try {
                     line = in.readUTF();
-                    if (!line.equals("Over")) {
                         System.out.println(line);
                         if (line.equals("true") || line.equals("false")) {
                             FirstTurn.player1_turn.set(Boolean.parseBoolean(line));
@@ -89,7 +71,12 @@ public class Client extends Start implements FirstTurn {
                                     piskvorky.componentsOff((JButton) button2);
                                 }
                             }
-                        } else if (Integer.parseInt(line) != odchozi) {
+                        }
+                        else if (line.contains("Kola")){
+                            String[] arr = line.split(":");
+                            piskvorky.kolaLan = Integer.parseInt(arr[1]);
+                        }
+                        else if (Integer.parseInt(line) != odchozi) {
                             int index = Integer.parseInt(line);
                             prichozi = index;
                             JButton button = (JButton) buttons.get(index);
@@ -97,27 +84,19 @@ public class Client extends Start implements FirstTurn {
                                 piskvorky.componentsOn((JButton) button2);
                             }
                             button.doClick();
+                            System.out.println("kliknutí na: "+line);
                         }
-                    }
-                    else{
-                        out.writeUTF("Over");
-                        end();
-                        break;
-                    }
                 } catch (IOException i) {
                     System.out.println(i);
                     try {
                         if (!vypnuto) {
                             JOptionPane.showMessageDialog(frame, "Server se odpojil");
                             frame.dispose();
-                            SettingUpClient setting = new SettingUpClient(obj);
                             end();
                         }
                     } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
                         e.printStackTrace();
                     }
-                } catch (UnsupportedAudioFileException | LineUnavailableException e) {
-                    e.printStackTrace();
                 }
             }
         });
@@ -131,14 +110,28 @@ public class Client extends Start implements FirstTurn {
             out = new DataOutputStream(socket.getOutputStream());
             in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             thread.start();
-            thread2.start();
         } catch (IOException u) {
             System.out.println(u);
             SettingUpClient obj = new SettingUpClient(piskvorky);
             JOptionPane.showMessageDialog(obj.dialogy, "Na této adrese není zapnutý žádný server");
         }
     }
-
+    public void sendIndex(int indexTlaco){
+        try {
+            if (indexTlaco != prichozi) {
+                out.writeUTF(String.valueOf(indexTlaco));
+                System.out.println("Odchozí od klienta: " + indexTlaco);
+                odchozi = indexTlaco;
+                if (buttons.get(0) != null) {
+                    for (Object button : buttons) {
+                        obj.componentsOff((JButton) button);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * Metoda end ukončuje komunikaci se serverem
      * @throws IOException
@@ -146,13 +139,12 @@ public class Client extends Start implements FirstTurn {
     public void end() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
         if ((server_znak.equals("X") && obj.winO > obj.winX) || ((server_znak.equals("O") && obj.winO < obj.winX)))
             win();
-        else
+        else if ((server_znak.equals("X") && obj.winO < obj.winX) || ((server_znak.equals("O") && obj.winO > obj.winX)))
             lose();
+        restart();
         vypnuto = true;
-        buttons.removeAll(buttons);
         obj.button_panel.removeAll();
-        thread.stop();
-        thread2.stop();
+        comunication = false;
         input.close();
         out.close();
         socket.close();
